@@ -1,7 +1,7 @@
 const path = require('path')
 const { BrowserWindow } = require('electron')
 const windowStateManager = require('electron-window-state')
-const sharedConfig = require('../../shared/config')
+const config = require('../config')
 
 let mainWindow = null
 
@@ -13,8 +13,8 @@ const initMainWindow = () => {
   mainWindow = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: parseInt(sharedConfig.stylingVariables.WINDOW_WIDTH),
-    height: parseInt(sharedConfig.stylingVariables.WINDOW_HEIGHT),
+    width: parseInt(config.stylingVariables.WINDOW_WIDTH),
+    height: parseInt(config.stylingVariables.WINDOW_HEIGHT),
     resizable: false,
     title: 'Tunepack',
     maximizable: false,

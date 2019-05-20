@@ -1,5 +1,5 @@
 const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('../../shared/constants/Channel')
+const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 
 createSendAndWait(Channel.SEARCH, async (event, args) => {

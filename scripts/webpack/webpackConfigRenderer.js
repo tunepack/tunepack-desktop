@@ -14,7 +14,7 @@ const paths = require('../utils/paths')
 const env = require('../utils/env')
 
 const port = process.env.PORT || 1212
-const sharedConfig = require('../../src/shared/config')
+const config = require('../../src/main/config')
 
 const rules = []
 
@@ -57,7 +57,7 @@ rules.push({
         includePaths: [
           path.resolve(paths.rendererPath, 'styles')
         ],
-        functions: injectGetFunction(sharedConfig.stylingVariables)
+        functions: injectGetFunction(config.stylingVariables)
       }
     }
   ])

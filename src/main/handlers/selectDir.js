@@ -1,5 +1,5 @@
 const { dialog } = require('electron')
-const Channel = require('../../shared/constants/Channel')
+const Channel = require('../constants/Channel')
 const { mainWindow } = require('../utils/mainWindow')
 const { createSendAndWait } = require('../utils/handlers')
 

@@ -3,7 +3,7 @@ const fs = require('fs')
 const _ = require('lodash')
 
 const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('../../shared/constants/Channel')
+const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
 
