@@ -78,6 +78,11 @@
       "private": false
     }
   },
+  "author": {
+    "name": "Team Tunepack",
+    "email": "team.tunepack@gmail.com",
+    "url": "https://tunepack.io"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tunepack/tunepack-desktop.git"
