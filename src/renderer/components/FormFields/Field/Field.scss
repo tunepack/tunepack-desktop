@@ -1,0 +1,25 @@
+@import 'base.scss';
+
+.component {
+
+}
+
+.error {
+  margin-top: .3em;
+
+  small {
+    color: $color-red;
+  }
+}
+
+.isCentered {
+  .error {
+    text-align: center;
+  }
+}
+
+.helper {
+  padding-bottom: .5em;
+  color: $color-placeholder;
+  font-size: 12px;
+}

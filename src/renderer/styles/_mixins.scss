@@ -1,0 +1,55 @@
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+@mixin input-style () {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  color: $color-text;
+  background-color: white;
+  background-clip: padding-box;
+  font-family: inherit;
+  border: solid 1px $color-border;
+  font-weight: 400;
+  font-size: 1rem;
+  transition: border-color 120ms;
+  box-shadow: none;
+  border-radius: 0.25em;
+
+  &:active,
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  @include placeholder () {
+    opacity: 1;
+    color: $color-placeholder;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+}

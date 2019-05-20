@@ -1,0 +1,15 @@
+@import 'base.scss';
+
+.component {
+  margin-bottom: 1.4em;
+  position: relative;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.isCentered {
+  display: flex;
+  justify-content: center;
+}

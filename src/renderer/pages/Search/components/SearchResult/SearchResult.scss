@@ -1,0 +1,79 @@
+@import 'base.scss';
+
+$progress-bar-height: 6px;
+$progress-bar-width: 65px;
+
+.component {
+  transition: background-color 120ms ease;
+  padding: $side-padding;
+  position: relative;
+
+  &:nth-child(even) {
+    background-color: darken(white, 3%);
+  }
+}
+
+.info {
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.infoPrimary {
+  max-width: 80%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.folderName {
+  font-size: 10px;
+  color: darken($color-subtext, 10%);
+}
+
+.metaData {
+  :global {
+    .meta-pill {
+      margin-right: .2em;
+    }
+  }
+}
+
+.controls {
+  margin-left: auto;
+}
+
+.progress {
+  height: $progress-bar-height;
+  background-color: $color-subtext;
+  border-radius: $progress-bar-height;
+  width: $progress-bar-width;
+  position: relative;
+}
+
+.progressIndicator {
+  border-radius: $progress-bar-height;
+  background-color: $color-primary;
+  transition: width 500ms ease;
+  width: 0;
+  height: $progress-bar-height;
+}
+
+.btnDownloadIconTop {
+  width: 18px;
+  height: 18px;
+}
+
+.btnDownloadedIconTop {
+  width: 18px;
+  height: 18px;
+}

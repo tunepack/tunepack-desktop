@@ -1,0 +1,37 @@
+// https://flatuicolors.com/palette/de/
+
+// Palette
+$color-blue: #4b7bec;
+$color-green: #20bf6b;
+$color-red: #eb3b5a;
+$color-turquoise: #0fb9b1;
+$color-purple: #a55eea;
+
+// Color types
+$color-primary: $color-blue;
+$color-primary-darker: darken($color-blue, 5%);
+
+$color-secondary: $color-turquoise;
+$color-secondary-darker: darken($color-turquoise, 5%);
+
+$color-success: $color-green;
+$color-success-darker: darken($color-green, 5%);
+
+// #a55eea
+
+$color-border: lighten(white, 5%);
+$color-text: #333;
+$color-subtext: #BDBDBD;
+
+// app colors
+$color-text: lighten(black, 1%);
+$color-border: #ededed;
+$color-placeholder: #9d9d9d;
+$color-body-bg: #fdfdfd;
+
+$gray-800: #353535;
+
+$header-height: get('HEADER_HEIGHT');
+$window-height: get('WINDOW_HEIGHT');
+$window-width: get('WINDOW_WIDTH');
+$side-padding: get('SIDE_PADDING');

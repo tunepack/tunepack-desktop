@@ -1,0 +1,18 @@
+@import 'base.scss';
+
+.component {
+  position: relative;
+  height: 40px;
+  background-color: $gray-800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.logo {
+  opacity: .2;
+  height: 18px;
+}

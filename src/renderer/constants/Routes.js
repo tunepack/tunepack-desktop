@@ -1,0 +1,5 @@
+export const HOME = '/'
+export const INTRO = '/intro'
+export const SEARCH = '/search'
+export const DOWNLOADS = '/downloads'
+export const SETTINGS = '/settings'

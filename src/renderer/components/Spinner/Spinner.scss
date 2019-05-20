@@ -1,0 +1,28 @@
+@import 'base.scss';
+
+$transparent-opacity: 0.2;
+$speed: 400ms;
+$primary-loader-bg-color: rgba(0, 0, 0, .05);
+
+.component {
+  animation: rotate $speed infinite linear;
+  color: white;
+  width: 1.2em;
+  height: 1.2em;
+
+  &.primary {
+    color: $color-primary;
+  }
+}
+
+:global {
+  @keyframes rotate {
+    from {
+      transform: rotate(0)
+    }
+
+    to {
+      transform: rotate(360deg)
+    }
+  }
+}

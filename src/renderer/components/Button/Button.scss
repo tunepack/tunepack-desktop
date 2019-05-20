@@ -1,0 +1,92 @@
+@import 'base.scss';
+
+$btn-height: 48px;
+$btn-focus-ring-width: 3px;
+
+.component {
+  background-color: $color-text;
+  border-radius: 2px;
+  height: $btn-height;
+  line-height: $btn-height;
+  color: white;
+  box-shadow: none;
+  border: 0;
+  padding: 0 14px;
+  cursor: pointer;
+  outline: 0;
+  transition: box-shadow 120ms ease, background-color 180ms ease;
+  font-size: 14px;
+
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-ring-width rgba(0, 0, 0, .2);
+  }
+
+  &.hasIconTop {
+    .content {
+      flex-direction: column;
+    }
+  }
+
+  &.variant-minimal {
+    height: auto;
+    line-height: inherit;
+    border: 0;
+    background: none transparent;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 11px;
+    cursor: pointer;
+    outline: 0;
+    opacity: .6;
+    transition: opacity 180ms ease;
+    color: $color-text;
+    padding: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.variant-primary {
+    background-color: $color-primary;
+    color: white;
+
+    &:hover {
+      background-color: $color-primary-darker;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-ring-width transparentize($color-primary, .5);
+    }
+  }
+
+
+  &.size-sm {
+    $scale-diff: .8;
+    $height: $btn-height * $scale-diff;
+    height: $height;
+    line-height: $height;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconTop {
+  margin-bottom: 3px;
+}
+
+.iconBefore {
+  margin-right: 1rem;
+}
+
+.iconAfter {
+  margin-left: 1rem;
+}
+

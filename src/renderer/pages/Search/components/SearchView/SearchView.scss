@@ -1,0 +1,39 @@
+@import 'base.scss';
+
+.component {
+
+}
+
+.header {
+  padding: $side-padding;
+}
+
+.searchResultsLoader,
+.searchResultsEmpty {
+  position: absolute;
+  top: $header-height + 77px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: unquote("calc(100vh - #{$header-height + 92px})");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchResultsEmpty {
+  color: $color-subtext;
+}
+
+.searchResultsLoader {
+  font-size: 40px;
+}
+
+.searchResults {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: unquote("calc(100vh - #{$header-height + 92px})");
+  margin: 0 $side-padding $side-padding $side-padding;
+  border: 1px solid $color-border;
+  border-radius: 5px;
+}
