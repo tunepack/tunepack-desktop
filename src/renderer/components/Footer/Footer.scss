@@ -1,0 +1,56 @@
+@import 'base.scss';
+
+.component {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  right: 0;
+  height: $footer-height - 1px;
+  border-bottom: 1px solid $color-border;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  user-select: none;
+}
+
+.links {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.link {;
+  flex-grow: 1;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: $color-subtext;
+  transition: color 200ms ease;
+  border-right: 1px solid $color-border;
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &:hover {
+    color: darken($color-subtext, 20%);
+  }
+
+  &.linkActive {
+    color: $color-text;
+  }
+}
+
+.linkLabel {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.linkIcon {
+  $size: 14px;
+  width: $size;
+  height: $size;
+}
