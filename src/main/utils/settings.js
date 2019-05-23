@@ -7,10 +7,6 @@ const moment = require('moment-timezone')
 moment.tz.setDefault('UTC')
 
 const schema = {
-  isNew: {
-    type: 'boolean',
-    default: true
-  },
   soulseekUsername: {
     type: 'string',
     default: slskUtils.generateUsername()
@@ -96,14 +92,12 @@ const config = new Store({
 })
 
 const getRendererSettings = () => {
-  const isNew = config.get('isNew')
   const downloadsDir = config.get('downloadsDir')
   const searchFileExtensions = config.get('searchFileExtensions')
   const searchHasOnlyHighBitrate = config.get('searchHasOnlyHighBitrate')
   const downloadHistory = config.get('downloadHistory')
 
   return {
-    isNew,
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate,
@@ -112,13 +106,11 @@ const getRendererSettings = () => {
 }
 
 const setRendererSettings = ({
-  isNew,
   downloadsDir,
   searchFileExtensions,
   searchHasOnlyHighBitrate
 }) => {
   config.set({
-    isNew,
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate
