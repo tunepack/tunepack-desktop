@@ -32,7 +32,7 @@
 .searchResults {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: unquote("calc(100vh - #{$header-height + 92px})");
+  height: unquote("calc(100vh - #{$header-height + $footer-height + 92px})");
   margin: 0 $side-padding $side-padding $side-padding;
   border: 1px solid $color-border;
   border-radius: 5px;
