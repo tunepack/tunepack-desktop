@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import * as Routes from 'constants/Routes'
-import styles from './Footer.scss'
+import styles from './Nav.scss'
 import Icon from 'components/Icon/Icon'
 import IconSearch from 'icons/Search.svg'
 import IconDownloadCloud from 'icons/DownloadCloud.svg'
@@ -30,7 +30,7 @@ const links = [{
   )
 }]
 
-const Footer = () => {
+const Nav = () => {
   return (
     <div className={styles.component}>
       <div className={styles.links}>
@@ -54,4 +54,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Nav
