@@ -35,10 +35,10 @@ class Layout extends React.PureComponent {
       <>
         <LoadingScreen isVisible={isLoadingScreenVisible} />
         <Header />
+        <Nav />
         <div className={styles.content}>
           {this.content}
         </div>
-        <Nav />
       </>
     )
   }

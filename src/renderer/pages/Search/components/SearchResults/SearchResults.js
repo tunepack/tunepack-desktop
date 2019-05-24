@@ -3,6 +3,7 @@ import Spinner from 'components/Spinner/Spinner'
 import SearchResult from '../SearchResult/SearchResult'
 import styles from './SearchResults.scss'
 import { FixedSizeList as List } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 export default class SearchResults extends React.Component {
   render () {
@@ -44,13 +45,19 @@ export default class SearchResults extends React.Component {
 
     return (
       <div className={styles.results}>
-        <List
-          height={538}
-          itemCount={searchResultsCount}
-          itemSize={100}
-          width={'100%'}>
-          {Row}
-        </List>
+        <AutoSizer>
+          {({ height, width }) => {
+            return (
+              <List
+                height={height}
+                width={width}
+                itemCount={searchResultsCount}
+                itemSize={100}>
+                {Row}
+              </List>
+            )
+          }}
+        </AutoSizer>
       </div>
     )
   }

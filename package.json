@@ -120,6 +120,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^4.0.1",
+    "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.1",
     "redux": "^4.0.1",
     "redux-electron-ipc": "^1.2.0",

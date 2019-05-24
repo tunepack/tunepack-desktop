@@ -1,8 +1,10 @@
 @import 'base.scss';
 
+$search-form-height: 80px;
+
 .loader,
 .empty {
-  height: unquote("calc(100vh - #{$header-height + $footer-height + 92px})");
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $search-form-height + $side-padding})");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +19,7 @@
 }
 
 .results {
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $search-form-height + $side-padding})");
   border: 1px solid $color-border;
   border-radius: 5px;
   margin: 0 $side-padding;
