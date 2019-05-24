@@ -56,7 +56,7 @@ const downloadTrack = async ({
 
 createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   const downloadsDir = settings.getDownloadsDir()
-  const downloadPath = path.resolve(downloadsDir, track.fileName)
+  const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
 
   const handleProgress = progress => {
     settings.updateDownloadHistoryEntry(track.id, {
