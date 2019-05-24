@@ -1,7 +1,8 @@
 import React from 'react'
-import { Switch, Route } from 'react-router'
+import { Route } from 'react-router'
 import * as Routes from 'constants/Routes'
 import Layout from 'components/Layout/Layout'
+import AnimatedSwitch from 'components/AnimatedSwitch/AnimatedSwitch'
 
 import Search from './Search'
 import Settings from './Settings'
@@ -9,7 +10,7 @@ import Settings from './Settings'
 export default () => {
   return (
     <Layout>
-      <Switch>
+      <AnimatedSwitch>
         <Route
           exact
           path={Routes.SEARCH}
@@ -22,7 +23,7 @@ export default () => {
           exact
           path={Routes.SETTINGS}
           component={Settings} />
-      </Switch>
+      </AnimatedSwitch>
     </Layout>
   )
 }

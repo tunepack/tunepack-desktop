@@ -3,6 +3,10 @@
   @import '~sanitize.css/typography.css';
   @import '~sanitize.css/forms.css';
 
+  html {
+    overflow-x: hidden;
+  }
+
   //*, *::after, *::before {
   //  -webkit-user-select: none;
   //  -webkit-user-drag: none;
