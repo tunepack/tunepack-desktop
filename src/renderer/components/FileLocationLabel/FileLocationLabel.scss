@@ -1,0 +1,16 @@
+@import 'base.scss';
+
+.component {
+  border-bottom: 2px dotted lighten($color-subtext, 10%);
+  padding: 10px 0;
+  color: $color-subtext;
+  background: none transparent;
+  user-select: none;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
+
+  &:hover {
+    color: darken($color-subtext, 10%);
+    border-bottom-color: $color-subtext;
+  }
+}

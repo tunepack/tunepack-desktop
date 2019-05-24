@@ -1,8 +1,14 @@
 import { all, takeLatest, put, call, select } from 'redux-saga/effects'
-import actions, { constants } from 'actions/settings'
+import actions, {
+  constants,
+  setSettings
+} from 'actions/settings'
 import { toggle as toggleLoadingScreen } from 'actions/loadingScreen'
 import handlers from 'handlers'
-import { getData as getSettings } from 'selectors/settings'
+import {
+  getData as getSettings,
+  getDownloadsDir
+} from 'selectors/settings'
 
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
@@ -34,9 +40,22 @@ export function * onSetSettings ({ payload: newSettings }) {
   }
 }
 
+export function * onSelectDownloadsDir () {
+  const downloadsDir = yield select(getDownloadsDir)
+
+  const { result: newDownloadsDir } = yield call(handlers.selectDir, {
+    defaultPath: downloadsDir
+  })
+
+  yield put(setSettings({
+    downloadsDir: newDownloadsDir
+  }))
+}
+
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.INITIALIZE, onInitialize),
-    takeLatest(constants.SET_SETTINGS, onSetSettings)
+    takeLatest(constants.SET_SETTINGS, onSetSettings),
+    takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir)
   ])
 }

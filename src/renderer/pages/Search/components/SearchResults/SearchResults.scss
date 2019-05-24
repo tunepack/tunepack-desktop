@@ -24,7 +24,7 @@ $scrollbar-width: 8px;
 
 .list {
   border: 1px solid $color-border;
-  border-radius: 5px;
+  border-radius: $border-radius;
 
   &::-webkit-scrollbar {
     background: darken(white, 4%);
