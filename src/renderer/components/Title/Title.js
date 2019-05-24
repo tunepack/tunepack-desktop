@@ -3,17 +3,16 @@ import styles from './Title.scss'
 import cx from 'classnames'
 
 const Title = ({
-  as = 'h1',
   className,
   children
 }) => {
   return (
-    <as
+    <h1
       className={cx(styles.component, {
         [className]: className
       })}>
       {children}
-    </as>
+    </h1>
   )
 }
 
