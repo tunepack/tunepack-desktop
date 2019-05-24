@@ -1,6 +1,6 @@
 @import 'base.scss';
 
-$progress-bar-height: 6px;
+$progress-bar-height: 8px;
 $progress-bar-width: 65px;
 
 .component {
@@ -61,11 +61,36 @@ $progress-bar-width: 65px;
 
 .progress {
   height: $progress-bar-height;
-  background-color: $color-subtext;
   border-radius: $progress-bar-height;
   width: $progress-bar-width;
   position: relative;
   margin-bottom: 5px;
+  background-color: lighten($color-border, 3%);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: $progress-bar-height;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    z-index: 10;
+    animation: progress 1200ms ease infinite;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(240,240,240,1) 50%,rgba(255,255,255,0) 100%);
+  }
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-$progress-bar-width);
+  }
+
+  100% {
+    transform: translateX($progress-bar-width);
+  }
 }
 
 .speed {
@@ -74,9 +99,15 @@ $progress-bar-width: 65px;
 }
 
 .progressIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
   border-radius: $progress-bar-height;
   background-color: $color-primary;
-  transition: width 500ms ease;
+  transition: width 100ms ease;
   width: 0;
   height: $progress-bar-height;
 }
