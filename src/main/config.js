@@ -6,7 +6,8 @@ const stylingVariables = {
   HEADER_HEIGHT: '40px',
   NAV_HEIGHT: '60px',
   SIDE_PADDING: '12px',
-  LIST_ITEM_HEIGHT: '100px'
+  LIST_ITEM_HEIGHT: '100px',
+  VIEW_HEADER_HEIGHT: '80px'
 }
 
 module.exports = {

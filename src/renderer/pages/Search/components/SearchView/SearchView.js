@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './SearchView.scss'
 import SearchForm from '../SearchForm/SearchForm'
+import View from 'components/View/View'
 import { connect } from 'react-redux'
 import { search, download } from 'actions/downloads'
 import { getSearchResults, getIsSearching } from 'selectors/search'
@@ -22,16 +22,16 @@ const SearchView = React.memo(({
   }
 
   return (
-    <>
-      <div className={styles.header}>
+    <View
+      header={(
         <SearchForm onSubmit={handleSearchSubmit} />
-      </div>
+      )}>
       <SearchResults
         downloads={downloads}
         onDownloadClick={handleSearchResultClick}
         isSearching={isSearching}
         searchResults={searchResults} />
-    </>
+    </View>
   )
 })
 

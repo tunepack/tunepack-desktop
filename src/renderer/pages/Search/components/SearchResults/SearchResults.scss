@@ -1,11 +1,10 @@
 @import 'base.scss';
 
-$search-form-height: 80px;
 $scrollbar-width: 8px;
 
 .loader,
 .empty {
-  height: unquote("calc(100vh - #{$header-height + $nav-height + $search-form-height + $side-padding})");
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,8 +19,7 @@ $scrollbar-width: 8px;
 }
 
 .results {
-  height: unquote("calc(100vh - #{$header-height + $nav-height + $search-form-height + $side-padding})");
-  margin: 0 $side-padding;
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
 }
 
 .list {
