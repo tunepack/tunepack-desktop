@@ -10,7 +10,7 @@ import {
 } from 'selectors/settings'
 import styles from './Layout.scss'
 
-class Layout extends React.Component {
+class Layout extends React.PureComponent {
   get content () {
     const {
       isInitialized,
