@@ -9,7 +9,7 @@ $progress-bar-width: 65px;
   position: relative;
 
   &:nth-child(even) {
-    background-color: darken(white, 3%);
+    background-color: darken(white, 1.5%);
   }
 }
 
@@ -65,7 +65,7 @@ $progress-bar-width: 65px;
   width: $progress-bar-width;
   position: relative;
   margin-bottom: 5px;
-  background-color: lighten($color-border, 3%);
+  background-color: lighten($color-border, 2%);
   overflow: hidden;
 
   &::after {
