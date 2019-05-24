@@ -2,8 +2,14 @@ import { createReducer } from 'utils/redux'
 import { fromJS } from 'immutable'
 import { SEARCH_REQUEST } from 'actions/downloads'
 
+let initialSearchResults = []
+
+if (process.env.NODE_ENV === 'development') {
+  initialSearchResults = require('../fixtures/search-justice-genesis').default
+}
+
 const initialState = fromJS({
-  searchResults: [],
+  searchResults: initialSearchResults,
   isSearching: false,
   error: null
 })

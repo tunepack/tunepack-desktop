@@ -4,18 +4,25 @@ import MetaPill from 'components/MetaPill/MetaPill'
 import SearchResultControls from '../SearchResultControls/SearchResultControls'
 import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
+import cx from 'classnames'
 
 const SearchResult = ({
   track,
+  index,
   download,
-  onDownloadClick
+  onDownloadClick,
+  style
 }) => {
   const fileExtension = track.get('fileExtension')
   const fileExtensionLabel = fileExtension === 'mp3'
     ? `${fileExtension} - ${track.get('bitrate')}kbps` : fileExtension
 
   return (
-    <div className={styles.component}>
+    <div
+      style={style}
+      className={cx(styles.component, {
+        [styles.isOdd]: index % 2
+      })}>
       <div className={styles.content}>
         <div className={styles.info}>
           <div className={styles.infoPrimary}>

@@ -7,8 +7,10 @@ $progress-bar-width: 65px;
   transition: background-color 120ms ease;
   padding: $side-padding;
   position: relative;
+  height: 100px;
+  display: flex;
 
-  &:nth-child(even) {
+  &.isOdd {
     background-color: darken(white, 1.5%);
   }
 }
@@ -25,6 +27,7 @@ $progress-bar-width: 65px;
 }
 
 .content {
+  flex-grow: 1;
   display: flex;
   align-items: center;
 }
@@ -33,9 +36,15 @@ $progress-bar-width: 65px;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 100%;
 }
 
 .folderName {
+  margin-top: 3px;
   font-size: 10px;
   color: darken($color-subtext, 10%);
 }
