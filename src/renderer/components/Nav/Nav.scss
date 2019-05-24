@@ -2,11 +2,23 @@
 
 .component {
   position: fixed;
-  top: $header-height;
+
+  @if $nav-at-top {
+    top: $header-height;
+  } @else {
+    bottom: 0;
+  }
+
   left: 0;
   right: 0;
   height: $nav-height - 1px;
-  border-bottom: 1px solid $color-border;
+
+  @if $nav-at-top {
+    border-bottom: 1px solid $color-border;
+  } @else {
+    border-top: 1px solid $color-border;
+  }
+
   background-color: white;
   display: flex;
   align-items: center;
