@@ -86,6 +86,7 @@ $progress-bar-width: 65px;
   margin-bottom: 5px;
   background-color: lighten($color-border, 2%);
   overflow: hidden;
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.1);
 
   &::after {
     content: '';
@@ -98,8 +99,22 @@ $progress-bar-width: 65px;
     width: 70px;
     z-index: 10;
     animation: progress 1200ms ease infinite;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(240,240,240,1) 50%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(220,220,220,1) 50%, rgba(255,255,255,0) 100%);
   }
+}
+
+.progressIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  border-radius: $progress-bar-height;
+  background-color: $color-primary;
+  transition: width 100ms ease;
+  width: 0;
+  height: $progress-bar-height;
 }
 
 @keyframes progress {
@@ -115,20 +130,6 @@ $progress-bar-width: 65px;
 .speed {
   font-size: 10px;
   color: $color-subtext;
-}
-
-.progressIndicator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  border-radius: $progress-bar-height;
-  background-color: $color-primary;
-  transition: width 100ms ease;
-  width: 0;
-  height: $progress-bar-height;
 }
 
 .btnDownloadIconTop {
