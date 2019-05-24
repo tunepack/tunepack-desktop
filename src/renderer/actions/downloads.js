@@ -7,6 +7,7 @@ export const DOWNLOAD_REQUEST = createRequestTypes('@downloads/DOWNLOAD_REQUEST'
 export const ON_DOWNLOAD_PROGRESS = '@downloads/ON_DOWNLOAD_PROGRESS'
 export const ON_DOWNLOAD_ERROR = '@downloads/ON_DOWNLOAD_ERROR'
 export const ON_DOWNLOAD_COMPLETE = '@downloads/ON_DOWNLOAD_COMPLETE'
+export const ON_DOWNLOAD_SPEED = '@downloads/ON_DOWNLOAD_SPEED'
 
 export const constants = {
   DOWNLOAD,
@@ -15,7 +16,8 @@ export const constants = {
   SEARCH_REQUEST,
   ON_DOWNLOAD_PROGRESS,
   ON_DOWNLOAD_ERROR,
-  ON_DOWNLOAD_COMPLETE
+  ON_DOWNLOAD_COMPLETE,
+  ON_DOWNLOAD_SPEED
 }
 
 export const download = createAction(DOWNLOAD)
@@ -25,6 +27,7 @@ export const searchRequest = createRequestAction(SEARCH_REQUEST)
 export const onDownloadProgress = createAction(ON_DOWNLOAD_PROGRESS)
 export const onDownloadError = createAction(ON_DOWNLOAD_ERROR)
 export const onDownloadComplete = createAction(ON_DOWNLOAD_COMPLETE)
+export const onDownloadSpeed = createAction(ON_DOWNLOAD_SPEED)
 
 export default {
   download,
@@ -33,5 +36,6 @@ export default {
   searchRequest,
   onDownloadProgress,
   onDownloadError,
-  onDownloadComplete
+  onDownloadComplete,
+  onDownloadSpeed
 }

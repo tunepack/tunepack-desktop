@@ -52,12 +52,25 @@ $progress-bar-width: 65px;
   margin-left: auto;
 }
 
+.downloading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .progress {
   height: $progress-bar-height;
   background-color: $color-subtext;
   border-radius: $progress-bar-height;
   width: $progress-bar-width;
   position: relative;
+  margin-bottom: 5px;
+}
+
+.speed {
+  font-size: 10px;
+  color: $color-subtext;
 }
 
 .progressIndicator {

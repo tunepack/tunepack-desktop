@@ -33,6 +33,9 @@ export const configureStore = (initialState = {}) => {
     [Channel.DOWNLOAD_PROGRESS]: (event, args) => {
       return downloadActions.onDownloadProgress(args)
     },
+    [Channel.DOWNLOAD_SPEED]: (event, args) => {
+      return downloadActions.onDownloadSpeed(args)
+    },
     [Channel.DOWNLOAD_COMPLETE]: (event, args) => {
       return downloadActions.onDownloadComplete(args)
     },

@@ -1,9 +1,10 @@
 import React from 'react'
 import Button from 'components/Button/Button'
 import { shell } from 'electron'
-import styles from '../../SearchResult.scss'
+import styles from '../SearchResult/SearchResult.scss'
 import Icon from 'components/Icon/Icon'
 import DownloadCloud from 'icons/DownloadCloud.svg'
+import prettyBytes from 'pretty-bytes'
 
 export default React.memo(({
   onDownloadClick,
@@ -22,13 +23,26 @@ export default React.memo(({
   }
 
   if (download?.get('isDownloading')) {
+    const avgSpeed = download.get('avgSpeed')
+
     return (
-      <div className={styles.progress}>
-        <div
-          style={{
-            width: `${download.get('progress')}%`
-          }}
-          className={styles.progressIndicator} />
+      <div className={styles.downloading}>
+        <div className={styles.progress}>
+          <div
+            style={{
+              width: `${download.get('progress')}%`
+            }}
+            className={styles.progressIndicator} />
+        </div>
+        {avgSpeed ? (
+          <div className={styles.speed}>
+            {prettyBytes(avgSpeed)}/s
+          </div>
+        ) : (
+          <div className={styles.speed}>
+            starting...
+          </div>
+        )}
       </div>
     )
   }

@@ -6,8 +6,10 @@ const { createSendAndWait } = require('../utils/handlers')
 const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
+const StreamSpeed = require('streamspeed')
 
-const PROGRESS_INTERVAL = 500
+const PROGRESS_INTERVAL = 150
+const SPEED_INTERVAL = 100
 
 const getErrorMessage = () => {
   return 'Something has gone wrong.'
@@ -16,7 +18,8 @@ const getErrorMessage = () => {
 const downloadTrack = async ({
   downloadPath,
   track,
-  onProgress
+  onProgress,
+  onSpeed
 }) => {
   return new Promise(async (resolve, reject) => {
     const writeStream = fs.createWriteStream(downloadPath)
@@ -26,6 +29,16 @@ const downloadTrack = async ({
 
     const downloadStream = await slsk.downloadStream({
       file: track
+    })
+
+    const throttledOnSpeed = _.throttle((speed, avgSpeed) => {
+      onSpeed(avgSpeed)
+    }, SPEED_INTERVAL)
+
+    let ss = new StreamSpeed()
+    ss.add(downloadStream)
+    ss.on('speed', (speed, avgSpeed) => {
+      throttledOnSpeed(speed, avgSpeed)
     })
 
     const throttledOnProgress = _.throttle(() => {
@@ -69,6 +82,17 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
     })
   }
 
+  const handleSpeed = avgSpeed => {
+    settings.updateDownloadHistoryEntry(track.id, {
+      avgSpeed
+    })
+
+    event.reply(Channel.DOWNLOAD_SPEED, {
+      track,
+      avgSpeed
+    })
+  }
+
   try {
     settings.addToDownloadHistory({
       track,
@@ -81,11 +105,8 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
     const downloadRes = await downloadTrack({
       downloadPath,
       track,
-      onProgress: handleProgress
-    })
-
-    settings.updateDownloadHistoryEntry(track.file, {
-      isDownloaded: true
+      onProgress: handleProgress,
+      onSpeed: handleSpeed
     })
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
@@ -96,13 +117,6 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
     return downloadRes
   } catch (error) {
     const errorMessage = getErrorMessage(error)
-
-    settings.updateDownloadHistoryEntry(track.file, {
-      isDownloading: false,
-      isDownloaded: false,
-      hasError: true,
-      errorMessage
-    })
 
     event.reply(Channel.DOWNLOAD_ERROR, {
       track,

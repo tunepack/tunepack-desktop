@@ -69,9 +69,6 @@ const schema = {
         track: {
           type: 'object',
           properties: {
-            bitrate: {
-              type: 'number'
-            },
             file: {
               type: 'string'
             },

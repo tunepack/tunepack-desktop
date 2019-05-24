@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './SearchResult.scss'
 import MetaPill from 'components/MetaPill/MetaPill'
-import SearchResultControls from './components/SearchResultControls/SearchResultControls'
+import SearchResultControls from '../SearchResultControls/SearchResultControls'
 import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 
