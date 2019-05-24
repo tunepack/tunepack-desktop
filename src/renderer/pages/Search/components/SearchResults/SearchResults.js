@@ -6,6 +6,19 @@ import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
 export default class SearchResults extends React.Component {
+  renderRow = ({ index, style }) => {
+    const { searchResults, onDownloadClick } = this.props
+    const track = searchResults.get(index)
+
+    return (
+      <SearchResult
+        index={index}
+        style={style}
+        track={track}
+        onDownloadClick={onDownloadClick} />
+    )
+  }
+
   render () {
     const {
       isSearching,
@@ -30,19 +43,6 @@ export default class SearchResults extends React.Component {
       )
     }
 
-    const Row = ({ index, style }) => {
-      const { searchResults, onDownloadClick } = this.props
-      const track = searchResults.get(index)
-
-      return (
-        <SearchResult
-          index={index}
-          style={style}
-          track={track}
-          onDownloadClick={onDownloadClick} />
-      )
-    }
-
     return (
       <div className={styles.results}>
         <AutoSizer>
@@ -53,7 +53,7 @@ export default class SearchResults extends React.Component {
                 width={width}
                 itemCount={searchResultsCount}
                 itemSize={100}>
-                {Row}
+                {this.renderRow}
               </List>
             )
           }}
