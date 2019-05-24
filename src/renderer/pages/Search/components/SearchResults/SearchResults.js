@@ -49,6 +49,7 @@ export default class SearchResults extends React.Component {
           {({ height, width }) => {
             return (
               <List
+                className={styles.list}
                 height={height}
                 width={width}
                 itemCount={searchResultsCount}

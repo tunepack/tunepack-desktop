@@ -1,6 +1,7 @@
 @import 'base.scss';
 
 $search-form-height: 80px;
+$scrollbar-width: 8px;
 
 .loader,
 .empty {
@@ -20,7 +21,22 @@ $search-form-height: 80px;
 
 .results {
   height: unquote("calc(100vh - #{$header-height + $nav-height + $search-form-height + $side-padding})");
+  margin: 0 $side-padding;
+}
+
+.list {
   border: 1px solid $color-border;
   border-radius: 5px;
-  margin: 0 $side-padding;
+
+  &::-webkit-scrollbar {
+    background: darken(white, 4%);
+    border-left: 1px solid $color-border;
+    width: $scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-thumb:window-inactive,
+  &::-webkit-scrollbar-thumb {
+    background: darken($color-border, 20%);
+    border-radius: $scrollbar-width / 2;
+  }
 }
