@@ -5,10 +5,12 @@
   transition: background-color 120ms ease;
   padding: 2px 4px;
   border-radius: 2px;
-  color: white;
-  background-color: $color-subtext;
+  color: darken($color-subtext, 15%);
+  background-color: $color-border;
   font-size: 9px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
 
   &.primary {
     background-color: $color-primary;

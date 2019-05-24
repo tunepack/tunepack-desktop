@@ -49,12 +49,22 @@ $progress-bar-width: 65px;
   color: darken($color-subtext, 10%);
 }
 
-.metaData {
-  :global {
-    .meta-pill {
-      margin-right: .2em;
-    }
+.fileExtension {
+  &.mp3 {
+    color: $color-blue;
   }
+
+  &.flac {
+    color: $color-red;
+  }
+
+  &.wav {
+    color: $color-orange;
+  }
+}
+
+.badgeFileExtension {
+  margin-right: 5px;
 }
 
 .controls {

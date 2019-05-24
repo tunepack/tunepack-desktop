@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './SearchResult.scss'
-import MetaPill from 'components/MetaPill/MetaPill'
+import Badge from 'components/Badge/Badge'
 import SearchResultControls from '../SearchResultControls/SearchResultControls'
 import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
@@ -33,12 +33,17 @@ const SearchResult = ({
               {track.get('folderName')}
             </div>
             <div className={styles.metaData}>
-              <MetaPill>
-                {fileExtensionLabel}
-              </MetaPill>
-              <MetaPill>
+              <Badge className={styles.badgeFileExtension}>
+                <div
+                  className={cx(styles.fileExtension, {
+                    [styles[fileExtension]]: fileExtension
+                  })}>
+                  {fileExtensionLabel}
+                </div>
+              </Badge>
+              <Badge>
                 {track.get('fileSize')}
-              </MetaPill>
+              </Badge>
             </div>
           </div>
           <div className={styles.controls}>
