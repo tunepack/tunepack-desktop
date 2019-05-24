@@ -19,6 +19,10 @@ const schema = {
     type: 'string',
     default: defaultDownloadsFolder
   },
+  searchDuration: {
+    type: 'number',
+    default: 10000
+  },
   searchFileExtensions: {
     type: 'array',
     items: {
@@ -119,6 +123,10 @@ const setRendererSettings = ({
   return getRendererSettings()
 }
 
+const getSearchDuration = () => {
+  return config.get('searchDuration')
+}
+
 const setDownloadsDir = (downloadsDir) => {
   return config.set('downloadsDir', downloadsDir)
 }
@@ -170,11 +178,11 @@ const addToDownloadHistory = ({
   return newDownloadHistory
 }
 
-const updateDownloadHistoryEntry = (file, updateFields) => {
+const updateDownloadHistoryEntry = (id, updateFields) => {
   const downloadHistory = getDownloadHistory()
 
   const newDownloadHistory = downloadHistory.map(i => {
-    return i.track.file === file ? {
+    return i.track.id === id ? {
       ...i,
       ...updateFields
     } : i
@@ -193,5 +201,6 @@ module.exports = {
   getSoulseekPassword,
   addToDownloadHistory,
   updateDownloadHistoryEntry,
-  clear
+  clear,
+  getSearchDuration
 }

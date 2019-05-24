@@ -1,19 +1,107 @@
 const { createSendAndWait } = require('../utils/handlers')
 const Channel = require('../constants/Channel')
+const AudioFileExtension = require('../constants/AudioFileExtension')
 const slsk = require('../utils/slsk')
+const { getTrackId } = require('../utils/tracks')
+const prettyBytes = require('pretty-bytes')
+const fileExtension = require('file-extension')
+
+const getTrackFileExtension = (track) => {
+  return fileExtension(track.file)
+}
+
+const removeFileExtension = fileName => {
+  const lastDotPosition = fileName.lastIndexOf('.')
+
+  if (lastDotPosition === -1) {
+    return fileName
+  }
+
+  return fileName.substr(0, lastDotPosition)
+}
+
+const getFileName = (r, hasFileExtension = false) => {
+  const { file } = r
+  const match = file.match(/[^\\]+$/)
+  const fileName = match[0] ? match[0] : file
+
+  if (!hasFileExtension) {
+    return removeFileExtension(fileName)
+  }
+
+  return fileName
+}
+
+const getFolderName = (r) => {
+  const { file } = r
+  const [
+    fileName,
+    folderName
+  ] = file
+    .split('\\')
+    .reverse()
+
+  if (fileName) {
+    return folderName
+  }
+
+  return file
+}
+
+const settings = require('../utils/settings')
+
+const formatTrack = r => {
+  return {
+    ...r,
+    id: getTrackId(r),
+    fileSize: prettyBytes(r.size),
+    bitrate: r.bitrate || null,
+    fileExtension: getTrackFileExtension(r),
+    fileName: getFileName(r),
+    folderName: getFolderName(r)
+  }
+}
 
 createSendAndWait(Channel.SEARCH, async (event, args) => {
   const { query } = args
 
+  const {
+    searchFileExtensions,
+    searchHasOnlyHighBitrate
+  } = settings.getRendererSettings()
+
+  const searchDuration = settings.getSearchDuration()
+
   const searchRes = await slsk.search({
-    query
+    query,
+    duration: searchDuration
   })
 
-  const output = searchRes
-    .sort((a, b) => { return (a.size / a.speed) - (b.size / b.speed) })
-    .filter(r => { return r.slots })
+  let results = searchRes
+    .sort((a, b) => {
+      return (a.size / a.speed) - (b.size / b.speed)
+    })
+    .filter(r => {
+      return r.slots
+    })
+    .filter(r => {
+      return searchFileExtensions.includes(getTrackFileExtension(r))
+    })
+    .map((r) => { return formatTrack(r) })
+
+  if (searchHasOnlyHighBitrate) {
+    results = results.filter(r => {
+      const fileExtension = getTrackFileExtension(r)
+
+      if (fileExtension !== AudioFileExtension.MP3) {
+        return true
+      }
+
+      return r.bitrate === 320
+    })
+  }
 
   return {
-    results: output
+    results
   }
 })

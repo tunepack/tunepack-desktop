@@ -1,0 +1,26 @@
+@import 'base.scss';
+
+.loader,
+.empty {
+  height: unquote("calc(100vh - #{$header-height + $footer-height + 92px})");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty {
+  color: $color-subtext;
+}
+
+.loader {
+  font-size: 40px;
+}
+
+.results {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: unquote("calc(100vh - #{$header-height + $footer-height + 92px})");
+  margin: 0 $side-padding $side-padding $side-padding;
+  border: 1px solid $color-border;
+  border-radius: 5px;
+}

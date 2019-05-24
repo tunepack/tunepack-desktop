@@ -33,12 +33,15 @@ const connect = ({
 
 const search = ({
   query,
-  duration = 10000
+  duration,
+  onFound
 }) => {
   return new Promise((resolve, reject) => {
+    onFound && _client.on('found', onFound)
+
     _client.search({
       req: query,
-      duration
+      timeout: duration
     }, (error, res) => {
       if (error) {
         return reject(error)

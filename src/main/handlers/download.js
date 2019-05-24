@@ -54,20 +54,17 @@ const downloadTrack = async ({
   })
 }
 
-createSendAndWait(Channel.DOWNLOAD, async (event, {
-  track,
-  name
-}) => {
+createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   const downloadsDir = settings.getDownloadsDir()
-  const downloadPath = path.resolve(downloadsDir, name)
+  const downloadPath = path.resolve(downloadsDir, track.fileName)
 
   const handleProgress = progress => {
-    settings.updateDownloadHistoryEntry(track.file, {
+    settings.updateDownloadHistoryEntry(track.id, {
       progress: String(progress)
     })
 
     event.reply(Channel.DOWNLOAD_PROGRESS, {
-      file: track.file,
+      track,
       progress
     })
   }
@@ -84,7 +81,6 @@ createSendAndWait(Channel.DOWNLOAD, async (event, {
     const downloadRes = await downloadTrack({
       downloadPath,
       track,
-      name,
       onProgress: handleProgress
     })
 
@@ -93,7 +89,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, {
     })
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
-      file: track.file,
+      track,
       ...downloadRes
     })
 
@@ -109,7 +105,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, {
     })
 
     event.reply(Channel.DOWNLOAD_ERROR, {
-      file: track.file,
+      track,
       errorMessage
     })
 
