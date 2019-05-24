@@ -1,0 +1,67 @@
+@import 'base.scss';
+
+.hasError {
+  :global {
+    .react-select {
+      &__control {
+        border-color: $color-red !important;
+      }
+    }
+  }
+}
+
+.component {
+  position: relative;
+
+  :global {
+    .react-select {
+      &__control {
+        border-color: $color-border;
+        background-color: white;
+        min-width: 240px;
+        border-radius: $border-radius;
+
+        &--is-focused,
+        &:hover {
+          box-shadow: none;
+          border: 1px solid $color-primary !important;
+        }
+      }
+
+      &__menu {
+        border-radius: $border-radius;
+        box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.08);
+        border: 1px solid $color-border;
+        z-index: 5000 !important;
+      }
+
+
+      &__value-container {
+        padding: 9px;
+      }
+
+      &__placeholder {
+        color: $color-placeholder;
+      }
+
+      &__option {
+        cursor: pointer;
+        outline: 0;
+
+        &--is-selected {
+          // background-color: $color-primary !important;
+          color: white !important;
+        }
+
+        &:hover,
+        &--is-focused {
+          background-color: $color-primary-light-bg;
+        }
+      }
+
+      &__indicator-separator {
+        background-color: $color-border;
+      }
+    }
+  }
+}

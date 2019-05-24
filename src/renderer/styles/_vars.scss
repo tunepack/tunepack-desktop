@@ -12,6 +12,7 @@ $color-orange: #fa8231;
 // Color types
 $color-primary: $color-blue;
 $color-primary-darker: darken($color-blue, 5%);
+$color-primary-light-bg: lighten($color-blue, 25%);
 
 $color-secondary: $color-turquoise;
 $color-secondary-darker: darken($color-turquoise, 5%);

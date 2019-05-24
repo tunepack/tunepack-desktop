@@ -1,0 +1,117 @@
+@import 'base.scss';
+
+:global {
+  @import '~react-toggle/style';
+}
+
+.component {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  &.crucial {
+    :global {
+      .react-toggle--checked {
+        &:hover {
+          .react-toggle-track {
+            background-color: darken($color-red, 5%) !important;
+          }
+
+          .react-toggle-thumb {
+            border-color: darken($color-red, 5%) !important;
+          }
+        }
+
+        .react-toggle-track {
+          background-color: $color-red;
+        }
+
+        .react-toggle-thumb {
+          border-color: $color-red;
+        }
+      }
+    }
+
+    &.checked {
+      .label {
+        color: $color-red;
+      }
+    }
+  }
+
+  :global {
+    .react-toggle--checked {
+      &:hover {
+        .react-toggle-track {
+          background-color: darken($color-green, 5%) !important;
+        }
+
+        .react-toggle-thumb {
+          border-color: darken($color-green, 5%) !important;
+        }
+      }
+
+      .react-toggle-track {
+        background-color: $color-green;
+      }
+
+      .react-toggle-thumb {
+        border-color: $color-green;
+      }
+    }
+
+    .react-toggle {
+      &:hover {
+        .react-toggle-track {
+          background-color: darken($color-border, 5%);
+        }
+      }
+    }
+
+    .react-toggle-thumb {
+      border-color: darken($color-border, 5%);
+    }
+
+    .react-toggle-track {
+      background-color: $color-border;
+    }
+
+    .react-toggle--focus {
+      .react-toggle-thumb {
+        box-shadow: none;
+      }
+    }
+
+    .react-toggle-track-x,
+    .react-toggle-track-check {
+      display: none;
+    }
+
+    .react-toggle-thumb {
+      outline: 0;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.checked {
+  .label {
+    color: $color-green;
+  }
+}
+
+.error {
+  margin-top: 4px;
+
+  small {
+    color: $color-red;
+  }
+}
+
+.label {
+  transition: color 120ms ease-in-out;
+  color: $color-placeholder;
+  margin-left: 15px;
+  font-weight: 500;
+}

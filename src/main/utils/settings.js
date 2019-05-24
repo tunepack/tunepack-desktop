@@ -96,12 +96,14 @@ const getRendererSettings = () => {
   const downloadsDir = config.get('downloadsDir')
   const searchFileExtensions = config.get('searchFileExtensions')
   const searchHasOnlyHighBitrate = config.get('searchHasOnlyHighBitrate')
+  const searchDuration = config.get('searchDuration')
   const downloadHistory = config.get('downloadHistory')
 
   return {
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate,
+    searchDuration,
     downloadHistory
   }
 }
@@ -109,12 +111,14 @@ const getRendererSettings = () => {
 const setRendererSettings = ({
   downloadsDir,
   searchFileExtensions,
-  searchHasOnlyHighBitrate
+  searchHasOnlyHighBitrate,
+  searchDuration
 }) => {
   config.set({
     downloadsDir,
     searchFileExtensions,
-    searchHasOnlyHighBitrate
+    searchHasOnlyHighBitrate,
+    searchDuration
   })
 
   return getRendererSettings()

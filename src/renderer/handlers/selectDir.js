@@ -5,6 +5,10 @@ export default ({
   defaultPath
 }) => {
   return sendAndWait(Channel.SELECT_DIR, {
-    defaultPath
+    defaultPath,
+    properties: [
+      'openDirectory',
+      'createDirectory'
+    ]
   })
 }
