@@ -16,6 +16,7 @@ $btn-focus-ring-width: 3px;
   outline: 0;
   transition: box-shadow 120ms ease, background-color 180ms ease;
   font-size: 14px;
+  user-select: none;
 
   &:focus {
     box-shadow: 0 0 0 $btn-focus-ring-width rgba(0, 0, 0, .2);
