@@ -3,7 +3,7 @@ import View from 'components/View/View'
 import Title from 'components/Title/Title'
 import { connect } from 'react-redux'
 import ResultsList from 'components/ResultsList/ResultsList'
-import { getDownloadsList } from 'selectors/downloads'
+import { getDownloadsList } from 'selectors/downloadsList'
 
 const DownloadsView = React.memo(({
   items
