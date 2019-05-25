@@ -129,7 +129,7 @@ $progress-bar-width: 65px;
 
 .speed {
   font-size: 10px;
-  color: $color-subtext;
+  color: darken($color-subtext, 10%);
 }
 
 .btnDownloadIconTop {
