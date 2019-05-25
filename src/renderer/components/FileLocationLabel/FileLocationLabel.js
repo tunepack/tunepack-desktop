@@ -8,7 +8,8 @@ const FileLocationLabel = ({
   return (
     <div
       onClick={onClick}
-      className={styles.component}>
+      className={styles.component}
+    >
       {fileLocation}
     </div>
   )

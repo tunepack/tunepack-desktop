@@ -7,7 +7,8 @@ const Icon = ({ glyph, className }) => {
     <svg
       className={cx(styles.component, {
         [className]: className
-      })}>
+      })}
+    >
       <use xlinkHref={glyph} />
     </svg>
   )

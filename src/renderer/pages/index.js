@@ -14,15 +14,18 @@ export default () => {
         <Route
           exact
           path={Routes.SEARCH}
-          component={Search} />
+          component={Search}
+        />
         <Route
           exact
           path={Routes.SEARCH}
-          component={Search} />
+          component={Search}
+        />
         <Route
           exact
           path={Routes.SETTINGS}
-          component={Settings} />
+          component={Settings}
+        />
       </AnimatedSwitch>
     </Layout>
   )

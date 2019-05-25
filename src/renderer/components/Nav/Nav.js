@@ -14,7 +14,8 @@ const links = [{
   className: styles.linkSearch,
   icon: (
     <Icon className={styles.linkIcon}
-      glyph={IconSearch} />
+      glyph={IconSearch}
+    />
   )
 }, {
   label: 'Downloads',
@@ -22,7 +23,8 @@ const links = [{
   className: styles.linkDownloads,
   icon: (
     <Icon className={styles.linkIcon}
-      glyph={IconDownloadCloud} />
+      glyph={IconDownloadCloud}
+    />
   )
 }, {
   label: 'Settings',
@@ -30,7 +32,8 @@ const links = [{
   className: styles.linkSettings,
   icon: (
     <Icon className={styles.linkIcon}
-      glyph={IconCog} />
+      glyph={IconCog}
+    />
   )
 }]
 
@@ -54,7 +57,8 @@ const Nav = ({ location }) => {
     <div className={styles.component}>
       <div className={cx(styles.linksContainer, {
         [pathnameClass]: true
-      })}>
+      })}
+      >
         <div className={styles.links}>
           {links.map(link => {
             return (
@@ -63,7 +67,8 @@ const Nav = ({ location }) => {
                 key={link.to}
                 to={link.to}
                 className={cx(styles.link, link.className)}
-                activeClassName={styles.linkActive}>
+                activeClassName={styles.linkActive}
+              >
                 <div className={styles.linkIcon}>
                   {link.icon}
                 </div>

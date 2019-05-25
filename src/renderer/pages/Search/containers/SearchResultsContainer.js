@@ -17,7 +17,8 @@ const SearchResultsContainer = React.memo(({
     <SearchResults
       onDownloadClick={handleSearchResultClick}
       isSearching={isSearching}
-      searchResults={searchResults} />
+      searchResults={searchResults}
+    />
   )
 })
 

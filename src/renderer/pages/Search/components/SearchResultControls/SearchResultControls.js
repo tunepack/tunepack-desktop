@@ -16,7 +16,8 @@ export default React.memo(({
         onClick={() => {
           shell.openItem(download.get('downloadPath'))
         }}
-        variant='minimal'>
+        variant='minimal'
+      >
         Open
       </Button>
     )
@@ -32,7 +33,8 @@ export default React.memo(({
             style={{
               width: `${download.get('progress')}%`
             }}
-            className={styles.progressIndicator} />
+            className={styles.progressIndicator}
+          />
         </div>
         {avgSpeed ? (
           <div className={styles.speed}>
@@ -54,8 +56,10 @@ export default React.memo(({
       iconTop={(
         <Icon
           className={styles.btnDownloadIconTop}
-          glyph={DownloadCloud} />
-      )}>
+          glyph={DownloadCloud}
+        />
+      )}
+    >
       download
     </Button>
   )

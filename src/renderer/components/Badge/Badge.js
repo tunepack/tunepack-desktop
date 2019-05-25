@@ -12,7 +12,8 @@ const Badge = ({
       className={cx(styles.component, {
         [styles[variant]]: variant,
         [className]: className
-      })}>
+      })}
+    >
       {children}
     </div>
   )

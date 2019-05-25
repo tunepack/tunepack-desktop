@@ -32,7 +32,8 @@ const SearchForm = React.memo(({
         field={{
           value: searchQuery,
           onChange: handleChange
-        }} />
+        }}
+      />
     </form>
   )
 })

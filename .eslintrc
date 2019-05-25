@@ -24,10 +24,6 @@
     "no-console": [
       "error"
     ],
-    "arrow-body-style": [
-      "error",
-      "always"
-    ],
     "object-curly-spacing": [
       "error",
       "always"
@@ -51,6 +47,10 @@
         "afterOpening": "never",
         "beforeClosing": "allow"
       }
+    ],
+    "react/jsx-closing-bracket-location": [
+      1,
+      "tag-aligned"
     ],
     "react-hooks/rules-of-hooks": "error",
     "react/prop-types": [0]

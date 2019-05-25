@@ -54,7 +54,8 @@ const Select = ({
     <div
       className={cx(styles.component, {
         [styles.hasError]: hasTouched && hasError
-      })}>
+      })}
+    >
       <ReactSelect
         classNamePrefix='react-select'
         name={name}
@@ -69,7 +70,8 @@ const Select = ({
           field,
           submitOnChange
         })}
-        {...props} />
+        {...props}
+      />
     </div>
   )
 }

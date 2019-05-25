@@ -26,12 +26,14 @@ const Toggle = ({
       className={cx(styles.component, {
         [styles.crucial]: crucial,
         [styles.checked]: value
-      })}>
+      })}
+    >
       <ReactToggle
         icons={false}
         className={styles.toggle}
         defaultChecked={value}
-        onChange={handleChange} />
+        onChange={handleChange}
+      />
     </label>
   )
 }

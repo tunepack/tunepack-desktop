@@ -22,7 +22,8 @@ const Button = ({
         [styles[`size-${size}`]]: size,
         [className]: className
       })}
-      {...props}>
+      {...props}
+    >
       <div className={styles.content}>
         {iconBefore && (
           <div className={styles.iconBefore}>

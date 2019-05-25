@@ -38,7 +38,8 @@ const SettingsForm = (props) => {
             helper='Enable this if you only want to show 320kbps mp3s in the search results'
             name='searchHasOnlyHighBitrate'
             label='Show high quality mp3 only'
-            component={Toggle} />
+            component={Toggle}
+          />
         </FormGroup>
         <FormGroup>
           <Field
@@ -49,7 +50,8 @@ const SettingsForm = (props) => {
             name='searchFileExtensions'
             label='Search file types'
             placeholder='Select your search file types'
-            component={Select} />
+            component={Select}
+          />
         </FormGroup>
         <FormGroup>
           <Field
@@ -60,7 +62,8 @@ const SettingsForm = (props) => {
             name='searchDurationInSeconds'
             label='Search duration (in seconds)'
             placeholder='Select search duration'
-            component={Input} />
+            component={Input}
+          />
         </FormGroup>
       </FormGroup>
     </Form>

@@ -35,7 +35,8 @@ const DownloadLocation = React.memo(({
       <Button
         type='button'
         onClick={handleClickFileLocation}
-        size='sm'>
+        size='sm'
+      >
         Change
       </Button>
     </FormGroup>

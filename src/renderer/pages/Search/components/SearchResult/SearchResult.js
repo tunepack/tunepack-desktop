@@ -22,7 +22,8 @@ const SearchResult = React.memo(({
       style={style}
       className={cx(styles.component, {
         [styles.isOdd]: index % 2
-      })}>
+      })}
+    >
       <div className={styles.content}>
         <div className={styles.info}>
           <div className={styles.infoPrimary}>
@@ -37,7 +38,8 @@ const SearchResult = React.memo(({
                 <div
                   className={cx(styles.fileExtension, {
                     [styles[fileExtension]]: fileExtension
-                  })}>
+                  })}
+                >
                   {fileExtensionLabel}
                 </div>
               </Badge>
@@ -49,7 +51,8 @@ const SearchResult = React.memo(({
           <div className={styles.controls}>
             <SearchResultControls
               onDownloadClick={() => { return onDownloadClick(track) }}
-              download={download} />
+              download={download}
+            />
           </div>
         </div>
       </div>

@@ -13,7 +13,8 @@ const SettingsView = () => {
             Settings
           </Title>
         </div>
-      )}>
+      )}
+    >
       <SettingsFormContainer />
     </View>
   )

@@ -12,7 +12,8 @@ const FormGroup = ({
       className={cx(styles.component, {
         [styles.parent]: parent,
         [className]: className
-      })}>
+      })}
+    >
       {children}
     </div>
   )

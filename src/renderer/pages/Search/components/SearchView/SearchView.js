@@ -8,7 +8,8 @@ export const SearchView = React.memo(() => {
     <View
       header={(
         <SearchFormContainer />
-      )}>
+      )}
+    >
       <SearchResultsContainer />
     </View>
   )

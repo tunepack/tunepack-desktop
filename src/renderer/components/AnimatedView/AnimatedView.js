@@ -9,7 +9,8 @@ const AnimatedView = ({
   return (
     <div
       style={style}
-      className={styles.component}>
+      className={styles.component}
+    >
       <Component {...props} />
     </div>
   )

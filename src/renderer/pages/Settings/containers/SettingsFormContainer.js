@@ -15,7 +15,8 @@ const SettingsFormContainer = React.memo(({
   return (
     <SettingsForm
       settings={settings}
-      onSubmit={handleSubmit} />
+      onSubmit={handleSubmit}
+    />
   )
 })
 

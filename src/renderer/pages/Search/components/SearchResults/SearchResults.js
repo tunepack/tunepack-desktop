@@ -16,7 +16,8 @@ const SearchResults = React.memo(({
         index={index}
         style={style}
         track={searchResults.get(index)}
-        onDownloadClick={onDownloadClick} />
+        onDownloadClick={onDownloadClick}
+      />
     )
   }
 
@@ -46,7 +47,8 @@ const SearchResults = React.memo(({
               height={height}
               width={width}
               itemCount={searchResultsCount}
-              itemSize={100}>
+              itemSize={100}
+            >
               {renderRow}
             </List>
           )

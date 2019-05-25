@@ -10,7 +10,8 @@ const Title = ({
     <h1
       className={cx(styles.component, {
         [className]: className
-      })}>
+      })}
+    >
       {children}
     </h1>
   )

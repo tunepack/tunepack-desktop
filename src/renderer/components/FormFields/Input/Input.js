@@ -22,7 +22,8 @@ const Input = ({
     <div
       className={cx({
         [styles.hasError]: hasTouched && hasError
-      })}>
+      })}
+    >
       <div className={styles.container}>
         <input
           {...field}
@@ -36,7 +37,8 @@ const Input = ({
               })
             }
           }}
-          className={cx(className, styles.input)} />
+          className={cx(className, styles.input)}
+        />
       </div>
     </div>
   )
