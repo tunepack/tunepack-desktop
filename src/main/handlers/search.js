@@ -5,6 +5,9 @@ const slsk = require('../utils/slsk')
 const { getTrackId } = require('../utils/tracks')
 const prettyBytes = require('pretty-bytes')
 const fileExtension = require('file-extension')
+const _ = require('lodash')
+
+const FOUND_INTERVAL = 16
 
 const getTrackFileExtension = (track) => {
   return fileExtension(track.file)
@@ -79,9 +82,24 @@ createSendAndWait(Channel.SEARCH, async (event, args) => {
 
   const searchDuration = settings.getSearchDuration()
 
+  let resultCount = 0
+
+  const throttledFound = _.throttle(track => {
+    event.reply(Channel.SEARCH_FOUND, {
+      track,
+      resultCount
+    })
+  }, FOUND_INTERVAL)
+
+  const handleFound = (track) => {
+    resultCount += 1
+    throttledFound(track)
+  }
+
   const searchRes = await slsk.search({
     query,
-    duration: searchDuration
+    duration: searchDuration,
+    onFound: handleFound
   })
 
   let results = searchRes

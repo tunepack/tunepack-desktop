@@ -41,6 +41,9 @@ export const configureStore = (initialState = {}) => {
     },
     [Channel.DOWNLOAD_ERROR]: (event, args) => {
       return downloadActions.onDownloadError(args)
+    },
+    [Channel.SEARCH_FOUND]: (event, args) => {
+      return downloadActions.onSearchFound(args)
     }
   })
 

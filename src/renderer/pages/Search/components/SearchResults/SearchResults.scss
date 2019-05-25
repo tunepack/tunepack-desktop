@@ -2,8 +2,7 @@
 
 $scrollbar-width: 8px;
 
-.loader,
-.empty {
+.loader {
   height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
   display: flex;
   align-items: center;
@@ -12,10 +11,6 @@ $scrollbar-width: 8px;
 
 .empty {
   color: $color-subtext;
-}
-
-.loader {
-  font-size: 40px;
 }
 
 .results {

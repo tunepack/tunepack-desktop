@@ -1,6 +1,6 @@
 import { createReducer } from 'utils/redux'
 import { fromJS } from 'immutable'
-import { SEARCH_REQUEST } from 'actions/downloads'
+import { SEARCH_REQUEST, ON_SEARCH_FOUND } from 'actions/downloads'
 import { SET_SEARCH_QUERY } from 'actions/search'
 
 let initialSearchResults = []
@@ -13,7 +13,9 @@ const initialState = fromJS({
   searchResults: initialSearchResults,
   searchQuery: '',
   isSearching: false,
-  error: null
+  error: null,
+  searchResultCount: 0,
+  searchResultLastFile: ''
 })
 
 export default createReducer(initialState, {
@@ -22,6 +24,8 @@ export default createReducer(initialState, {
       return state
         .set('isSearching', true)
         .set('error', null)
+        .set('searchResultCount', 0)
+        .set('searchResultLastFile', '')
     })
   },
   [SEARCH_REQUEST.SUCCESS]: (state, { payload: searchResults }) => {
@@ -41,5 +45,12 @@ export default createReducer(initialState, {
   [SET_SEARCH_QUERY]: (state, { payload: searchQuery }) => {
     return state
       .set('searchQuery', searchQuery)
+  },
+  [ON_SEARCH_FOUND]: (state, { payload: { track, resultCount } }) => {
+    return state.withMutations((state) => {
+      return state
+        .set('searchResultCount', resultCount)
+        .set('searchResultLastFile', track.file)
+    })
   }
 })

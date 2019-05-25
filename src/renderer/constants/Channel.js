@@ -1,5 +1,6 @@
 export const INITIALIZE = 'initialize'
 export const SEARCH = 'search'
+export const SEARCH_FOUND = `${SEARCH}:found`
 export const DOWNLOAD = 'download'
 export const DOWNLOAD_PROGRESS = `${DOWNLOAD}:progress`
 export const DOWNLOAD_SPEED = `${DOWNLOAD}:speed`

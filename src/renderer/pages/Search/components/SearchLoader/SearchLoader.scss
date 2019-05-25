@@ -1,0 +1,36 @@
+@import 'base.scss';
+
+.component {
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.spinner {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.content {
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.resultCount {
+  margin-bottom: 4px;
+}
+
+.latestTrackFile {
+  color: $color-subtext;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-width: 300px;
+}

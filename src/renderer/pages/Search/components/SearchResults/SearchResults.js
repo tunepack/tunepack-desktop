@@ -1,6 +1,6 @@
 import React from 'react'
-import Spinner from 'components/Spinner/Spinner'
 import SearchResult from '../SearchResult/SearchResult'
+import SearchLoader from '../SearchLoader/SearchLoader'
 import styles from './SearchResults.scss'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
@@ -22,9 +22,7 @@ const SearchResults = React.memo(({
 
   if (isSearching) {
     return (
-      <div className={styles.loader}>
-        <Spinner primary />
-      </div>
+      <SearchLoader />
     )
   }
 

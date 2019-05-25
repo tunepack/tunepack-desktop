@@ -9,3 +9,11 @@ export const getIsSearching = state => {
 export const getSearchQuery = state => {
   return state.search.get('searchQuery')
 }
+
+export const getSearchResultCount = state => {
+  return state.search.get('searchResultCount')
+}
+
+export const getSearchResultLastFile = state => {
+  return state.search.get('searchResultLastFile')
+}

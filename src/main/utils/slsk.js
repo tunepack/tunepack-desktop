@@ -37,7 +37,7 @@ const search = ({
   onFound
 }) => {
   return new Promise((resolve, reject) => {
-    onFound && _client.on('found', onFound)
+    onFound && _client.on(`found:${query}`, onFound)
 
     _client.search({
       req: query,

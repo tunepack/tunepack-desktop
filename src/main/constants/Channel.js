@@ -1,5 +1,6 @@
 const INITIALIZE = 'initialize'
 const SEARCH = 'search'
+const SEARCH_FOUND = `${SEARCH}:found`
 const DOWNLOAD = 'download'
 const DOWNLOAD_PROGRESS = `${DOWNLOAD}:progress`
 const DOWNLOAD_SPEED = `${DOWNLOAD}:speed`
@@ -11,6 +12,7 @@ const SET_SETTINGS = 'set-settings'
 module.exports = {
   INITIALIZE,
   SEARCH,
+  SEARCH_FOUND,
   DOWNLOAD,
   DOWNLOAD_PROGRESS,
   DOWNLOAD_SPEED,
