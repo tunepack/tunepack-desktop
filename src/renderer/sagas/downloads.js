@@ -18,7 +18,7 @@ export function * onDownload ({ payload: track }) {
   yield put(actions.downloadRequest.start())
 
   try {
-    const { settings } = yield call(handlers.download, track.toJS())
+    const { settings } = yield call(handlers.download, track.toObject())
     yield put(actions.downloadRequest.success(settings))
   } catch (error) {
     yield put(actions.downloadRequest.error(error))

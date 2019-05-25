@@ -1,20 +1,17 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
-import { Input, Field, FormGroup, FieldLabel, Select, Toggle } from 'components/FormFields'
-import Button from 'components/Button/Button'
-import { connect } from 'react-redux'
-import { getData as getSettings } from 'selectors/settings'
-import { selectDownloadDir, setSettings } from 'actions/settings'
-import FileLocationLabel from 'components/FileLocationLabel/FileLocationLabel'
+import { withFormik, Form } from 'formik'
+import { Input, Field, FormGroup, Select, Toggle } from 'components/FormFields'
+
 import * as AudioFileExtensions from 'constants/AudioFileExtension'
 import * as Yup from 'yup'
+import DownloadLocation from '../DownloadsLocation/DownloadsLocation'
 
 const validationSchema = Yup.object().shape({
   searchFileExtensions: Yup
     .array()
     .min(1, 'You need at least 1 file extension for searching')
     .required(),
-  searchDuration: Yup
+  searchDurationInSeconds: Yup
     .number()
     .min(3, 'You cannot search for less than 3 seconds, there would be no results otherwise')
     .max(60, 'You cannot search for longer than 60 seconds, it would take too long')
@@ -30,117 +27,71 @@ const fileExtensionOptions = Object
     }
   })
 
-const getInitialSearchFileExtensions = settings => {
-  const searchFileExtensions = settings.get('searchFileExtensions')
-
-  return searchFileExtensions.map(i => {
-    return {
-      label: i,
-      value: i
-    }
-  }).toArray()
-}
-
-const SettingsForm = ({
-  settings,
-  selectDownloadDir,
-  setSettings
-}) => {
-  const handleClickFileLocation = (e) => {
-    e.preventDefault()
-    selectDownloadDir()
-  }
-
-  const handleSubmit = (newSettings) => {
-    newSettings.searchFileExtensions = newSettings.searchFileExtensions.map(ext => { return ext.value })
-    newSettings.searchDuration = newSettings.searchDuration * 1000
-
-    setSettings(newSettings)
-  }
-
-  const searchFileExtensions = getInitialSearchFileExtensions(settings)
-
+const SettingsForm = (props) => {
   return (
-    <Formik
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      enableReinitialize
-      initialValues={{
-        downloadsDir: settings.get('downloadsDir'),
-        searchHasOnlyHighBitrate: settings.get('searchHasOnlyHighBitrate'),
-        searchFileExtensions,
-        searchDuration: (settings.get('searchDuration') / 1000)
-      }}
-      render={({ values }) => {
-        return (
-          <Form>
-            <FormGroup parent>
-              <FormGroup>
-                <FieldLabel>
-                  Download location
-                </FieldLabel>
-                <FileLocationLabel
-                  fileLocation={values.downloadsDir}
-                  onClick={handleClickFileLocation}
-                />
-              </FormGroup>
-              <Button
-                type='button'
-                onClick={handleClickFileLocation}
-                size='sm'>
-                Change
-              </Button>
-            </FormGroup>
-            <FormGroup parent>
-              <FormGroup>
-                <Field
-                  submitOnChange
-                  helper='Enable this if you only want to show 320kbps mp3s in the search results'
-                  name='searchHasOnlyHighBitrate'
-                  label='Show high quality mp3 only'
-                  component={Toggle} />
-              </FormGroup>
-              <FormGroup>
-                <Field
-                  submitOnChange
-                  isMulti
-                  isClearable={false}
-                  options={fileExtensionOptions}
-                  name='searchFileExtensions'
-                  label='Search file types'
-                  placeholder='Select your search file types'
-                  component={Select} />
-              </FormGroup>
-              <FormGroup>
-                <Field
-                  submitOnBlur
-                  min={1}
-                  max={25}
-                  type='number'
-                  name='searchDuration'
-                  label='Search duration (in seconds)'
-                  placeholder='Select search duration'
-                  component={Input} />
-              </FormGroup>
-            </FormGroup>
-          </Form>
-        )
-      }} />
+    <Form onSubmit={props.handleSubmit}>
+      <DownloadLocation />
+      <FormGroup parent>
+        <FormGroup>
+          <Field
+            submitOnChange
+            helper='Enable this if you only want to show 320kbps mp3s in the search results'
+            name='searchHasOnlyHighBitrate'
+            label='Show high quality mp3 only'
+            component={Toggle} />
+        </FormGroup>
+        <FormGroup>
+          <Field
+            submitOnChange
+            isMulti
+            isClearable={false}
+            options={fileExtensionOptions}
+            name='searchFileExtensions'
+            label='Search file types'
+            placeholder='Select your search file types'
+            component={Select} />
+        </FormGroup>
+        <FormGroup>
+          <Field
+            submitOnBlur
+            min={1}
+            max={25}
+            type='number'
+            name='searchDurationInSeconds'
+            label='Search duration (in seconds)'
+            placeholder='Select search duration'
+            component={Input} />
+        </FormGroup>
+      </FormGroup>
+    </Form>
   )
 }
 
-const mapStateToProps = state => {
+const mapPropsToValues = ({
+  settings
+}) => {
   return {
-    settings: getSettings(state)
+    searchHasOnlyHighBitrate: settings?.get('searchHasOnlyHighBitrate'),
+    searchFileExtensions: settings?.get('searchFileExtensions').toArray(),
+    searchDurationInSeconds: (settings?.get('searchDuration') / 1000)
   }
 }
 
-const mapActionsToProps = {
-  selectDownloadDir,
-  setSettings
+const mapValuesToSubmit = ({
+  searchDurationInSeconds,
+  ...values
+}) => {
+  return {
+    searchDuration: searchDurationInSeconds * 1000,
+    ...values
+  }
 }
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(SettingsForm)
+export default withFormik({
+  validationSchema,
+  mapPropsToValues,
+  displayName: 'SettingsForm',
+  handleSubmit: (values, { props }) => {
+    props.onSubmit(mapValuesToSubmit(values))
+  }
+})(SettingsForm)

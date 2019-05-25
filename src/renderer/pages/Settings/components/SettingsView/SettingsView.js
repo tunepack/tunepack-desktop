@@ -1,7 +1,7 @@
 import React from 'react'
 import View from 'components/View/View'
 import Title from 'components/Title/Title'
-import SettingsForm from '../SettingsForm/SettingsForm'
+import SettingsFormContainer from '../../containers/SettingsFormContainer'
 import styles from './SettingsView.scss'
 
 const SettingsView = () => {
@@ -14,7 +14,7 @@ const SettingsView = () => {
           </Title>
         </div>
       )}>
-      <SettingsForm />
+      <SettingsFormContainer />
     </View>
   )
 }

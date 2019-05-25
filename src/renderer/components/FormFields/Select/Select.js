@@ -3,36 +3,42 @@ import ReactSelect from 'react-select'
 import styles from './Select.scss'
 import cx from 'classnames'
 
-const getValueFromOptions = (options, value, isMulti) => {
-  if (isMulti && Array.isArray(value)) {
-    const isSelectedValue = !!value[0]?.value
-
-    if (isSelectedValue) {
-      return value
-    }
-
-    return value.map(v => { return options.find(o => { return o.value === v }) })
+const getValue = ({
+  isMulti,
+  options,
+  value
+}) => {
+  if (options) {
+    return isMulti
+      ? options.filter(option => { return value.indexOf(option.value) >= 0 })
+      : options.find(option => { return option.value === value })
   }
 
-  if (Array.isArray(value)) {
-    return value
-  }
+  return isMulti ? [] : ''
+}
 
-  for (const option of options) {
-    if (option.options) {
-      for (const nestedOption of option.options) {
-        if (nestedOption.value === value) {
-          return nestedOption
-        }
-      }
+const onChange = ({
+  isMulti,
+  form,
+  field,
+  submitOnChange
+}) => {
+  return option => {
+    const value = isMulti
+      ? option.map(item => { return item.value })
+      : option.value
+
+    form.setFieldValue(
+      field.name,
+      value
+    )
+
+    if (submitOnChange) {
+      setTimeout(() => {
+        form.submitForm()
+      })
     }
-
-    if (option.value === value) {
-      return option
-    }
   }
-
-  return null
 }
 
 const Select = ({
@@ -44,8 +50,6 @@ const Select = ({
   const hasTouched = !!form.touched[field.name]
   const hasError = !!form.errors[field.name]
 
-  field.value = getValueFromOptions(props.options, field.value, props.isMulti)
-
   return (
     <div
       className={cx(styles.component, {
@@ -54,20 +58,17 @@ const Select = ({
       <ReactSelect
         classNamePrefix='react-select'
         name={name}
-        value={field.value}
-        onChange={option => {
-          if (Array.isArray(option)) {
-            form.setFieldValue(field.name, option)
-          } else {
-            form.setFieldValue(field.name, option.value)
-          }
-
-          if (submitOnChange) {
-            setTimeout(() => {
-              form.submitForm()
-            })
-          }
-        }}
+        value={getValue({
+          options: props.options,
+          isMulti: props.isMulti,
+          value: field.value
+        })}
+        onChange={onChange({
+          isMulti: props.isMulti,
+          form,
+          field,
+          submitOnChange
+        })}
         {...props} />
     </div>
   )
