@@ -14,6 +14,17 @@ export function * onSearch ({ payload: query }) {
   }
 }
 
+export function * onSearchStop ({ payload: query }) {
+  yield put(actions.searchStopRequest.start())
+
+  try {
+    yield call(handlers.searchStop, query)
+    yield put(actions.searchStopRequest.success())
+  } catch (error) {
+    yield put(actions.searchStopRequest.error(error))
+  }
+}
+
 export function * onDownload ({ payload: track }) {
   yield put(actions.downloadRequest.start())
 
@@ -28,6 +39,7 @@ export function * onDownload ({ payload: track }) {
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.SEARCH, onSearch),
+    takeLatest(constants.SEARCH_STOP, onSearchStop),
     takeLatest(constants.DOWNLOAD, onDownload)
   ])
 }

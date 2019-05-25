@@ -136,6 +136,7 @@ $link-bg-padding: 10px;
   align-items: center;
   justify-content: center;
   color: $color-subtext;
+  font-family: inherit;
 
   &:last-child {
     border-right: 0;

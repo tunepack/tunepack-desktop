@@ -6,6 +6,7 @@ const { getTrackId } = require('../utils/tracks')
 const prettyBytes = require('pretty-bytes')
 const fileExtension = require('file-extension')
 const _ = require('lodash')
+const searches = require('../utils/searches')
 
 const FOUND_INTERVAL = 16
 
@@ -82,17 +83,25 @@ createSendAndWait(Channel.SEARCH, async (event, args) => {
 
   const searchDuration = settings.getSearchDuration()
 
-  let resultCount = 0
+  searches[query] = {
+    startedOn: ~new Date(),
+    resultCount: 0,
+    isDone: false,
+    results: []
+  }
 
   const throttledFound = _.throttle(track => {
+    const searchCache = searches[query]
+
     event.reply(Channel.SEARCH_FOUND, {
       track,
-      resultCount
+      resultCount: searchCache.resultCount
     })
   }, FOUND_INTERVAL)
 
   const handleFound = (track) => {
-    resultCount += 1
+    searches[query].resultCount++
+    searches[query].results.push(track)
     throttledFound(track)
   }
 
@@ -101,6 +110,8 @@ createSendAndWait(Channel.SEARCH, async (event, args) => {
     duration: searchDuration,
     onFound: handleFound
   })
+
+  searches[query].isDone = true
 
   let results = searchRes
     .sort((a, b) => {

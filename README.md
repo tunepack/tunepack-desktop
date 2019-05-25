@@ -44,3 +44,9 @@ Then run
 ```
 npm run package:ci
 ```
+
+Debugging soulseek:
+
+```
+DEBUG=slsk:* npm run dev
+```

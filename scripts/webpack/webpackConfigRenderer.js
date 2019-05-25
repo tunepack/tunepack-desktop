@@ -128,6 +128,18 @@ rules.push({
   ]
 })
 
+// ttf fonts
+rules.push({
+  test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+  use: {
+    loader: 'url-loader',
+    options: {
+      limit: 10000,
+      mimetype: 'application/octet-stream'
+    }
+  }
+})
+
 let plugins = [
   new HtmlWebpackPlugin({
     template: path.resolve(paths.rendererPath, 'index.html'),

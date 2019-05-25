@@ -6,6 +6,7 @@ import AnimatedSwitch from 'components/AnimatedSwitch/AnimatedSwitch'
 
 import Search from './Search'
 import Settings from './Settings'
+import Downloads from './Downloads'
 
 export default () => {
   return (
@@ -20,6 +21,11 @@ export default () => {
           exact
           path={Routes.SEARCH}
           component={Search}
+        />
+        <Route
+          exact
+          path={Routes.DOWNLOADS}
+          component={Downloads}
         />
         <Route
           exact
