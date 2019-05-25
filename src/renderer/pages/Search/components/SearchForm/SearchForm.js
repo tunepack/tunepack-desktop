@@ -25,7 +25,7 @@ const SearchForm = React.memo(({
   return (
     <form onSubmit={handleSubmit}>
       <Input
-        isClearable
+        isClearable={!isSearching}
         onClearClick={() => {
           onChange('')
         }}
