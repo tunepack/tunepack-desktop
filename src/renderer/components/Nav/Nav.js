@@ -4,8 +4,8 @@ import * as Routes from 'constants/Routes'
 import styles from './Nav.scss'
 import Icon from 'components/Icon/Icon'
 import IconSearch from 'icons/Search.svg'
-import IconDownloadCloud from 'icons/DownloadCloud.svg'
-import IconCog from 'icons/Cog.svg'
+import IconDownloadCloud from 'icons/DownloadCloudAlt.svg'
+import IconCog from 'icons/CogAlt.svg'
 import cx from 'classnames'
 
 const links = [{

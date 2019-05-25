@@ -1,13 +1,15 @@
 @import 'base.scss';
 
-$link-search-bg-transform: 180px - 12px;
-$link-search-width: 80px;
+$item-scale: 1.0;
 
-$link-downloads-bg-transform: 205px;
-$link-downloads-width: 105px;
+$link-search-bg-transform: 160px * $item-scale;
+$link-search-width: 80px * $item-scale;
 
-$link-settings-bg-transform: 258px + 7px;
-$link-settings-width: 87px;
+$link-downloads-bg-transform: 205px * $item-scale;
+$link-downloads-width: 105px * $item-scale;
+
+$link-settings-bg-transform: 265px * $item-scale;
+$link-settings-width: 87px * $item-scale;
 
 $link-bg-padding: 10px;
 
@@ -55,6 +57,10 @@ $link-bg-padding: 10px;
         width: auto !important;
       }
     }
+
+    .linkDownloads {
+      margin-left: 1em;
+    }
   }
 
   &.atDownloads {
@@ -87,17 +93,6 @@ $link-bg-padding: 10px;
 .linkLabel {
   width: 0;
   overflow: hidden;
-}
-
-.linkSearch {
-
-}
-
-.linkSettings {
-
-}
-
-.linkDownloads {
 }
 
 .links {
@@ -135,15 +130,16 @@ $link-bg-padding: 10px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: $color-subtext;
   font-family: inherit;
+  color: darken($color-subtext, 15%);
+  transition: color 200ms ease;
 
   &:last-child {
     border-right: 0;
   }
 
   &:hover {
-    color: darken($color-subtext, 20%);
+    color: darken($color-subtext, 25%);
   }
 
   &.linkActive {

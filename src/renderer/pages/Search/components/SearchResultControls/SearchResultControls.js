@@ -3,7 +3,7 @@ import Button from 'components/Button/Button'
 import { shell } from 'electron'
 import styles from '../SearchResult/SearchResult.scss'
 import Icon from 'components/Icon/Icon'
-import DownloadCloud from 'icons/DownloadCloud.svg'
+import DownloadCloud from 'icons/DownloadCloudAlt.svg'
 import prettyBytes from 'pretty-bytes'
 
 export default React.memo(({
