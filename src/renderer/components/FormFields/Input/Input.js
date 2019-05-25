@@ -28,7 +28,7 @@ const Input = ({
           {...field}
           {...props}
           onBlur={event => {
-            form.setFieldValue(field.name, event.target.value)
+            form?.setFieldValue && form.setFieldValue(field.name, event.target.value)
 
             if (submitOnBlur) {
               setTimeout(() => {
