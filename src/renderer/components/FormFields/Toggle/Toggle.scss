@@ -44,20 +44,20 @@
     .react-toggle--checked {
       &:hover {
         .react-toggle-track {
-          background-color: darken($color-green, 5%) !important;
+          background-color: darken($color-primary, 5%) !important;
         }
 
         .react-toggle-thumb {
-          border-color: darken($color-green, 5%) !important;
+          border-color: darken($color-primary, 5%) !important;
         }
       }
 
       .react-toggle-track {
-        background-color: $color-green;
+        background-color: $color-primary;
       }
 
       .react-toggle-thumb {
-        border-color: $color-green;
+        border-color: $color-primary;
       }
     }
 
