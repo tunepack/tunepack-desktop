@@ -9,8 +9,8 @@ export function * onSearch ({ payload: query }) {
     const { results } = yield call(handlers.search, query)
 
     yield put(actions.searchRequest.success(results))
-  } catch (error) {
-    yield put(actions.searchRequest.error(error))
+  } catch (res) {
+    yield put(actions.searchRequest.error(res.error))
   }
 }
 
@@ -20,8 +20,8 @@ export function * onSearchStop ({ payload: query }) {
   try {
     yield call(handlers.searchStop, query)
     yield put(actions.searchStopRequest.success())
-  } catch (error) {
-    yield put(actions.searchStopRequest.error(error))
+  } catch (res) {
+    yield put(actions.searchStopRequest.error(res.error))
   }
 }
 
@@ -31,8 +31,8 @@ export function * onDownload ({ payload: track }) {
   try {
     const { settings } = yield call(handlers.download, track.toObject())
     yield put(actions.downloadRequest.success(settings))
-  } catch (error) {
-    yield put(actions.downloadRequest.error(error))
+  } catch (res) {
+    yield put(actions.downloadRequest.error(res.error))
   }
 }
 

@@ -3,7 +3,9 @@ import actions, {
   constants,
   setSettings
 } from 'actions/settings'
-import { toggle as toggleLoadingScreen } from 'actions/loadingScreen'
+
+import { showLoading, showError } from 'actions/app'
+
 import handlers from 'handlers'
 import {
   getData as getSettings,
@@ -16,9 +18,11 @@ export function * onInitialize () {
   try {
     const { settings } = yield call(handlers.initialize)
     yield put(actions.initializeRequest.success(settings))
-    yield put(toggleLoadingScreen(false))
-  } catch (error) {
-    yield put(actions.initializeRequest.error(error))
+    yield put(showLoading(false))
+  } catch (res) {
+    yield put(showLoading(false))
+    yield put(showError(res.error))
+    yield put(actions.initializeRequest.error(res.error))
   }
 }
 

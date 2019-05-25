@@ -4,6 +4,7 @@ import searchStop from './searchStop'
 import download from './download'
 import selectDir from './selectDir'
 import setSettings from './setSettings'
+import reload from './reload'
 
 export default {
   initialize,
@@ -11,5 +12,6 @@ export default {
   searchStop,
   download,
   selectDir,
-  setSettings
+  setSettings,
+  reload
 }

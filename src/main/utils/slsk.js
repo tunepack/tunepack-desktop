@@ -13,13 +13,14 @@ let _client = null
 
 const connect = ({
   username: user,
-  password: pass
+  password: pass,
+  timeout
 }) => {
   return new Promise((resolve, reject) => {
     slsk.connect({
       user,
       pass,
-      timeout: 10000
+      timeout
     }, (error, client) => {
       if (error) {
         return reject(error)
@@ -76,11 +77,16 @@ const downloadStream = options => {
   })
 }
 
+const disconnect = () => {
+  slsk.disconnect()
+}
+
 module.exports = {
   connect,
   search,
   download,
   downloadStream,
   generateUsername,
-  generatePassword
+  generatePassword,
+  disconnect
 }
