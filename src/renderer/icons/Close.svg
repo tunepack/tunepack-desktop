@@ -1,0 +1,18 @@
+<svg width="12" height="12" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>close</title>
+  <desc>Created using Figma</desc>
+  <g id="Canvas" transform="translate(-321 -733)">
+    <g id="close">
+      <g id="Group">
+        <g id="Vector">
+          <use xlink:href="#path0_fill" transform="translate(321 733)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <path id="path0_fill"
+          d="M 1.58946e-07 10.9583L 1.04167 12L 6 7.04167L 10.9583 12L 12 10.9583L 7.04167 6L 12 1.04167L 10.9583 1.58946e-07L 6 4.95833L 1.04167 1.58946e-07L 1.58946e-07 1.04167L 4.95833 6L 1.58946e-07 10.9583Z"/>
+  </defs>
+</svg>

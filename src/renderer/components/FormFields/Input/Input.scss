@@ -19,3 +19,31 @@
     padding: .7em;
   }
 }
+
+.clearIconContainer {
+  background: none transparent;
+  position: absolute;
+  border: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  opacity: .3;
+  cursor: pointer;
+  outline: 0;
+  transition: opacity 200ms ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.clearIcon {
+  $size: 12px;
+  height: $size;
+  width: $size;
+}
