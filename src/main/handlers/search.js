@@ -62,6 +62,13 @@ const formatTrack = r => {
   }
 }
 
+const getUniqueArray = (array, key) => {
+  return array
+    .map(i => { return i[key] })
+    .map((e, i, final) => { return final.indexOf(e) === i && i })
+    .filter(e => { return array[e] }).map(e => { return array[e] })
+}
+
 createSendAndWait(Channel.SEARCH, async (event, args) => {
   const { query } = args
 
@@ -100,6 +107,8 @@ createSendAndWait(Channel.SEARCH, async (event, args) => {
       return r.bitrate === 320
     })
   }
+
+  results = getUniqueArray(results, 'id')
 
   return {
     results
