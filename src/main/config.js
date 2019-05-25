@@ -1,7 +1,5 @@
-const pkg = require('../../package')
-
 const APP_NAME = 'Tunepack'
-const APP_VERSION = pkg.version
+const APP_VERSION = '1.0.3'
 
 const stylingVariables = {
   WINDOW_WIDTH: '540px',
