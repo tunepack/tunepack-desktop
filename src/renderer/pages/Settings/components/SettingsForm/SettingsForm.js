@@ -97,7 +97,7 @@ const SettingsForm = ({
                   submitOnChange
                   helper='Enable this if you only want to show 320kbps mp3s in the search results'
                   name='searchHasOnlyHighBitrate'
-                  label='Search for high quality mp3 only'
+                  label='Show high quality mp3 only'
                   component={Toggle} />
               </FormGroup>
               <FormGroup>
