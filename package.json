@@ -1,7 +1,7 @@
 {
   "name": "tunepack-desktop",
   "productName": "Tunepack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A modern tool for finding and downloading high quality audio files",
   "scripts": {
     "build": "run-p build:main build:renderer",
@@ -9,7 +9,7 @@
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./scripts/webpack/webpackConfigRenderer.js",
     "build:electron": "cross-env NODE_ENV=development electron ./build/main.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts/webpack/webpackConfigRenderer.js",
-    "dev:main": "cross-env NODE_ENV=development electron -r @babel/register ./src/main/index.js",
+    "dev:main": "cross-env NODE_ENV=development electron --require @babel/register ./src/main/index.js",
     "package": "npm run build && electron-builder --publish never",
     "package:all": "npm run build && electron-builder build -mwl",
     "package:win": "npm run build && electron-builder build --win --x64",
@@ -97,6 +97,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.4.0",
     "core-js": "^3.1.2",
+    "debug": "^4.1.1",
     "electron-default-menu": "^1.0.1",
     "electron-store": "^3.2.0",
     "electron-window-state": "^5.0.3",

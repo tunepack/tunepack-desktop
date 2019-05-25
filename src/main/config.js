@@ -1,4 +1,7 @@
+const pkg = require('../../package')
+
 const APP_NAME = 'Tunepack'
+const APP_VERSION = pkg.version
 
 const stylingVariables = {
   WINDOW_WIDTH: '540px',
@@ -12,5 +15,6 @@ const stylingVariables = {
 
 module.exports = {
   stylingVariables,
-  APP_NAME
+  APP_NAME,
+  APP_VERSION
 }
