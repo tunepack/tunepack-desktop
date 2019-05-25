@@ -11,7 +11,8 @@ const ResultListItem = React.memo(({
   index,
   download,
   onDownloadClick,
-  style
+  style,
+  isDownloadsPage
 }) => {
   const fileExtension = track.get('fileExtension')
   const fileExtensionLabel = fileExtension === 'mp3'
@@ -50,6 +51,7 @@ const ResultListItem = React.memo(({
           </div>
           <div className={styles.controls}>
             <SearchResultControls
+              isDownloadsPage={isDownloadsPage}
               onDownloadClick={() => { return onDownloadClick(track) }}
               download={download}
             />

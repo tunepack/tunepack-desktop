@@ -6,7 +6,7 @@ export const getDownloadByTrackId = trackId => {
   return createSelector(
     getDownloads,
     (downloads) => {
-      return downloads.get(trackId)
+      return downloads.get(String(trackId))
     }
   )
 }

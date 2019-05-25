@@ -8,7 +8,8 @@ import { download } from 'actions/downloads'
 
 const ResultsList = React.memo(({
   items,
-  download
+  download,
+  isDownloadsPage = false
 }) => {
   const handleDownloadClick = (track) => {
     download(track)
@@ -17,6 +18,7 @@ const ResultsList = React.memo(({
   const renderRow = ({ index, style }) => {
     return (
       <ResultListItem
+        isDownloadsPage={isDownloadsPage}
         index={index}
         style={style}
         track={items.get(index)}

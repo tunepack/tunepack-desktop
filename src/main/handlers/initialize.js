@@ -11,7 +11,7 @@ createSendAndWait(Channel.INITIALIZE, async () => {
     await slsk.connect({
       username,
       password,
-      timeout: 2000
+      timeout: 10000
     })
   } catch (e) {
     const isNoConnectionError = e.message.includes('ENOTFOUND')

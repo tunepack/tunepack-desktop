@@ -17,6 +17,7 @@ const DownloadsView = React.memo(({
       )}
     >
       <ResultsList
+        isDownloadsPage
         items={items}
       />
     </View>

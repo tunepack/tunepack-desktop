@@ -1,5 +1,7 @@
 import { createReducer } from 'utils/redux'
-import { Map } from 'immutable'
+import { Map, fromJS } from 'immutable'
+
+import { INITIALIZE_REQUEST } from '../actions/settings'
 
 import {
   DOWNLOAD,
@@ -13,9 +15,24 @@ const initialState = Map({
   // This will be a hash map
 })
 
+const getInitialStateFromSettings = settings => {
+  const initialState = {}
+
+  const { downloadHistory } = settings
+
+  for (const download of downloadHistory) {
+    initialState[download.track.id] = download
+  }
+
+  return fromJS(initialState)
+}
+
 export default createReducer(initialState, {
+  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: settings }) => {
+    return getInitialStateFromSettings(settings)
+  },
   [DOWNLOAD]: (state, { payload: track }) => {
-    return state.set(track.get('id'), Map({
+    return state.set(String(track.get('id')), Map({
       track,
       isDownloading: true,
       isDownloaded: false,
@@ -28,7 +45,7 @@ export default createReducer(initialState, {
   [ON_DOWNLOAD_PROGRESS]: (state, { payload: { track, progress } }) => {
     return state.withMutations((state) => {
       const currentTrackState = state
-        .get(track.id)
+        .get(String(track.id))
         .set('progress', progress)
 
       return state.set(track.id, currentTrackState)
@@ -37,7 +54,7 @@ export default createReducer(initialState, {
   [ON_DOWNLOAD_SPEED]: (state, { payload: { track, avgSpeed } }) => {
     return state.withMutations((state) => {
       const currentTrackState = state
-        .get(track.id)
+        .get(String(track.id))
         .set('avgSpeed', avgSpeed)
 
       return state.set(track.id, currentTrackState)
@@ -46,7 +63,7 @@ export default createReducer(initialState, {
   [ON_DOWNLOAD_COMPLETE]: (state, { payload: { track, downloadPath } }) => {
     return state.withMutations((state) => {
       const currentTrackState = state
-        .get(track.id)
+        .get(String(track.id))
         .set('downloadPath', downloadPath)
         .set('isDownloading', false)
         .set('isDownloaded', true)
@@ -57,7 +74,7 @@ export default createReducer(initialState, {
   [ON_DOWNLOAD_ERROR]: (state, { payload: { track, error } }) => {
     return state.withMutations((state) => {
       const currentTrackState = state
-        .get(track.id)
+        .get(String(track.id))
         .set('error', error)
         .set('isDownloading', false)
 

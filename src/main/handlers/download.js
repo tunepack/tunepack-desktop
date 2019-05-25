@@ -110,7 +110,8 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
     })
 
     settings.updateDownloadHistoryEntry(track.id, {
-      isDownloading: false
+      isDownloading: false,
+      isDownloaded: true
     })
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
