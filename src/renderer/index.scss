@@ -1,16 +1,10 @@
 :global {
   @import '~sanitize.css/sanitize.css';
   @import '~sanitize.css/typography.css';
-  @import '~sanitize.css/forms.css';
 
   html {
     overflow-x: hidden;
     overflow-y: hidden;
+    font-size: 14px;
   }
-
-  //*, *::after, *::before {
-  //  -webkit-user-select: none;
-  //  -webkit-user-drag: none;
-  //  -webkit-app-region: no-drag;
-  //}
 }

@@ -1,5 +1,6 @@
 import { createReducer } from 'utils/redux'
 import { Map } from 'immutable'
+
 import {
   DOWNLOAD,
   ON_DOWNLOAD_PROGRESS,
@@ -8,7 +9,9 @@ import {
   ON_DOWNLOAD_SPEED
 } from 'actions/downloads'
 
-const initialState = Map({})
+const initialState = Map({
+  // This will be a hash map
+})
 
 export default createReducer(initialState, {
   [DOWNLOAD]: (state, { payload: track }) => {
@@ -23,34 +26,42 @@ export default createReducer(initialState, {
     }))
   },
   [ON_DOWNLOAD_PROGRESS]: (state, { payload: { track, progress } }) => {
-    const currentTrackState = state
-      .get(track.id)
-      .set('progress', progress)
+    return state.withMutations((state) => {
+      const currentTrackState = state
+        .get(track.id)
+        .set('progress', progress)
 
-    return state.set(track.id, currentTrackState)
+      return state.set(track.id, currentTrackState)
+    })
   },
   [ON_DOWNLOAD_SPEED]: (state, { payload: { track, avgSpeed } }) => {
-    const currentTrackState = state
-      .get(track.id)
-      .set('avgSpeed', avgSpeed)
+    return state.withMutations((state) => {
+      const currentTrackState = state
+        .get(track.id)
+        .set('avgSpeed', avgSpeed)
 
-    return state.set(track.id, currentTrackState)
+      return state.set(track.id, currentTrackState)
+    })
   },
   [ON_DOWNLOAD_COMPLETE]: (state, { payload: { track, downloadPath } }) => {
-    const currentTrackState = state
-      .get(track.id)
-      .set('downloadPath', downloadPath)
-      .set('isDownloading', false)
-      .set('isDownloaded', true)
+    return state.withMutations((state) => {
+      const currentTrackState = state
+        .get(track.id)
+        .set('downloadPath', downloadPath)
+        .set('isDownloading', false)
+        .set('isDownloaded', true)
 
-    return state.set(track.id, currentTrackState)
+      return state.set(track.id, currentTrackState)
+    })
   },
   [ON_DOWNLOAD_ERROR]: (state, { payload: { track, error } }) => {
-    const currentTrackState = state
-      .get(track.id)
-      .set('error', error)
-      .set('isDownloading', false)
+    return state.withMutations((state) => {
+      const currentTrackState = state
+        .get(track.id)
+        .set('error', error)
+        .set('isDownloading', false)
 
-    return state.set(track.id, currentTrackState)
+      return state.set(track.id, currentTrackState)
+    })
   }
 })

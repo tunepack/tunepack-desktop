@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Formik, Form } from 'formik'
 import { Input, Field, FormGroup, FieldLabel, Select, Toggle } from 'components/FormFields'
 import Button from 'components/Button/Button'
@@ -6,21 +6,19 @@ import { connect } from 'react-redux'
 import { getData as getSettings } from 'selectors/settings'
 import { selectDownloadDir, setSettings } from 'actions/settings'
 import FileLocationLabel from 'components/FileLocationLabel/FileLocationLabel'
-import LivingAlert from 'components/LivingAlert/LivingAlert'
 import * as AudioFileExtensions from 'constants/AudioFileExtension'
 import * as Yup from 'yup'
-import styles from './SettingsForm.scss'
 
 const validationSchema = Yup.object().shape({
   searchFileExtensions: Yup
     .array()
-    .min(1)
+    .min(1, 'You need at least 1 file extension for searching')
     .required(),
   searchDuration: Yup
     .number()
-    .min(5)
-    .max(25)
-    .required()
+    .min(3, 'You cannot search for less than 3 seconds, there would be no results otherwise')
+    .max(60, 'You cannot search for longer than 60 seconds, it would take too long')
+    .required('Search duration is required')
 })
 
 const fileExtensionOptions = Object
@@ -48,8 +46,6 @@ const SettingsForm = ({
   selectDownloadDir,
   setSettings
 }) => {
-  const [isSaved, setIsSaved] = useState(false)
-
   const handleClickFileLocation = (e) => {
     e.preventDefault()
     selectDownloadDir()
@@ -60,7 +56,6 @@ const SettingsForm = ({
     newSettings.searchDuration = newSettings.searchDuration * 1000
 
     setSettings(newSettings)
-    setIsSaved(true)
   }
 
   const searchFileExtensions = getInitialSearchFileExtensions(settings)
@@ -74,9 +69,9 @@ const SettingsForm = ({
         downloadsDir: settings.get('downloadsDir'),
         searchHasOnlyHighBitrate: settings.get('searchHasOnlyHighBitrate'),
         searchFileExtensions,
-        searchDuration: settings.get('searchDuration') / 1000
+        searchDuration: (settings.get('searchDuration') / 1000)
       }}
-      render={({ values, handleSubmit }) => {
+      render={({ values }) => {
         return (
           <Form>
             <FormGroup parent>
@@ -99,17 +94,18 @@ const SettingsForm = ({
             <FormGroup parent>
               <FormGroup>
                 <Field
-                  helper='When searching for mp3 files, do you only want to only display 320kbps?'
+                  submitOnChange
+                  helper='Enable this if you only want to show 320kbps mp3s in the search results'
                   name='searchHasOnlyHighBitrate'
                   label='Search for high quality mp3 only'
                   component={Toggle} />
               </FormGroup>
               <FormGroup>
                 <Field
+                  submitOnChange
                   isMulti
                   isClearable={false}
                   options={fileExtensionOptions}
-                  helper='What kind of file types do you want to search for?'
                   name='searchFileExtensions'
                   label='Search file types'
                   placeholder='Select your search file types'
@@ -117,29 +113,15 @@ const SettingsForm = ({
               </FormGroup>
               <FormGroup>
                 <Field
+                  submitOnBlur
                   min={1}
                   max={25}
                   type='number'
                   name='searchDuration'
-                  label='Search speed (in seconds)'
+                  label='Search duration (in seconds)'
                   placeholder='Select search duration'
                   component={Input} />
               </FormGroup>
-              <Button
-                type='submit'
-                onClick={handleSubmit}
-                size='sm'>
-                Save
-              </Button>
-              {isSaved && (
-                <LivingAlert
-                  onDestroy={() => {
-                    setIsSaved(false)
-                  }}
-                  className={styles.saveSuccess}>
-                  Settings saved
-                </LivingAlert>
-              )}
             </FormGroup>
           </Form>
         )

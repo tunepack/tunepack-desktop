@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 import cx from 'classnames'
 
-const SearchResult = ({
+const SearchResult = React.memo(({
   track,
   index,
   download,
@@ -55,7 +55,7 @@ const SearchResult = ({
       </div>
     </div>
   )
-}
+})
 
 const mapStateToProps = (state, ownProps) => {
   const trackId = ownProps.track.get('id')

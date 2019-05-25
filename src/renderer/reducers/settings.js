@@ -9,9 +9,11 @@ const initialState = fromJS({
 
 export default createReducer(initialState, {
   [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: data }) => {
-    return state
-      .set('isInitialized', true)
-      .set('data', fromJS(data))
+    return state.withMutations((state) => {
+      return state
+        .set('isInitialized', true)
+        .set('data', fromJS(data))
+    })
   },
   [SET_SETTINGS_REQUEST.SUCCESS]: (state, { payload: data }) => {
     return state

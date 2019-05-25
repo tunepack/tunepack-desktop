@@ -1,6 +1,7 @@
 import { createReducer } from 'utils/redux'
 import { fromJS } from 'immutable'
 import { SEARCH_REQUEST } from 'actions/downloads'
+import { SET_SEARCH_QUERY } from 'actions/search'
 
 let initialSearchResults = []
 
@@ -10,24 +11,35 @@ if (process.env.NODE_ENV === 'development') {
 
 const initialState = fromJS({
   searchResults: initialSearchResults,
+  searchQuery: '',
   isSearching: false,
   error: null
 })
 
 export default createReducer(initialState, {
   [SEARCH_REQUEST.START]: (state) => {
-    return state
-      .set('isSearching', true)
-      .set('error', null)
+    return state.withMutations((state) => {
+      return state
+        .set('isSearching', true)
+        .set('error', null)
+    })
   },
   [SEARCH_REQUEST.SUCCESS]: (state, { payload: searchResults }) => {
-    return state
-      .set('searchResults', fromJS(searchResults))
-      .set('isSearching', false)
+    return state.withMutations((state) => {
+      return state
+        .set('searchResults', fromJS(searchResults))
+        .set('isSearching', false)
+    })
   },
   [SEARCH_REQUEST.ERROR]: (state) => {
+    return state.withMutations((state) => {
+      return state
+        .set('isSearching', false)
+        .set('error', true)
+    })
+  },
+  [SET_SEARCH_QUERY]: (state, { payload: searchQuery }) => {
     return state
-      .set('isSearching', false)
-      .set('error', true)
+      .set('searchQuery', searchQuery)
   }
 })

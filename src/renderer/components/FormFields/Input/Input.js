@@ -7,6 +7,7 @@ const Input = ({
   field,
   form,
   className,
+  submitOnBlur,
   ...props
 }) => {
   const hasTouched = _.has(form?.touched, field.name)
@@ -26,6 +27,15 @@ const Input = ({
         <input
           {...field}
           {...props}
+          onBlur={event => {
+            form.setFieldValue(field.name, event.target.value)
+
+            if (submitOnBlur) {
+              setTimeout(() => {
+                form.submitForm()
+              })
+            }
+          }}
           className={cx(className, styles.input)} />
       </div>
     </div>

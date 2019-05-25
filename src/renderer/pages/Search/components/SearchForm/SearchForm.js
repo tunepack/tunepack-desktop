@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react'
-import { Form, Formik } from 'formik'
-import { Field, Input } from 'components/FormFields'
+import { Input } from 'components/FormFields'
 
-const SearchForm = ({
+const SearchForm = React.memo(({
+  onChange,
+  searchQuery,
+  isSearching,
   onSubmit
 }) => {
   const queryInputRef = useRef(null)
@@ -11,24 +13,28 @@ const SearchForm = ({
     queryInputRef.current.focus()
   }, [])
 
+  const handleChange = event => {
+    onChange(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    onSubmit()
+  }
+
   return (
-    <Formik
-      onSubmit={onSubmit}
-      initialValues={{
-        query: ''
-      }}
-      render={() => {
-        return (
-          <Form>
-            <Field
-              placeholder='Search track name, album, artist'
-              innerRef={queryInputRef}
-              name='query'
-              component={Input} />
-          </Form>
-        )
-      }} />
+    <form onSubmit={handleSubmit}>
+      <Input
+        innerRef={queryInputRef}
+        disabled={isSearching}
+        placeholder='Search by track name, album or artist...'
+        name='searchQuery'
+        field={{
+          value: searchQuery,
+          onChange: handleChange
+        }} />
+    </form>
   )
-}
+})
 
 export default SearchForm
