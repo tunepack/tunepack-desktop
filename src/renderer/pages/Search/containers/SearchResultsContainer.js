@@ -2,18 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getSearchResults, getIsSearching } from 'selectors/search'
 import ResultsList from 'components/ResultsList/ResultsList'
-import { download } from 'actions/downloads'
 import SearchLoader from '../components/SearchLoader/SearchLoader'
 
 const SearchResultsContainer = React.memo(({
   isSearching,
-  searchResults,
-  download
+  searchResults
 }) => {
-  const handleSearchResultClick = (track) => {
-    download(track)
-  }
-
   if (isSearching) {
     return (
       <SearchLoader />
@@ -21,11 +15,7 @@ const SearchResultsContainer = React.memo(({
   }
 
   return (
-    <ResultsList
-      onDownloadClick={handleSearchResultClick}
-      isSearching={isSearching}
-      searchResults={searchResults}
-    />
+    <ResultsList items={searchResults} />
   )
 })
 
@@ -36,9 +26,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapActionsToProps = {
-  download
-}
+const mapActionsToProps = null
 
 export default connect(
   mapStateToProps,

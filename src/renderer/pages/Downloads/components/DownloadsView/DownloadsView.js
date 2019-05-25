@@ -2,9 +2,12 @@ import React from 'react'
 import View from 'components/View/View'
 import Title from 'components/Title/Title'
 import { connect } from 'react-redux'
-import { getDownloads } from '../../../../selectors/downloads'
+import ResultsList from 'components/ResultsList/ResultsList'
+import { getDownloadsList } from 'selectors/downloads'
 
-const DownloadsView = () => {
+const DownloadsView = React.memo(({
+  items
+}) => {
   return (
     <View
       header={(
@@ -13,13 +16,15 @@ const DownloadsView = () => {
         </Title>
       )}
     >
-      Work in progress...
+      <ResultsList
+        items={items}
+      />
     </View>
   )
-}
+})
 
 const mapStateToProps = state => ({
-  downloads: getDownloads(state)
+  items: getDownloadsList(state)
 })
 
 export default connect(

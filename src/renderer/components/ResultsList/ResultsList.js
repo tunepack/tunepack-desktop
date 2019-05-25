@@ -1,27 +1,33 @@
 import React from 'react'
-import SearchResult from '../ResultListItem/ResultListItem'
+import ResultListItem from '../ResultListItem/ResultListItem'
 import styles from './ResultsList.scss'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { connect } from 'react-redux'
+import { download } from 'actions/downloads'
 
 const ResultsList = React.memo(({
-  searchResults,
-  onDownloadClick
+  items,
+  download
 }) => {
+  const handleDownloadClick = (track) => {
+    download(track)
+  }
+
   const renderRow = ({ index, style }) => {
     return (
-      <SearchResult
+      <ResultListItem
         index={index}
         style={style}
-        track={searchResults.get(index)}
-        onDownloadClick={onDownloadClick}
+        track={items.get(index)}
+        onDownloadClick={handleDownloadClick}
       />
     )
   }
 
-  const searchResultsCount = searchResults.count()
+  const itemsCount = items.count()
 
-  if (searchResultsCount === 0) {
+  if (itemsCount === 0) {
     return (
       <div className={styles.empty}>
         No results.
@@ -38,7 +44,7 @@ const ResultsList = React.memo(({
               className={styles.list}
               height={height}
               width={width}
-              itemCount={searchResultsCount}
+              itemCount={itemsCount}
               itemSize={100}
             >
               {renderRow}
@@ -50,4 +56,13 @@ const ResultsList = React.memo(({
   )
 })
 
-export default ResultsList
+const mapStateToProps = null
+
+const mapActionsToProps = {
+  download
+}
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(ResultsList)
