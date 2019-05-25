@@ -1,0 +1,143 @@
+@import 'base.scss';
+
+$progress-bar-height: 8px;
+$progress-bar-width: 65px;
+
+.component {
+  transition: background-color 120ms ease;
+  padding: $side-padding;
+  position: relative;
+  height: 100px;
+  display: flex;
+
+  &.isOdd {
+    background-color: darken(white, 1.5%);
+  }
+}
+
+.info {
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.infoPrimary {
+  max-width: 80%;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 100%;
+}
+
+.folderName {
+  margin-top: 3px;
+  font-size: 10px;
+  color: darken($color-subtext, 10%);
+}
+
+.fileExtension {
+  &.mp3 {
+    color: $color-blue;
+  }
+
+  &.flac {
+    color: $color-red;
+  }
+
+  &.wav {
+    color: $color-orange;
+  }
+}
+
+.badgeFileExtension {
+  margin-right: 5px;
+}
+
+.controls {
+  margin-left: auto;
+}
+
+.downloading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress {
+  height: $progress-bar-height;
+  border-radius: $progress-bar-height;
+  width: $progress-bar-width;
+  position: relative;
+  margin-bottom: 5px;
+  background-color: lighten($color-border, 2%);
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: $progress-bar-height;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    z-index: 10;
+    animation: progress 1200ms ease infinite;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(220,220,220,1) 50%, rgba(255,255,255,0) 100%);
+  }
+}
+
+.progressIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  border-radius: $progress-bar-height;
+  background-color: $color-primary;
+  transition: width 100ms ease;
+  width: 0;
+  height: $progress-bar-height;
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-$progress-bar-width);
+  }
+
+  100% {
+    transform: translateX($progress-bar-width);
+  }
+}
+
+.speed {
+  font-size: 10px;
+  color: darken($color-subtext, 10%);
+}
+
+.btnDownloadIconTop {
+  width: 18px;
+  height: 18px;
+}
+
+.btnDownloadedIconTop {
+  width: 18px;
+  height: 18px;
+}

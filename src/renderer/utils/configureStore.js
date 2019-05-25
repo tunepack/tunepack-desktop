@@ -5,13 +5,16 @@ import {
 } from 'redux'
 import { createHashHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
+import * as Channel from '../constants/Channel'
 
 import {
   routerMiddleware
 } from 'connected-react-router'
 
+import createIpc from 'redux-electron-ipc'
 import createRootReducer from 'reducers'
 import rootSaga from 'sagas'
+import downloadActions from 'actions/downloads'
 
 export const history = createHashHistory()
 
@@ -26,13 +29,32 @@ export const configureStore = (initialState = {}) => {
 
   const sagaMiddleware = createSagaMiddleware()
 
+  const ipcMiddleware = createIpc({
+    [Channel.DOWNLOAD_PROGRESS]: (event, args) => {
+      return downloadActions.onDownloadProgress(args)
+    },
+    [Channel.DOWNLOAD_SPEED]: (event, args) => {
+      return downloadActions.onDownloadSpeed(args)
+    },
+    [Channel.DOWNLOAD_COMPLETE]: (event, args) => {
+      return downloadActions.onDownloadComplete(args)
+    },
+    [Channel.DOWNLOAD_ERROR]: (event, args) => {
+      return downloadActions.onDownloadError(args)
+    },
+    [Channel.SEARCH_FOUND]: (event, args) => {
+      return downloadActions.onSearchFound(args)
+    }
+  })
+
   const store = createStore(
     rootReducer,
     initialState,
     compose(
       applyMiddleware(
         routerMiddleware(history),
-        sagaMiddleware
+        sagaMiddleware,
+        ipcMiddleware
       ),
       ...enhancers
     )

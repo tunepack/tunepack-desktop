@@ -1,14 +1,16 @@
 import React from 'react'
 import Header from 'components/Header/Header'
-import { getIsVisible as getIsLoadingScreenVisible } from 'selectors/loadingScreen'
-import { toggle as toggleLoadingScreen } from 'actions/loadingScreen'
+import Nav from 'components/Nav/Nav'
 import { connect } from 'react-redux'
 import LoadingScreen from 'components/LoadingScreen/LoadingScreen'
+import ErrorScreen from 'components/ErrorScreen/ErrorScreen'
 import {
   getIsInitialized
 } from 'selectors/settings'
+import styles from './Layout.scss'
+import { getIsLoading } from 'selectors/app'
 
-class Layout extends React.Component {
+class Layout extends React.PureComponent {
   get content () {
     const {
       isInitialized,
@@ -21,20 +23,27 @@ class Layout extends React.Component {
 
     return (
       <>
-        <Header />
         {children}
       </>
     )
   }
 
   render () {
-    const { isLoadingScreenVisible } = this.props
+    const {
+      isLoading
+    } = this.props
 
     return (
       <>
         <LoadingScreen
-          isVisible={isLoadingScreenVisible} />
-        {this.content}
+          isVisible={isLoading}
+        />
+        <ErrorScreen />
+        <Header />
+        <Nav />
+        <div className={styles.content}>
+          {this.content}
+        </div>
       </>
     )
   }
@@ -43,15 +52,10 @@ class Layout extends React.Component {
 const mapStateToProps = state => {
   return {
     isInitialized: getIsInitialized(state),
-    isLoadingScreenVisible: getIsLoadingScreenVisible(state)
+    isLoading: getIsLoading(state)
   }
 }
 
-const mapActionsToProps = {
-  toggleLoadingScreen
-}
-
 export default connect(
-  mapStateToProps,
-  mapActionsToProps
+  mapStateToProps
 )(Layout)

@@ -6,10 +6,13 @@ $color-green: #20bf6b;
 $color-red: #eb3b5a;
 $color-turquoise: #0fb9b1;
 $color-purple: #a55eea;
+$color-orange: #fa8231;
+
 
 // Color types
 $color-primary: $color-blue;
 $color-primary-darker: darken($color-blue, 5%);
+$color-primary-light-bg: lighten($color-blue, 25%);
 
 $color-secondary: $color-turquoise;
 $color-secondary-darker: darken($color-turquoise, 5%);
@@ -30,8 +33,14 @@ $color-placeholder: #9d9d9d;
 $color-body-bg: #fdfdfd;
 
 $gray-800: #353535;
-
 $header-height: get('HEADER_HEIGHT');
+$nav-height: get('NAV_HEIGHT');
 $window-height: get('WINDOW_HEIGHT');
 $window-width: get('WINDOW_WIDTH');
 $side-padding: get('SIDE_PADDING');
+$list-item-height: get('LIST_ITEM_HEIGHT');
+$view-header-height: get('VIEW_HEADER_HEIGHT');
+
+// config
+$nav-at-top: false;
+$border-radius: 5px;

@@ -44,3 +44,15 @@ Then run
 ```
 npm run package:ci
 ```
+
+Debugging:
+
+```
+DEBUG=tunepack:* npm run dev
+```
+
+Debugging soulseek:
+
+```
+DEBUG=slsk:* npm run dev
+```

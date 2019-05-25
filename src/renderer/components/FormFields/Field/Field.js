@@ -17,7 +17,8 @@ const Field = ({
 }) => {
   return (
     <div
-      className={styles.component}>
+      className={styles.component}
+    >
       {(!hideFieldLabel && label) && (
         <FieldLabel>
           {label}
@@ -32,7 +33,8 @@ const Field = ({
         <FormikField
           name={name}
           label={label}
-          {...props} />
+          {...props}
+        />
       </div>
       <FormikErrorMessage
         name={name}
@@ -42,7 +44,8 @@ const Field = ({
               <small>{error}</small>
             </div>
           )
-        }} />
+        }}
+      />
     </div>
   )
 }

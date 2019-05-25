@@ -4,13 +4,16 @@ import cx from 'classnames'
 
 const FormGroup = ({
   children,
-  className
+  className,
+  parent
 }) => {
   return (
     <div
       className={cx(styles.component, {
+        [styles.parent]: parent,
         [className]: className
-      })}>
+      })}
+    >
       {children}
     </div>
   )

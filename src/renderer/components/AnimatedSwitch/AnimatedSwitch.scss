@@ -1,0 +1,10 @@
+@import 'base.scss';
+
+.component {
+  position: relative;
+
+  > div {
+    position: absolute;
+    width: 100%;
+  }
+}

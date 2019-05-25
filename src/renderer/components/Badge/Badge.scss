@@ -1,0 +1,26 @@
+@import 'base.scss';
+
+.component {
+  display: inline-block;
+  transition: background-color 120ms ease;
+  padding: 2px 4px;
+  border-radius: 2px;
+  color: darken($color-subtext, 15%);
+  background-color: $color-border;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+
+  &.primary {
+    background-color: $color-primary;
+  }
+
+  &.secondary {
+    background-color: $color-turquoise;
+  }
+
+  &.success {
+    background-color: #778ca3;
+  }
+}

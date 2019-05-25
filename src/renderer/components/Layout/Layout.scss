@@ -1,0 +1,9 @@
+@import 'base.scss';
+
+.content {
+  @if $nav-at-top {
+    margin-top: $header-height + $nav-height;
+  } @else {
+    margin-top: $header-height;
+  }
+}

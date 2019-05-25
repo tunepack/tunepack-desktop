@@ -14,14 +14,14 @@ const createSendAndWait = (channel, handler) => {
         ...res
       })
     } catch (error) {
+      event.reply(responseChannel, {
+        success: false,
+        error: error.message || 'unknown-error'
+      })
+
       if (process.env.NODE_ENV === 'development') {
         throw error
       }
-
-      event.reply(responseChannel, {
-        success: false,
-        error
-      })
     }
   }
 

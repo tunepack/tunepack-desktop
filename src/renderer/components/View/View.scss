@@ -1,0 +1,17 @@
+@import 'base.scss';
+
+.header {
+  height: $view-header-height;
+  padding: $side-padding;
+  display: flex;
+  align-items: center;
+}
+
+.headerContent {
+  width: 100%;
+}
+
+.content {
+  padding: 0 $side-padding;
+  margin-bottom: $nav-height + $side-padding;
+}

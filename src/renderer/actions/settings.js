@@ -8,6 +8,7 @@ export const SELECT_DIR_REQUEST = createRequestTypes('@settings/SELECT_DIR_REQUE
 
 export const SET_SETTINGS = '@settings/SET_SETTINGS'
 export const SET_SETTINGS_REQUEST = createRequestTypes('@settings/SET_SETTINGS_REQUEST')
+export const SELECT_DOWNLOAD_DIR = '@settings/SELECT_DOWNLOAD_DIR'
 
 export const constants = {
   INITIALIZE,
@@ -15,7 +16,8 @@ export const constants = {
   SELECT_DIR,
   SELECT_DIR_REQUEST,
   SET_SETTINGS,
-  SET_SETTINGS_REQUEST
+  SET_SETTINGS_REQUEST,
+  SELECT_DOWNLOAD_DIR
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -27,11 +29,14 @@ export const selectDirRequest = createRequestAction(SELECT_DIR_REQUEST)
 export const setSettings = createAction(SET_SETTINGS)
 export const setSettingsRequest = createRequestAction(SET_SETTINGS_REQUEST)
 
+export const selectDownloadDir = createAction(SELECT_DOWNLOAD_DIR)
+
 export default {
   initialize,
   initializeRequest,
   selectDir,
   selectDirRequest,
   setSettings,
-  setSettingsRequest
+  setSettingsRequest,
+  selectDownloadDir
 }

@@ -2,6 +2,7 @@ const path = require('path')
 const { BrowserWindow } = require('electron')
 const windowStateManager = require('electron-window-state')
 const config = require('../config')
+const slsk = require('./slsk')
 
 let mainWindow = null
 
@@ -51,6 +52,7 @@ const initMainWindow = () => {
   })
 
   mainWindow.on('closed', () => {
+    slsk.disconnect()
     mainWindow = null
   })
 }

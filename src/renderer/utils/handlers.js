@@ -5,7 +5,7 @@ export const sendAndWait = (channel, args) => {
     const receiverChannel = `${channel}:ping`
     const responseChannel = `${channel}:pong`
 
-    ipcRenderer.on(responseChannel, (event, args) => {
+    ipcRenderer.once(responseChannel, (event, args) => {
       if (args.success === true) {
         return resolve(args)
       }

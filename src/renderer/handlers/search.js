@@ -1,7 +1,7 @@
 import { sendAndWait } from '../utils/handlers'
-import * as Channel from 'constants/channel'
+import * as Channel from 'constants/Channel'
 
-export default ({ query }) => {
+export default (query) => {
   return sendAndWait(Channel.SEARCH, {
     query
   })

@@ -7,6 +7,13 @@
   &:last-child {
     margin-bottom: 0;
   }
+
+  &.parent {
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    background-color: darken(white, 2%);
+    padding: $side-padding;
+  }
 }
 
 .isCentered {

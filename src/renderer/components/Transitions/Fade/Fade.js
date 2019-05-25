@@ -8,13 +8,15 @@ const Fade = ({ in: inProp, duration = 600, children }) => {
   return (
     <Transition
       in={inProp}
-      timeout={duration}>
+      timeout={duration}
+    >
       {state => {
         return (
           <div
             className={cx(styles.component, {
               [styles[`component--${state}`]]: state
-            })}>
+            })}
+          >
             {children}
           </div>
         )

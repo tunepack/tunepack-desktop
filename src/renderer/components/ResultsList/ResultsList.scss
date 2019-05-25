@@ -1,0 +1,35 @@
+@import 'base.scss';
+
+$scrollbar-width: 8px;
+
+.loader {
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty {
+  color: $color-subtext;
+}
+
+.results {
+  height: unquote("calc(100vh - #{$header-height + $nav-height + $view-header-height + $side-padding})");
+}
+
+.list {
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+
+  &::-webkit-scrollbar {
+    background: darken(white, 4%);
+    border-left: 1px solid $color-border;
+    width: $scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-thumb:window-inactive,
+  &::-webkit-scrollbar-thumb {
+    background: darken($color-border, 20%);
+    border-radius: $scrollbar-width / 2;
+  }
+}

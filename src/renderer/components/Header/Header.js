@@ -7,7 +7,8 @@ const Header = () => {
     <div className={styles.component}>
       <img
         className={styles.logo}
-        src={LogoSmall} />
+        src={LogoSmall}
+      />
     </div>
   )
 }

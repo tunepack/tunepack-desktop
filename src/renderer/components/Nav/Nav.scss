@@ -1,0 +1,160 @@
+@import 'base.scss';
+
+$item-scale: 1.0;
+
+$link-search-bg-transform: 160px * $item-scale;
+$link-search-width: 80px * $item-scale;
+
+$link-downloads-bg-transform: 205px * $item-scale;
+$link-downloads-width: 105px * $item-scale;
+
+$link-settings-bg-transform: 265px * $item-scale;
+$link-settings-width: 87px * $item-scale;
+
+$link-bg-padding: 10px;
+
+.component {
+  position: fixed;
+
+  @if $nav-at-top {
+    top: $header-height;
+  } @else {
+    bottom: 0;
+  }
+
+  left: 0;
+  right: 0;
+  height: $nav-height - 1px;
+
+  @if $nav-at-top {
+    border-bottom: 1px solid $color-border;
+  } @else {
+    border-top: 1px solid $color-border;
+  }
+
+  background-color: white;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  user-select: none;
+}
+
+.linksContainer {
+  position: relative;
+  width: 100%;
+  height: $nav-height;
+
+  &.atSearch {
+    .linkBackground {
+      transform: translateX($link-search-bg-transform);
+      width: $link-search-width + $link-bg-padding;
+    }
+
+    .linkSearch {
+      margin-right: 1em;
+
+      .linkLabel {
+        width: auto !important;
+      }
+    }
+
+    .linkDownloads {
+      margin-left: 1em;
+    }
+  }
+
+  &.atDownloads {
+    .linkBackground {
+      transform: translateX($link-downloads-bg-transform);
+      width: $link-downloads-width + $link-bg-padding;
+    }
+
+    .linkDownloads {
+      .linkLabel {
+        width: auto !important;
+      }
+    }
+  }
+
+  &.atSettings {
+    .linkBackground {
+      transform: translateX($link-settings-bg-transform);
+      width: $link-settings-width + $link-bg-padding;
+    }
+
+    .linkSettings {
+      .linkLabel {
+        width: auto !important;
+      }
+    }
+  }
+}
+
+.linkLabel {
+  width: 0;
+  overflow: hidden;
+}
+
+.links {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  height: $nav-height;
+}
+
+.linkBackground {
+  background-color: $gray-800;
+  width: 100px;
+  position: absolute;
+  top: 15px;
+  right: 0;
+  bottom: 15px;
+  left: 0;
+  z-index: 1;
+  border-radius: 50px;
+  transition: transform 300ms ease, width 200ms ease;
+  will-change: transform, width;
+}
+
+.link {
+  padding: 5px;
+  margin-right: 15px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  color: darken($color-subtext, 15%);
+  transition: color 200ms ease;
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &:hover {
+    color: darken($color-subtext, 25%);
+  }
+
+  &.linkActive {
+    color: white;
+  }
+}
+
+.linkLabel {
+  margin-left: 10px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.linkIcon {
+  $size: 16px;
+  width: $size;
+  height: $size;
+}

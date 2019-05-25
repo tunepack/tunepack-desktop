@@ -1,8 +1,11 @@
 @import 'base.scss';
 
 .component {
-  position: relative;
-  height: 40px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: $header-height;
   background-color: $gray-800;
   display: flex;
   align-items: center;
@@ -10,6 +13,7 @@
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: drag;
+  z-index: 9000;
 }
 
 .logo {

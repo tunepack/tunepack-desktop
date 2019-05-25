@@ -51,7 +51,8 @@ const LoadingScreen = ({
             ref={waveRef}
             className={cx(styles.wave, {
               [styles.waveIsVisible]: isWaveVisible
-            })} />
+            })}
+          />
         </div>
       </Fade>
     </div>

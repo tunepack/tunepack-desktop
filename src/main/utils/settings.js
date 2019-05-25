@@ -3,13 +3,14 @@ const slskUtils = require('./slsk')
 const { defaultDownloadsFolder } = require('./downloadsFolder')
 const AudioFileExtension = require('../constants/AudioFileExtension')
 const moment = require('moment-timezone')
+const config = require('../config')
+const debug = require('debug')('tunepack:settings')
 
 moment.tz.setDefault('UTC')
 
 const schema = {
-  isNew: {
-    type: 'boolean',
-    default: true
+  lastVersion: {
+    type: 'string'
   },
   soulseekUsername: {
     type: 'string',
@@ -22,6 +23,10 @@ const schema = {
   downloadsDir: {
     type: 'string',
     default: defaultDownloadsFolder
+  },
+  searchDuration: {
+    type: 'number',
+    default: 10000
   },
   searchFileExtensions: {
     type: 'array',
@@ -43,112 +48,87 @@ const schema = {
     default: [],
     type: 'array',
     items: {
-      type: 'object',
-      properties: {
-        createdAt: {
-          type: 'string'
-        },
-        downloadPath: {
-          type: 'string'
-        },
-        progress: {
-          type: 'string'
-        },
-        isDownloading: {
-          type: 'boolean'
-        },
-        isDownloaded: {
-          type: 'boolean'
-        },
-        hasError: {
-          type: 'boolean'
-        },
-        errorMessage: {
-          type: 'string'
-        },
-        track: {
-          type: 'object',
-          properties: {
-            bitrate: {
-              type: 'number'
-            },
-            file: {
-              type: 'string'
-            },
-            size: {
-              type: 'number'
-            },
-            speed: {
-              type: 'number'
-            },
-            user: {
-              type: 'string'
-            }
-          }
-        }
-      }
+      type: 'object'
     }
   }
 }
 
-const config = new Store({
+const settings = new Store({
   schema
 })
 
+const clear = () => {
+  debug(`Clearing settings`)
+  return settings.clear()
+}
+
+const lastVersion = settings.get('lastVersion')
+
+if (lastVersion === undefined) {
+  debug(`No last version in settings found`)
+  clear()
+  settings.set('lastVersion', config.APP_VERSION)
+} else if (lastVersion !== config.APP_VERSION) {
+  debug(`Old version ${lastVersion} found, current version is: ${config.APP_VERSION}`)
+  clear()
+}
+
+debug(`Settings loaded`, settings.get())
+
 const getRendererSettings = () => {
-  const isNew = config.get('isNew')
-  const downloadsDir = config.get('downloadsDir')
-  const searchFileExtensions = config.get('searchFileExtensions')
-  const searchHasOnlyHighBitrate = config.get('searchHasOnlyHighBitrate')
-  const downloadHistory = config.get('downloadHistory')
+  const downloadsDir = settings.get('downloadsDir')
+  const searchFileExtensions = settings.get('searchFileExtensions')
+  const searchHasOnlyHighBitrate = settings.get('searchHasOnlyHighBitrate')
+  const searchDuration = settings.get('searchDuration')
+  const downloadHistory = settings.get('downloadHistory')
 
   return {
-    isNew,
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate,
+    searchDuration,
     downloadHistory
   }
 }
 
 const setRendererSettings = ({
-  isNew,
   downloadsDir,
   searchFileExtensions,
-  searchHasOnlyHighBitrate
+  searchHasOnlyHighBitrate,
+  searchDuration
 }) => {
-  config.set({
-    isNew,
+  settings.set({
     downloadsDir,
     searchFileExtensions,
-    searchHasOnlyHighBitrate
+    searchHasOnlyHighBitrate,
+    searchDuration
   })
 
   return getRendererSettings()
 }
 
+const getSearchDuration = () => {
+  return settings.get('searchDuration')
+}
+
 const setDownloadsDir = (downloadsDir) => {
-  return config.set('downloadsDir', downloadsDir)
+  return settings.set('downloadsDir', downloadsDir)
 }
 
 const getDownloadsDir = () => {
-  return config.get('downloadsDir')
+  return settings.get('downloadsDir')
 }
 
 const getSoulseekUsername = (soulseekUsername) => {
-  return config.get('soulseekUsername', soulseekUsername)
+  return settings.get('soulseekUsername', soulseekUsername)
 }
 
 const getSoulseekPassword = (soulseekPassword) => {
-  return config.get('soulseekPassword', soulseekPassword)
+  return settings.get('soulseekPassword', soulseekPassword)
 }
 
 const getDownloadHistory = () => {
-  return config.get('downloadHistory')
-}
-
-const clear = () => {
-  return config.clear()
+  return settings.get('downloadHistory')
 }
 
 const addToDownloadHistory = ({
@@ -174,21 +154,21 @@ const addToDownloadHistory = ({
     }
   ]
 
-  config.set('downloadHistory', newDownloadHistory)
+  settings.set('downloadHistory', newDownloadHistory)
   return newDownloadHistory
 }
 
-const updateDownloadHistoryEntry = (file, updateFields) => {
+const updateDownloadHistoryEntry = (id, updateFields) => {
   const downloadHistory = getDownloadHistory()
 
   const newDownloadHistory = downloadHistory.map(i => {
-    return i.track.file === file ? {
+    return i.track.id === id ? {
       ...i,
       ...updateFields
     } : i
   })
 
-  config.set('downloadHistory', newDownloadHistory)
+  settings.set('downloadHistory', newDownloadHistory)
   return newDownloadHistory
 }
 
@@ -201,5 +181,6 @@ module.exports = {
   getSoulseekPassword,
   addToDownloadHistory,
   updateDownloadHistoryEntry,
-  clear
+  clear,
+  getSearchDuration
 }

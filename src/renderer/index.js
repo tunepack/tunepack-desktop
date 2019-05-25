@@ -16,7 +16,8 @@ function renderApp (RootComponent) {
     <AppContainer>
       <RootComponent
         history={history}
-        store={store} />
+        store={store}
+      />
     </AppContainer>,
     rootElement
   )
