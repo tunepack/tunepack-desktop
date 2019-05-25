@@ -1,6 +1,8 @@
 import React from 'react'
 import View from 'components/View/View'
 import Title from 'components/Title/Title'
+import { connect } from 'react-redux'
+import { getDownloads } from '../../../../selectors/downloads'
 
 const DownloadsView = () => {
   return (
@@ -16,4 +18,10 @@ const DownloadsView = () => {
   )
 }
 
-export default DownloadsView
+const mapStateToProps = state => ({
+  downloads: getDownloads(state)
+})
+
+export default connect(
+  mapStateToProps
+)(DownloadsView)

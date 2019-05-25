@@ -99,7 +99,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       downloadPath,
       isDownloading: true,
       isDownloaded: false,
-      hasError: false
+      error: ''
     })
 
     const downloadRes = await downloadTrack({
@@ -107,6 +107,10 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       track,
       onProgress: handleProgress,
       onSpeed: handleSpeed
+    })
+
+    settings.updateDownloadHistoryEntry(track.id, {
+      isDownloading: false
     })
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
@@ -117,6 +121,12 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
     return downloadRes
   } catch (error) {
     const errorMessage = getErrorMessage(error)
+
+    settings.updateDownloadHistoryEntry(track.id, {
+      isDownloading: false,
+      isDownloaded: false,
+      error: errorMessage
+    })
 
     event.reply(Channel.DOWNLOAD_ERROR, {
       track,

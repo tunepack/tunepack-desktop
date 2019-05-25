@@ -48,47 +48,7 @@ const schema = {
     default: [],
     type: 'array',
     items: {
-      type: 'object',
-      properties: {
-        createdAt: {
-          type: 'string'
-        },
-        downloadPath: {
-          type: 'string'
-        },
-        progress: {
-          type: 'string'
-        },
-        isDownloading: {
-          type: 'boolean'
-        },
-        isDownloaded: {
-          type: 'boolean'
-        },
-        hasError: {
-          type: 'boolean'
-        },
-        errorMessage: {
-          type: 'string'
-        },
-        track: {
-          type: 'object',
-          properties: {
-            file: {
-              type: 'string'
-            },
-            size: {
-              type: 'number'
-            },
-            speed: {
-              type: 'number'
-            },
-            user: {
-              type: 'string'
-            }
-          }
-        }
-      }
+      type: 'object'
     }
   }
 }
@@ -112,6 +72,8 @@ if (lastVersion === undefined) {
   debug(`Old version ${lastVersion} found, current version is: ${config.APP_VERSION}`)
   clear()
 }
+
+debug(`Settings loaded`, settings.get())
 
 const getRendererSettings = () => {
   const downloadsDir = settings.get('downloadsDir')

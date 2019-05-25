@@ -1,12 +1,10 @@
 import React from 'react'
-import SearchResult from '../SearchResult/SearchResult'
-import SearchLoader from '../SearchLoader/SearchLoader'
-import styles from './SearchResults.scss'
+import SearchResult from '../ResultListItem/ResultListItem'
+import styles from './ResultsList.scss'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
-const SearchResults = React.memo(({
-  isSearching,
+const ResultsList = React.memo(({
   searchResults,
   onDownloadClick
 }) => {
@@ -18,12 +16,6 @@ const SearchResults = React.memo(({
         track={searchResults.get(index)}
         onDownloadClick={onDownloadClick}
       />
-    )
-  }
-
-  if (isSearching) {
-    return (
-      <SearchLoader />
     )
   }
 
@@ -58,4 +50,4 @@ const SearchResults = React.memo(({
   )
 })
 
-export default SearchResults
+export default ResultsList

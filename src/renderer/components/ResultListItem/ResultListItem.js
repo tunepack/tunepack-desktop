@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from './SearchResult.scss'
+import styles from './ResultListItem.scss'
 import Badge from 'components/Badge/Badge'
-import SearchResultControls from '../SearchResultControls/SearchResultControls'
+import SearchResultControls from '../ResultListItemControls/ResultListItemControls'
 import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 import cx from 'classnames'
 
-const SearchResult = React.memo(({
+const ResultListItem = React.memo(({
   track,
   index,
   download,
@@ -73,4 +73,4 @@ const mapActionsToProps = null
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(SearchResult)
+)(ResultListItem)

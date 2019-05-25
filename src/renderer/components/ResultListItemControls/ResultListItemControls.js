@@ -1,10 +1,10 @@
 import React from 'react'
 import Button from 'components/Button/Button'
 import { shell } from 'electron'
-import styles from '../SearchResult/SearchResult.scss'
+import styles from '../ResultListItem/ResultListItem.scss'
 import Icon from 'components/Icon/Icon'
 import DownloadCloud from 'icons/DownloadCloudAlt.svg'
-import prettyBytes from 'pretty-bytes'
+import prettyBytes from 'pretty-bytes/index'
 
 export default React.memo(({
   onDownloadClick,
