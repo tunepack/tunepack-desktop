@@ -19,6 +19,11 @@ rules.push({
   }
 })
 
+rules.push({
+  test: /\.node$/,
+  use: 'node-loader'
+})
+
 const plugins = []
 
 plugins.push(
