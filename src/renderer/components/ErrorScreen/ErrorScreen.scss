@@ -34,6 +34,6 @@
   color: $color-red;
   font-size: 28px;
   font-weight: 700;
-  max-width: unquote("calc(100w - #{$side-padding})");
+  max-width: unquote("calc(100vw - #{$side-padding})");
   text-align: center;
 }
