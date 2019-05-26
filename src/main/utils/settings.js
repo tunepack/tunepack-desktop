@@ -5,61 +5,80 @@ const AudioFileExtension = require('../constants/AudioFileExtension')
 const moment = require('moment-timezone')
 const config = require('../config')
 const debug = require('debug')('tunepack:settings')
+const uuid = require('uuid/v1')
 
 moment.tz.setDefault('UTC')
 
-const schema = {
-  lastVersion: {
-    type: 'string'
-  },
-  soulseekUsername: {
-    type: 'string',
-    default: slskUtils.generateUsername()
-  },
-  soulseekPassword: {
-    type: 'string',
-    default: slskUtils.generatePassword()
-  },
-  downloadsDir: {
-    type: 'string',
-    default: defaultDownloadsFolder
-  },
-  searchDuration: {
-    type: 'number',
-    default: 10000
-  },
-  searchFileExtensions: {
-    type: 'array',
-    items: {
+// permaSettings are encrypted and never get cleared
+const permaSettings = new Store({
+  cwd: 'perma',
+  encryptionKey: 'snuffelposk323',
+  schema: {
+    uid: {
       type: 'string',
-      enum: Object.values(AudioFileExtension)
-    },
-    default: [
-      AudioFileExtension.MP3,
-      AudioFileExtension.WAV,
-      AudioFileExtension.FLAC
-    ]
-  },
-  searchHasOnlyHighBitrate: {
-    type: 'boolean',
-    default: true
-  },
-  downloadHistory: {
-    default: [],
-    type: 'array',
-    items: {
-      type: 'object'
+      default: uuid()
     }
   }
+})
+
+const getUid = () => {
+  return permaSettings.get('uid')
 }
 
 const settings = new Store({
-  schema
+  schema: {
+    lastVersion: {
+      type: 'string'
+    },
+    soulseekUsername: {
+      type: 'string',
+      default: slskUtils.generateUsername()
+    },
+    soulseekPassword: {
+      type: 'string',
+      default: slskUtils.generatePassword()
+    },
+    downloadsDir: {
+      type: 'string',
+      default: defaultDownloadsFolder
+    },
+    searchDuration: {
+      type: 'number',
+      default: 10000
+    },
+    searchFileExtensions: {
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: Object.values(AudioFileExtension)
+      },
+      default: [
+        AudioFileExtension.MP3,
+        AudioFileExtension.WAV,
+        AudioFileExtension.FLAC
+      ]
+    },
+    searchHasOnlyHighBitrate: {
+      type: 'boolean',
+      default: true
+    },
+    downloadHistory: {
+      default: [],
+      type: 'array',
+      items: {
+        type: 'object'
+      }
+    }
+  }
 })
 
-const clear = () => {
+const clear = (initialSettings) => {
   debug(`Clearing settings`)
-  return settings.clear()
+  settings.clear()
+
+  if (initialSettings) {
+    settings.set(initialSettings)
+  }
 }
 
 if (process.env.FRESH === 'true') {
@@ -73,8 +92,14 @@ if (lastVersion === undefined) {
   clear()
   settings.set('lastVersion', config.APP_VERSION)
 } else if (lastVersion !== config.APP_VERSION) {
+  const soulseekUsername = settings.get('soulseekUsername')
+  const soulseekPassword = settings.get('soulseekPassword')
+
   debug(`Old version ${lastVersion} found, current version is: ${config.APP_VERSION}`)
-  clear()
+  clear({
+    soulseekUsername,
+    soulseekPassword
+  })
 }
 
 debug(`Settings loaded`, settings.get())
@@ -85,13 +110,15 @@ const getRendererSettings = () => {
   const searchHasOnlyHighBitrate = settings.get('searchHasOnlyHighBitrate')
   const searchDuration = settings.get('searchDuration')
   const downloadHistory = settings.get('downloadHistory')
+  const uid = getUid()
 
   return {
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate,
     searchDuration,
-    downloadHistory
+    downloadHistory,
+    uid
   }
 }
 

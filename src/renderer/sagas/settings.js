@@ -12,13 +12,26 @@ import {
   getDownloadsDir
 } from 'selectors/settings'
 
+import {
+  setUid,
+  sendEvent
+} from 'utils/analytics'
+
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
 
   try {
     const { settings } = yield call(handlers.initialize)
-    yield put(actions.initializeRequest.success(settings))
     yield put(showLoading(false))
+
+    setUid(settings.uid)
+
+    sendEvent({
+      category: 'Settings',
+      action: 'Initialize'
+    })
+
+    yield put(actions.initializeRequest.success(settings))
   } catch (res) {
     yield put(showLoading(false))
     yield put(showError(res.error))
@@ -38,6 +51,12 @@ export function * onSetSettings ({ payload: newSettings }) {
     }
 
     const { settings } = yield call(handlers.setSettings, updatedSettings)
+
+    sendEvent({
+      category: 'Settings',
+      action: 'SetSettings'
+    })
+
     yield put(actions.setSettingsRequest.success(settings))
   } catch (error) {
     yield put(actions.setSettingsRequest.error(error))
@@ -49,6 +68,13 @@ export function * onSelectDownloadsDir () {
 
   const { result: newDownloadsDir } = yield call(handlers.selectDir, {
     defaultPath: downloadsDir
+  })
+
+  sendEvent({
+    category: 'Settings',
+    action: 'SelectDownloadsDir',
+    label: downloadsDir,
+    value: newDownloadsDir
   })
 
   yield put(setSettings({

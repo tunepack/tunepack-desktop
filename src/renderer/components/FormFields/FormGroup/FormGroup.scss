@@ -1,7 +1,7 @@
 @import 'base.scss';
 
 .component {
-  margin-bottom: 1.4em;
+  margin-bottom: $side-padding;
   position: relative;
 
   &:last-child {

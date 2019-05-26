@@ -1,10 +1,15 @@
 import React from 'react'
 import { withFormik, Form } from 'formik'
 import { Input, Field, FormGroup, Select, Toggle } from 'components/FormFields'
+import Button from 'components/Button/Button'
 
 import * as AudioFileExtensions from 'constants/AudioFileExtension'
 import * as Yup from 'yup'
 import DownloadLocation from '../DownloadsLocation/DownloadsLocation'
+import Icon from 'components/Icon/Icon'
+import IconReset from 'icons/Reset.svg'
+import styles from './SettingsForm.scss'
+import Spinner from 'components/Spinner/Spinner'
 
 const validationSchema = Yup.object().shape({
   searchFileExtensions: Yup
@@ -27,9 +32,13 @@ const fileExtensionOptions = Object
     }
   })
 
-const SettingsForm = (props) => {
+const SettingsForm = React.memo(({
+  handleSubmit,
+  onResetClick,
+  isResetting
+}) => {
   return (
-    <Form onSubmit={props.handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <DownloadLocation />
       <FormGroup parent>
         <FormGroup>
@@ -66,9 +75,28 @@ const SettingsForm = (props) => {
           />
         </FormGroup>
       </FormGroup>
+      <FormGroup parent>
+        <Button
+          onClick={onResetClick}
+          size='sm'
+          variant='error'
+          iconAfter={isResetting ? (
+            <div className={styles.btnResetLoading}>
+              <Spinner />
+            </div>
+          ) : (
+            <Icon
+              className={styles.btnResetIcon}
+              glyph={IconReset}
+            />
+          )}
+        >
+          Reset and reconnect
+        </Button>
+      </FormGroup>
     </Form>
   )
-}
+})
 
 const mapPropsToValues = ({
   settings

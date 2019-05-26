@@ -5,9 +5,11 @@ import {
   ON_UPDATE_SETTINGS,
   SET_SETTINGS_REQUEST
 } from 'actions/settings'
+import { RESET_REQUEST } from '../actions/app'
 
 const initialState = fromJS({
   isInitialized: false,
+  isResetting: false,
   data: {}
 })
 
@@ -26,5 +28,8 @@ export default createReducer(initialState, {
   [ON_UPDATE_SETTINGS]: (state, { payload: data }) => {
     return state
       .set('data', fromJS(data))
+  },
+  [RESET_REQUEST.START]: (state) => {
+    return state.set('isResetting', true)
   }
 })

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -154,6 +156,10 @@ let plugins = [
     } : false
   }),
   new LodashPlugin(),
+  new webpack.EnvironmentPlugin({
+    NODE_ENV: env.isDev ? 'development' : 'production',
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID
+  }),
   new SpritePlugin(),
   new BundleAnalyzerPlugin({
     analyzerMode:

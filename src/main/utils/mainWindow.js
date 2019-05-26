@@ -26,7 +26,7 @@ const initMainWindow = () => {
     icon: path.resolve(__dirname, '../../../resources/icon.icns'),
     webPreferences: {
       nodeIntegration: true,
-      devTools: false
+      devTools: process.env.NODE_ENV !== 'production'
     }
   })
 

@@ -1,13 +1,26 @@
 const config = require('../config')
 
 function getMenuTemplate () {
-  return (process.platform === 'darwin') ? [{
+  const isMac = process.platform === 'darwin'
+
+  return isMac ? [{
     label: config.APP_NAME,
     submenu: [{
       role: 'about'
     }, {
       role: 'quit'
     }]
+  }, {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'selectAll' }
+    ]
   }] : []
 }
 

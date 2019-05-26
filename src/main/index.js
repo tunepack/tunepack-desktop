@@ -3,7 +3,7 @@ const { initMainWindow } = require('./utils/mainWindow')
 const { ensureDefaultDownloadsFolder } = require('./utils/downloadsFolder')
 const slsk = require('./utils/slsk')
 const downloadsFolderWatcher = require('./utils/downloadsFolderWatcher')
-const debug = require('debug')('tunepack:main')
+// const debug = require('debug')('tunepack:main')
 const menuUtils = require('./utils/menu')
 
 const menu = Menu.buildFromTemplate(menuUtils.getMenuTemplate())
@@ -34,11 +34,7 @@ const installExtensions = async () => {
 }
 
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
 
 app.on('before-quit', e => {
@@ -50,9 +46,8 @@ app.on('before-quit', e => {
   slsk.disconnect()
 
   setTimeout(() => {
-    debug('Saving state took too long. Quitting.')
     app.quit()
-  }, 4000) // quit after 4 secs, at most
+  }, 500) // quit after 4 secs, at most
 })
 
 app.on('ready', async () => {

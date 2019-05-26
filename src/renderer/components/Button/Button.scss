@@ -19,13 +19,29 @@ $btn-focus-ring-width: 3px;
   user-select: none;
   font-family: inherit;
 
+  &.isLoading {
+    cursor: not-allowed;
+  }
+
   &:focus {
-    box-shadow: 0 0 0 $btn-focus-ring-width rgba(0, 0, 0, .2);
+    box-shadow: 0 0 0 $btn-focus-ring-width transparentize(#000, .8);
   }
 
   &.hasIconTop {
     .content {
       flex-direction: column;
+    }
+  }
+
+  &.variant-error {
+    background-color: $color-red;
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-ring-width transparentize($color-red, .8);
+    }
+
+    &:hover {
+      background-color: darken($color-red, 5%);
     }
   }
 
@@ -90,5 +106,19 @@ $btn-focus-ring-width: 3px;
 
 .iconAfter {
   margin-left: 1rem;
+}
+
+.loaderWrap {
+  width: 20px;
+  height: 20px;
+
+  // Nasty: but the spinner has some weird offset that we correct here
+  transform: translate3d(0, -2px, 0);
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  cursor: not-allowed;
 }
 

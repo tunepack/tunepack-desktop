@@ -1,5 +1,4 @@
-import { shell } from 'electron'
-const { Notification } = require('electron')
+const { Notification, shell } = require('electron')
 const debug = require('debug')('tunepack:notifications')
 
 const showDownloadedNotification = ({

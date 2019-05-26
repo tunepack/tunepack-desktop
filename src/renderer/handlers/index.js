@@ -5,6 +5,7 @@ import download from './download'
 import selectDir from './selectDir'
 import setSettings from './setSettings'
 import reload from './reload'
+import reset from './reset'
 
 export default {
   initialize,
@@ -13,5 +14,6 @@ export default {
   download,
   selectDir,
   setSettings,
-  reload
+  reload,
+  reset
 }

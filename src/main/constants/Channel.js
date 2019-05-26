@@ -11,6 +11,7 @@ const SELECT_DIR = 'select-dir'
 const SET_SETTINGS = 'set-settings'
 const UPDATE_SETTINGS = 'update-settings'
 const RELOAD = 'reload'
+const RESET = 'reset'
 
 module.exports = {
   INITIALIZE,
@@ -25,5 +26,6 @@ module.exports = {
   SELECT_DIR,
   SET_SETTINGS,
   UPDATE_SETTINGS,
-  RELOAD
+  RELOAD,
+  RESET
 }
