@@ -62,7 +62,7 @@ const clear = () => {
   return settings.clear()
 }
 
-if (process.env.CLEAR_SETTINGS === 'true') {
+if (process.env.FRESH === 'true') {
   clear()
 }
 

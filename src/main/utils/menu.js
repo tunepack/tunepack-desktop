@@ -1,1 +1,16 @@
-// TODO: jep menu: https://github.com/webtorrent/webtorrent-desktop/blob/master/src/main/menu.js
+const config = require('../config')
+
+function getMenuTemplate () {
+  return (process.platform === 'darwin') ? [{
+    label: config.APP_NAME,
+    submenu: [{
+      role: 'about'
+    }, {
+      role: 'quit'
+    }]
+  }] : []
+}
+
+module.exports = {
+  getMenuTemplate
+}

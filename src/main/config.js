@@ -1,5 +1,6 @@
 const APP_NAME = 'Tunepack'
-const APP_VERSION = '1.0.3'
+const HOME_PAGE_URL = 'https://tunepack.io'
+const APP_VERSION = '1.0.4'
 
 const stylingVariables = {
   WINDOW_WIDTH: '540px',
@@ -14,5 +15,6 @@ const stylingVariables = {
 module.exports = {
   stylingVariables,
   APP_NAME,
-  APP_VERSION
+  APP_VERSION,
+  HOME_PAGE_URL
 }

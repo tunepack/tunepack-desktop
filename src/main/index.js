@@ -1,9 +1,13 @@
-const { app } = require('electron')
+const { app, Menu } = require('electron')
 const { initMainWindow } = require('./utils/mainWindow')
 const { ensureDefaultDownloadsFolder } = require('./utils/downloadsFolder')
 const slsk = require('./utils/slsk')
 const downloadsFolderWatcher = require('./utils/downloadsFolderWatcher')
 const debug = require('debug')('tunepack:main')
+const menuUtils = require('./utils/menu')
+
+const menu = Menu.buildFromTemplate(menuUtils.getMenuTemplate())
+Menu.setApplicationMenu(menu)
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support')
