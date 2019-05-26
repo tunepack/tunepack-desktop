@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const path = require('path')
 const webpack = require('webpack')
 const LodashPlugin = require('lodash-webpack-plugin')
@@ -31,7 +33,8 @@ plugins.push(
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'production',
     DEBUG_PROD: false,
-    START_MINIMIZED: false
+    START_MINIMIZED: false,
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID
   }),
   new BundleAnalyzerPlugin({
     analyzerMode:

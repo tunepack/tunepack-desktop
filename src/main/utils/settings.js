@@ -5,56 +5,74 @@ const AudioFileExtension = require('../constants/AudioFileExtension')
 const moment = require('moment-timezone')
 const config = require('../config')
 const debug = require('debug')('tunepack:settings')
+const uuid = require('uuid/v1')
 
 moment.tz.setDefault('UTC')
 
-const schema = {
-  lastVersion: {
-    type: 'string'
-  },
-  soulseekUsername: {
-    type: 'string',
-    default: slskUtils.generateUsername()
-  },
-  soulseekPassword: {
-    type: 'string',
-    default: slskUtils.generatePassword()
-  },
-  downloadsDir: {
-    type: 'string',
-    default: defaultDownloadsFolder
-  },
-  searchDuration: {
-    type: 'number',
-    default: 10000
-  },
-  searchFileExtensions: {
-    type: 'array',
-    items: {
+// permaSettings are encrypted and never get cleared
+const permaSettings = new Store({
+  cwd: 'perma',
+  encryptionKey: '23498712nSLKDFJKLJ;3;3l;l;;',
+  schema: {
+    uid: {
       type: 'string',
-      enum: Object.values(AudioFileExtension)
-    },
-    default: [
-      AudioFileExtension.MP3,
-      AudioFileExtension.WAV,
-      AudioFileExtension.FLAC
-    ]
-  },
-  searchHasOnlyHighBitrate: {
-    type: 'boolean',
-    default: true
-  },
-  downloadHistory: {
-    default: [],
-    type: 'array',
-    items: {
-      type: 'object'
+      default: uuid()
     }
   }
+})
+
+permaSettings.clear()
+permaSettings.openInEditor()
+
+const getUid = () => {
+  return permaSettings.get('uid')
 }
 
 const settings = new Store({
-  schema
+  schema: {
+    lastVersion: {
+      type: 'string'
+    },
+    soulseekUsername: {
+      type: 'string',
+      default: slskUtils.generateUsername()
+    },
+    soulseekPassword: {
+      type: 'string',
+      default: slskUtils.generatePassword()
+    },
+    downloadsDir: {
+      type: 'string',
+      default: defaultDownloadsFolder
+    },
+    searchDuration: {
+      type: 'number',
+      default: 10000
+    },
+    searchFileExtensions: {
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: Object.values(AudioFileExtension)
+      },
+      default: [
+        AudioFileExtension.MP3,
+        AudioFileExtension.WAV,
+        AudioFileExtension.FLAC
+      ]
+    },
+    searchHasOnlyHighBitrate: {
+      type: 'boolean',
+      default: true
+    },
+    downloadHistory: {
+      default: [],
+      type: 'array',
+      items: {
+        type: 'object'
+      }
+    }
+  }
 })
 
 const clear = (initialSettings) => {
@@ -95,13 +113,15 @@ const getRendererSettings = () => {
   const searchHasOnlyHighBitrate = settings.get('searchHasOnlyHighBitrate')
   const searchDuration = settings.get('searchDuration')
   const downloadHistory = settings.get('downloadHistory')
+  const uid = getUid()
 
   return {
     downloadsDir,
     searchFileExtensions,
     searchHasOnlyHighBitrate,
     searchDuration,
-    downloadHistory
+    downloadHistory,
+    uid
   }
 }
 

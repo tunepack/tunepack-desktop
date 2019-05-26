@@ -18,7 +18,15 @@ npm run dev
 To package the app for the local platform:
 
 ```shell
-npm run package
+GA_TRACKING_ID=x npm run package
+```
+
+## Packaging and publishing
+
+To package the app for the local platform:
+
+```shell
+GA_TRACKING_ID=x npm run package:ci
 ```
 
 The packaged app will be inside the `release` directory.
@@ -26,7 +34,7 @@ The packaged app will be inside the `release` directory.
 ## Building to Multiple Platforms
 
 ```shell
-npm run package:all
+GA_TRACKING_ID=x npm run package:all
 ```
 
 ## Uploading a draft release to Github automatically

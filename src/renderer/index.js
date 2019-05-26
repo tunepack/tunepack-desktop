@@ -5,6 +5,9 @@ import './index.scss'
 import Root from 'components/Root/Root'
 import { configureStore, history } from 'utils/configureStore'
 import { initialize } from 'actions/settings'
+import { initialize as initializeAnalytics } from 'utils/analytics'
+
+initializeAnalytics()
 
 const store = configureStore()
 store.dispatch(initialize())
