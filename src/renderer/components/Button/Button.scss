@@ -20,12 +20,24 @@ $btn-focus-ring-width: 3px;
   font-family: inherit;
 
   &:focus {
-    box-shadow: 0 0 0 $btn-focus-ring-width rgba(0, 0, 0, .2);
+    box-shadow: 0 0 0 $btn-focus-ring-width transparentize(#000, .8);
   }
 
   &.hasIconTop {
     .content {
       flex-direction: column;
+    }
+  }
+
+  &.variant-error {
+    background-color: $color-red;
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-ring-width transparentize($color-red, .8);
+    }
+
+    &:hover {
+      background-color: darken($color-red, 5%);
     }
   }
 

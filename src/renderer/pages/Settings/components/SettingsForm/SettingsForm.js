@@ -1,10 +1,14 @@
 import React from 'react'
 import { withFormik, Form } from 'formik'
 import { Input, Field, FormGroup, Select, Toggle } from 'components/FormFields'
+import Button from 'components/Button/Button'
 
 import * as AudioFileExtensions from 'constants/AudioFileExtension'
 import * as Yup from 'yup'
 import DownloadLocation from '../DownloadsLocation/DownloadsLocation'
+import Icon from 'components/Icon/Icon'
+import IconReset from 'icons/Reset.svg'
+import styles from './SettingsForm.scss'
 
 const validationSchema = Yup.object().shape({
   searchFileExtensions: Yup
@@ -65,6 +69,20 @@ const SettingsForm = (props) => {
             component={Input}
           />
         </FormGroup>
+      </FormGroup>
+      <FormGroup parent>
+        <Button
+          size='sm'
+          variant='error'
+          iconAfter={(
+            <Icon
+              className={styles.btnResetIcon}
+              glyph={IconReset}
+            />
+          )}
+        >
+          Reset and reconnect
+        </Button>
       </FormGroup>
     </Form>
   )
