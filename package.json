@@ -1,7 +1,7 @@
 {
   "name": "tunepack-desktop",
   "productName": "Tunepack",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A modern tool for finding and downloading high quality audio files",
   "scripts": {
     "build": "run-p build:main build:renderer",
