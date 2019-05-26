@@ -10,6 +10,7 @@ const generatePassword = () => {
 }
 
 let _client = null
+let _isConnected = false
 
 const connect = ({
   username: user,
@@ -17,6 +18,10 @@ const connect = ({
   timeout
 }) => {
   return new Promise((resolve, reject) => {
+    if (_isConnected) {
+      return resolve(_client)
+    }
+
     slsk.connect({
       user,
       pass,
@@ -26,6 +31,7 @@ const connect = ({
         return reject(error)
       }
 
+      _isConnected = true
       _client = client
       resolve(client)
     })
@@ -78,6 +84,10 @@ const downloadStream = options => {
 }
 
 const disconnect = () => {
+  if (!_isConnected) {
+    return
+  }
+
   slsk.disconnect()
 }
 
