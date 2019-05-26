@@ -12,7 +12,7 @@ moment.tz.setDefault('UTC')
 // permaSettings are encrypted and never get cleared
 const permaSettings = new Store({
   cwd: 'perma',
-  encryptionKey: '23498712nSLKDFJKLJ;3;3l;l;;',
+  encryptionKey: 'snuffelposk323',
   schema: {
     uid: {
       type: 'string',
