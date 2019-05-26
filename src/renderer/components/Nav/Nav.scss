@@ -37,6 +37,7 @@ $link-bg-padding: 10px;
   align-items: center;
   z-index: 100;
   user-select: none;
+  box-shadow: 0px -1px 3px 0px transparentize(#000000, .95);
 }
 
 .linksContainer {

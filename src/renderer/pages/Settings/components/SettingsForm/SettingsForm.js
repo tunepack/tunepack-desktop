@@ -9,6 +9,7 @@ import DownloadLocation from '../DownloadsLocation/DownloadsLocation'
 import Icon from 'components/Icon/Icon'
 import IconReset from 'icons/Reset.svg'
 import styles from './SettingsForm.scss'
+import Spinner from 'components/Spinner/Spinner'
 
 const validationSchema = Yup.object().shape({
   searchFileExtensions: Yup
@@ -31,9 +32,13 @@ const fileExtensionOptions = Object
     }
   })
 
-const SettingsForm = (props) => {
+const SettingsForm = React.memo(({
+  handleSubmit,
+  onResetClick,
+  isResetting
+}) => {
   return (
-    <Form onSubmit={props.handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <DownloadLocation />
       <FormGroup parent>
         <FormGroup>
@@ -72,9 +77,14 @@ const SettingsForm = (props) => {
       </FormGroup>
       <FormGroup parent>
         <Button
+          onClick={onResetClick}
           size='sm'
           variant='error'
-          iconAfter={(
+          iconAfter={isResetting ? (
+            <div className={styles.btnResetLoading}>
+              <Spinner />
+            </div>
+          ) : (
             <Icon
               className={styles.btnResetIcon}
               glyph={IconReset}
@@ -86,7 +96,7 @@ const SettingsForm = (props) => {
       </FormGroup>
     </Form>
   )
-}
+})
 
 const mapPropsToValues = ({
   settings

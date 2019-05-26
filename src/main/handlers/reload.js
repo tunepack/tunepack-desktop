@@ -4,7 +4,7 @@ const { getMainWindow } = require('../utils/mainWindow')
 
 createSendAndWait(Channel.RELOAD, async () => {
   const mainWindow = getMainWindow()
-  mainWindow.reload()
+  mainWindow.webContents.reloadIgnoringCache()
 
   return true
 })

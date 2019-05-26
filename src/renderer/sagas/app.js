@@ -16,8 +16,19 @@ export function * onReload () {
   }
 }
 
+export function * onReset () {
+  yield put(actions.resetRequest.start())
+
+  try {
+    yield call(handlers.reset)
+  } catch (res) {
+    yield put(actions.resetRequest.error(res.error))
+  }
+}
+
 export default function * watchSettings () {
   yield all([
-    takeLatest(constants.RELOAD, onReload)
+    takeLatest(constants.RELOAD, onReload),
+    takeLatest(constants.RESET, onReset)
   ])
 }

@@ -1,20 +1,32 @@
 import React from 'react'
 import SettingsForm from '../components/SettingsForm/SettingsForm'
 import { connect } from 'react-redux'
-import { getData as getSettings } from 'selectors/settings'
+import {
+  getData as getSettings,
+  getIsResetting
+} from 'selectors/settings'
 import { setSettings } from 'actions/settings'
+import { reset } from 'actions/app'
 
 const SettingsFormContainer = React.memo(({
   settings,
-  setSettings
+  setSettings,
+  reset,
+  isResetting
 }) => {
   const handleSubmit = (newSettings) => {
     setSettings(newSettings)
   }
 
+  const handleResetClick = () => {
+    reset()
+  }
+
   return (
     <SettingsForm
+      isResetting={isResetting}
       settings={settings}
+      onResetClick={handleResetClick}
       onSubmit={handleSubmit}
     />
   )
@@ -22,12 +34,14 @@ const SettingsFormContainer = React.memo(({
 
 const mapStateToProps = state => {
   return {
-    settings: getSettings(state)
+    settings: getSettings(state),
+    isResetting: getIsResetting(state)
   }
 }
 
 const mapActionsToProps = {
-  setSettings
+  setSettings,
+  reset
 }
 
 export default connect(

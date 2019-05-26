@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Button.scss'
 import cx from 'classnames'
+import Spinner from 'components/Spinner/Spinner'
 
 const Button = ({
   children,
@@ -11,6 +12,7 @@ const Button = ({
   iconTop,
   size,
   className,
+  isLoading,
   ...props
 }) => {
   return (
@@ -20,25 +22,34 @@ const Button = ({
         [styles.hasIconTop]: iconTop,
         [styles[`variant-${variant}`]]: variant,
         [styles[`size-${size}`]]: size,
+        [styles.isLoading]: isLoading,
         [className]: className
       })}
       {...props}
     >
       <div className={styles.content}>
-        {iconBefore && (
+        {iconBefore && !isLoading && (
           <div className={styles.iconBefore}>
             {iconBefore}
           </div>
         )}
-        {iconTop && (
+        {iconTop && !isLoading && (
           <div className={styles.iconTop}>
             {iconTop}
           </div>
         )}
-        <div className={styles.children}>
-          {children}
-        </div>
-        {iconAfter && (
+        {isLoading ? (
+          <div className={styles.loaderWrap}>
+            <Spinner
+              className={cx(styles.loader)}
+            />
+          </div>
+        ) : (
+          <div className={styles.children}>
+            {children}
+          </div>
+        )}
+        {iconAfter && !isLoading && (
           <div className={styles.iconAfter}>
             {iconAfter}
           </div>

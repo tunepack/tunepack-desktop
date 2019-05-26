@@ -89,6 +89,7 @@ const disconnect = () => {
   }
 
   slsk.disconnect()
+  _isConnected = false
 }
 
 module.exports = {

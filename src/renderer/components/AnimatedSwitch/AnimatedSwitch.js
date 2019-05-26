@@ -12,8 +12,8 @@ const mapStyles = styles => {
 const bounceTransition = {
   // start in a transparent, upscaled state
   atEnter: {
-    opacity: 0,
-    scale: 1.2
+    scale: 1.2,
+    opacity: 0
   },
   // leave in a transparent, downscaled state
   atLeave: {
@@ -37,7 +37,7 @@ function bounce (val) {
 const AnimatedSwitch = ({ children }) => {
   return (
     <DepAnimatedSwitch
-      className={styles.component}
+      className={styles.switch}
       atEnter={bounceTransition.atEnter}
       atLeave={bounceTransition.atLeave}
       atActive={bounceTransition.atActive}
