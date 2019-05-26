@@ -25,7 +25,8 @@ const initMainWindow = () => {
     titleBarStyle: 'hiddenInset',
     icon: path.resolve(__dirname, '../../../resources/icon.icns'),
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      devTools: false
     }
   })
 
