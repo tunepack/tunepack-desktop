@@ -57,9 +57,13 @@ const settings = new Store({
   schema
 })
 
-const clear = () => {
+const clear = (initialSettings) => {
   debug(`Clearing settings`)
-  return settings.clear()
+  settings.clear()
+
+  if (initialSettings) {
+    settings.set(initialSettings)
+  }
 }
 
 if (process.env.FRESH === 'true') {
@@ -73,8 +77,14 @@ if (lastVersion === undefined) {
   clear()
   settings.set('lastVersion', config.APP_VERSION)
 } else if (lastVersion !== config.APP_VERSION) {
+  const soulseekUsername = settings.get('soulseekUsername')
+  const soulseekPassword = settings.get('soulseekPassword')
+
   debug(`Old version ${lastVersion} found, current version is: ${config.APP_VERSION}`)
-  clear()
+  clear({
+    soulseekUsername,
+    soulseekPassword
+  })
 }
 
 debug(`Settings loaded`, settings.get())
