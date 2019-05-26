@@ -21,9 +21,6 @@ const permaSettings = new Store({
   }
 })
 
-permaSettings.clear()
-permaSettings.openInEditor()
-
 const getUid = () => {
   return permaSettings.get('uid')
 }
