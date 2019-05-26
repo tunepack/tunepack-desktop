@@ -2,24 +2,11 @@ const { createSendAndWait } = require('../utils/handlers')
 const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
-const fs = require('fs')
-const { promisify } = require('util')
 const Timeout = require('await-timeout')
 const debug = require('debug')('tunepack:initialize')
+const fsUtils = require('../utils/fs')
 
 const TIMEOUT = 3000
-
-const unlink = promisify(fs.unlink)
-const stat = promisify(fs.stat)
-
-const getDoesFileExist = async path => {
-  try {
-    await stat(path)
-    return true
-  } catch (e) {
-    return false
-  }
-}
 
 const getCleanDownloadHistory = async downloadHistory => {
   const cleanDownloadHistory = [
@@ -44,7 +31,7 @@ const getCleanDownloadHistory = async downloadHistory => {
       debug(`Removing old download at: ${downloadPath}`)
 
       try {
-        await unlink(downloadPath)
+        await fsUtils.unlink(downloadPath)
       } catch (e) {
         debug(`Could not remove old download at: ${downloadPath}, still removing it from downloadsHistory`)
       }
@@ -55,7 +42,7 @@ const getCleanDownloadHistory = async downloadHistory => {
 
     const downloadPath = cleanDownloadHistory[k].downloadPath
 
-    const doesDownloadFileExist = await getDoesFileExist(downloadPath)
+    const doesDownloadFileExist = await fsUtils.getDoesFileExist(downloadPath)
 
     if (!doesDownloadFileExist) {
       debug(`Found ${downloadPath} in downloadHistory, but the file did not exist so it was probably removed, cleaning this up.`)

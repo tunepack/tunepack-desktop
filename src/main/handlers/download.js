@@ -8,6 +8,8 @@ const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
 const StreamSpeed = require('streamspeed')
 const notifications = require('../utils/notifications')
+const fsUtils = require('../utils/fs')
+const debug = require('debug')('tunepack:download')
 
 const PROGRESS_INTERVAL = 150
 const SPEED_INTERVAL = 100
@@ -68,6 +70,23 @@ const downloadTrack = async ({
   })
 }
 
+const getUniqueDownloadPath = async (track) => {
+  const downloadsDir = settings.getDownloadsDir()
+  const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
+
+  const isDownloadPathTaken = await fsUtils.getDoesFileExist(downloadPath)
+
+  if (!isDownloadPathTaken) {
+    return downloadPath
+  }
+
+  const newDownloadPath = path.resolve(downloadsDir, `${track.fileName}_${track.id}.${track.fileExtension}`)
+
+  debug(`Download path was taken, new download path is: ${newDownloadPath}`)
+
+  return newDownloadPath
+}
+
 createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   try {
     const handleProgress = progress => {
@@ -92,8 +111,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       })
     }
 
-    const downloadsDir = settings.getDownloadsDir()
-    const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
+    const downloadPath = await getUniqueDownloadPath(track)
 
     settings.addToDownloadHistory({
       track,
