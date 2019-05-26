@@ -19,6 +19,11 @@ const DownloadsView = React.memo(({
       <ResultsList
         isDownloadsPage
         items={items}
+        emptyLabel={(
+          <span>
+            Nothing downloaded, yet.
+          </span>
+        )}
       />
     </View>
   )

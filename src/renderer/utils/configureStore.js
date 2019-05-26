@@ -14,7 +14,8 @@ import {
 import createIpc from 'redux-electron-ipc'
 import createRootReducer from 'reducers'
 import rootSaga from 'sagas'
-import downloadActions from 'actions/downloads'
+import downloadsActions from 'actions/downloads'
+import settingsActions from 'actions/settings'
 
 export const history = createHashHistory()
 
@@ -31,19 +32,22 @@ export const configureStore = (initialState = {}) => {
 
   const ipcMiddleware = createIpc({
     [Channel.DOWNLOAD_PROGRESS]: (event, args) => {
-      return downloadActions.onDownloadProgress(args)
+      return downloadsActions.onDownloadProgress(args)
     },
     [Channel.DOWNLOAD_SPEED]: (event, args) => {
-      return downloadActions.onDownloadSpeed(args)
+      return downloadsActions.onDownloadSpeed(args)
     },
     [Channel.DOWNLOAD_COMPLETE]: (event, args) => {
-      return downloadActions.onDownloadComplete(args)
+      return downloadsActions.onDownloadComplete(args)
     },
     [Channel.DOWNLOAD_ERROR]: (event, args) => {
-      return downloadActions.onDownloadError(args)
+      return downloadsActions.onDownloadError(args)
     },
     [Channel.SEARCH_FOUND]: (event, args) => {
-      return downloadActions.onSearchFound(args)
+      return downloadsActions.onSearchFound(args)
+    },
+    [Channel.UPDATE_SETTINGS]: (event, args) => {
+      return settingsActions.onUpdateSettings(args)
     }
   })
 

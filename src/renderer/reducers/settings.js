@@ -1,6 +1,10 @@
 import { createReducer } from 'utils/redux'
 import { fromJS } from 'immutable'
-import { INITIALIZE_REQUEST, SET_SETTINGS_REQUEST } from 'actions/settings'
+import {
+  INITIALIZE_REQUEST,
+  ON_UPDATE_SETTINGS,
+  SET_SETTINGS_REQUEST
+} from 'actions/settings'
 
 const initialState = fromJS({
   isInitialized: false,
@@ -16,6 +20,10 @@ export default createReducer(initialState, {
     })
   },
   [SET_SETTINGS_REQUEST.SUCCESS]: (state, { payload: data }) => {
+    return state
+      .set('data', fromJS(data))
+  },
+  [ON_UPDATE_SETTINGS]: (state, { payload: data }) => {
     return state
       .set('data', fromJS(data))
   }

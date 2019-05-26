@@ -2,16 +2,19 @@ const path = require('path')
 const { BrowserWindow } = require('electron')
 const windowStateManager = require('electron-window-state')
 const config = require('../config')
-const slsk = require('./slsk')
 
-let mainWindow = null
+let _mainWindow = null
 
 const isProd = process.env.NODE_ENV === 'production'
+
+const getMainWindow = () => {
+  return _mainWindow
+}
 
 const initMainWindow = () => {
   const mainWindowState = windowStateManager()
 
-  mainWindow = new BrowserWindow({
+  _mainWindow = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: parseInt(config.stylingVariables.WINDOW_WIDTH),
@@ -26,38 +29,37 @@ const initMainWindow = () => {
     }
   })
 
-  isProd && mainWindow.setMenu(null)
+  isProd && _mainWindow.setMenu(null)
 
-  mainWindowState.manage(mainWindow)
+  mainWindowState.manage(_mainWindow)
 
   const port = process.env.PORT || 1212
   const url = isProd ? `file://${__dirname}/index.html` : `http://localhost:${port}/index.html`
 
-  mainWindow.loadURL(url)
+  _mainWindow.loadURL(url)
 
   // Setup handlers
   require('../handlers')
 
-  mainWindow.once('ready-to-show', () => {
-    if (!mainWindow) {
+  _mainWindow.once('ready-to-show', () => {
+    if (!_mainWindow) {
       throw new Error('"mainWindow" is not defined')
     }
 
     if (process.env.START_MINIMIZED === 'true') {
-      mainWindow.minimize()
+      _mainWindow.minimize()
     } else {
-      mainWindow.show()
-      mainWindow.focus()
+      _mainWindow.show()
+      _mainWindow.focus()
     }
   })
 
-  mainWindow.on('closed', () => {
-    slsk.disconnect()
-    mainWindow = null
+  _mainWindow.on('closed', () => {
+    _mainWindow = null
   })
 }
 
 module.exports = {
-  mainWindow,
+  getMainWindow,
   initMainWindow
 }

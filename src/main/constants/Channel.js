@@ -9,6 +9,7 @@ const DOWNLOAD_ERROR = `${DOWNLOAD}:error`
 const DOWNLOAD_COMPLETE = `${DOWNLOAD}:complete`
 const SELECT_DIR = 'select-dir'
 const SET_SETTINGS = 'set-settings'
+const UPDATE_SETTINGS = 'update-settings'
 const RELOAD = 'reload'
 
 module.exports = {
@@ -23,5 +24,6 @@ module.exports = {
   DOWNLOAD_COMPLETE,
   SELECT_DIR,
   SET_SETTINGS,
+  UPDATE_SETTINGS,
   RELOAD
 }

@@ -20,3 +20,30 @@
   opacity: .2;
   height: 18px;
 }
+
+.btnDownloadsFolder {
+  border: 0;
+  background: none transparent;
+  margin: 0;
+  padding: 10px;
+  outline: 0;
+  position: absolute;
+  top: 0;
+  right: 5px;
+  bottom: 0;
+  color: white;
+  opacity: .5;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+  z-index: 200;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.downloadsFolderIcon {
+  $size: 18px;
+  height: $size;
+  width: $size;
+}

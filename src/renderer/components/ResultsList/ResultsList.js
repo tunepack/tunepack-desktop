@@ -9,7 +9,8 @@ import { download } from 'actions/downloads'
 const ResultsList = React.memo(({
   items,
   download,
-  isDownloadsPage = false
+  isDownloadsPage = false,
+  emptyLabel
 }) => {
   const handleDownloadClick = (track) => {
     download(track)
@@ -32,7 +33,7 @@ const ResultsList = React.memo(({
   if (itemsCount === 0) {
     return (
       <div className={styles.empty}>
-        No results.
+        {emptyLabel}
       </div>
     )
   }

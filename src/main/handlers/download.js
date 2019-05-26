@@ -7,6 +7,7 @@ const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
 const StreamSpeed = require('streamspeed')
+const notifications = require('../utils/notifications')
 
 const PROGRESS_INTERVAL = 150
 const SPEED_INTERVAL = 100
@@ -68,32 +69,32 @@ const downloadTrack = async ({
 }
 
 createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
-  const downloadsDir = settings.getDownloadsDir()
-  const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
-
-  const handleProgress = progress => {
-    settings.updateDownloadHistoryEntry(track.id, {
-      progress: String(progress)
-    })
-
-    event.reply(Channel.DOWNLOAD_PROGRESS, {
-      track,
-      progress
-    })
-  }
-
-  const handleSpeed = avgSpeed => {
-    settings.updateDownloadHistoryEntry(track.id, {
-      avgSpeed
-    })
-
-    event.reply(Channel.DOWNLOAD_SPEED, {
-      track,
-      avgSpeed
-    })
-  }
-
   try {
+    const handleProgress = progress => {
+      settings.updateDownloadHistoryEntry(track.id, {
+        progress: String(progress)
+      })
+
+      event.reply(Channel.DOWNLOAD_PROGRESS, {
+        track,
+        progress
+      })
+    }
+
+    const handleSpeed = avgSpeed => {
+      settings.updateDownloadHistoryEntry(track.id, {
+        avgSpeed
+      })
+
+      event.reply(Channel.DOWNLOAD_SPEED, {
+        track,
+        avgSpeed
+      })
+    }
+
+    const downloadsDir = settings.getDownloadsDir()
+    const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
+
     settings.addToDownloadHistory({
       track,
       downloadPath,
@@ -102,7 +103,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       error: ''
     })
 
-    const downloadRes = await downloadTrack({
+    await downloadTrack({
       downloadPath,
       track,
       onProgress: handleProgress,
@@ -116,10 +117,17 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
       track,
-      ...downloadRes
+      downloadPath
     })
 
-    return downloadRes
+    notifications.showDownloadedNotification({
+      track,
+      downloadPath
+    })
+
+    return {
+      downloadPath
+    }
   } catch (error) {
     const errorMessage = getErrorMessage(error)
 

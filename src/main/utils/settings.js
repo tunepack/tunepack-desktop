@@ -62,6 +62,10 @@ const clear = () => {
   return settings.clear()
 }
 
+if (process.env.CLEAR_SETTINGS === 'true') {
+  clear()
+}
+
 const lastVersion = settings.get('lastVersion')
 
 if (lastVersion === undefined) {
