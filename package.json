@@ -8,6 +8,7 @@
     "build:main": "cross-env NODE_ENV=production webpack --config ./scripts/webpack/webpackConfigMain.js",
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./scripts/webpack/webpackConfigRenderer.js",
     "build:electron": "cross-env NODE_ENV=development electron ./build/main.js",
+    "build:preview": "npm run build && npm run build:electron",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts/webpack/webpackConfigRenderer.js",
     "dev:main": "cross-env NODE_ENV=development electron --require @babel/register ./src/main/index.js",
     "package": "npm run build && electron-builder --publish never",
