@@ -6,16 +6,21 @@ import {
 } from 'selectors/search'
 import SearchForm from '../components/SearchForm/SearchForm'
 import { search } from 'actions/downloads'
-import { setSearchQuery } from 'actions/search'
+import { setSearchQuery, reset } from 'actions/search'
 
 const SearchResultsContainer = React.memo(({
   searchQuery,
   setSearchQuery,
   isSearching,
-  search
+  search,
+  reset
 }) => {
-  const onChange = (searchQuery) => {
+  const handleChange = (searchQuery) => {
     setSearchQuery(searchQuery)
+  }
+
+  const handleClearClick = () => {
+    reset()
   }
 
   const handleSubmit = () => {
@@ -24,7 +29,8 @@ const SearchResultsContainer = React.memo(({
 
   return (
     <SearchForm
-      onChange={onChange}
+      onClearClick={handleClearClick}
+      onChange={handleChange}
       searchQuery={searchQuery}
       isSearching={isSearching}
       onSubmit={handleSubmit}
@@ -41,7 +47,8 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = {
   search,
-  setSearchQuery
+  setSearchQuery,
+  reset
 }
 
 export default connect(

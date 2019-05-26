@@ -44,8 +44,7 @@
   }
 
   @include placeholder () {
-    opacity: 1;
-    color: $color-placeholder;
+    color: $color-text;
   }
 
   &:disabled {

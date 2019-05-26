@@ -5,7 +5,8 @@ const SearchForm = React.memo(({
   onChange,
   searchQuery,
   isSearching,
-  onSubmit
+  onSubmit,
+  onClearClick
 }) => {
   const queryInputRef = useRef(null)
 
@@ -26,9 +27,7 @@ const SearchForm = React.memo(({
     <form onSubmit={handleSubmit}>
       <Input
         isClearable={!isSearching}
-        onClearClick={() => {
-          onChange('')
-        }}
+        onClearClick={onClearClick}
         innerRef={queryInputRef}
         disabled={isSearching}
         placeholder='Search by track name, album or artist...'

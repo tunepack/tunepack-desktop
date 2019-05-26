@@ -17,3 +17,7 @@ export const getSearchResultCount = state => {
 export const getSearchResultLastFile = state => {
   return state.search.get('searchResultLastFile')
 }
+
+export const getHasSearched = state => {
+  return state.search.get('hasSearched')
+}

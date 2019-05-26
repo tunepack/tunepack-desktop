@@ -7,6 +7,9 @@ const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
 const StreamSpeed = require('streamspeed')
+const notifications = require('../utils/notifications')
+const fsUtils = require('../utils/fs')
+const debug = require('debug')('tunepack:download')
 
 const PROGRESS_INTERVAL = 150
 const SPEED_INTERVAL = 100
@@ -67,33 +70,49 @@ const downloadTrack = async ({
   })
 }
 
-createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
+const getUniqueDownloadPath = async (track) => {
   const downloadsDir = settings.getDownloadsDir()
   const downloadPath = path.resolve(downloadsDir, `${track.fileName}.${track.fileExtension}`)
 
-  const handleProgress = progress => {
-    settings.updateDownloadHistoryEntry(track.id, {
-      progress: String(progress)
-    })
+  const isDownloadPathTaken = await fsUtils.getDoesFileExist(downloadPath)
 
-    event.reply(Channel.DOWNLOAD_PROGRESS, {
-      track,
-      progress
-    })
+  if (!isDownloadPathTaken) {
+    return downloadPath
   }
 
-  const handleSpeed = avgSpeed => {
-    settings.updateDownloadHistoryEntry(track.id, {
-      avgSpeed
-    })
+  const newDownloadPath = path.resolve(downloadsDir, `${track.fileName}_${track.id}.${track.fileExtension}`)
 
-    event.reply(Channel.DOWNLOAD_SPEED, {
-      track,
-      avgSpeed
-    })
-  }
+  debug(`Download path was taken, new download path is: ${newDownloadPath}`)
 
+  return newDownloadPath
+}
+
+createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   try {
+    const handleProgress = progress => {
+      settings.updateDownloadHistoryEntry(track.id, {
+        progress: String(progress)
+      })
+
+      event.reply(Channel.DOWNLOAD_PROGRESS, {
+        track,
+        progress
+      })
+    }
+
+    const handleSpeed = avgSpeed => {
+      settings.updateDownloadHistoryEntry(track.id, {
+        avgSpeed
+      })
+
+      event.reply(Channel.DOWNLOAD_SPEED, {
+        track,
+        avgSpeed
+      })
+    }
+
+    const downloadPath = await getUniqueDownloadPath(track)
+
     settings.addToDownloadHistory({
       track,
       downloadPath,
@@ -102,7 +121,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       error: ''
     })
 
-    const downloadRes = await downloadTrack({
+    await downloadTrack({
       downloadPath,
       track,
       onProgress: handleProgress,
@@ -116,10 +135,17 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
 
     event.reply(Channel.DOWNLOAD_COMPLETE, {
       track,
-      ...downloadRes
+      downloadPath
     })
 
-    return downloadRes
+    notifications.showDownloadedNotification({
+      track,
+      downloadPath
+    })
+
+    return {
+      downloadPath
+    }
   } catch (error) {
     const errorMessage = getErrorMessage(error)
 

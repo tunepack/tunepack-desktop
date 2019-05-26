@@ -4,7 +4,10 @@ import {
   List
 } from 'immutable'
 
-import { INITIALIZE_REQUEST } from 'actions/settings'
+import {
+  INITIALIZE_REQUEST,
+  ON_UPDATE_SETTINGS
+} from 'actions/settings'
 
 import {
   DOWNLOAD
@@ -30,5 +33,8 @@ export default createReducer(initialState, {
   },
   [DOWNLOAD]: (state, { payload: track }) => {
     return state.push(track)
+  },
+  [ON_UPDATE_SETTINGS]: (state, { payload: settings }) => {
+    return getInitialStateFromSettings(settings)
   }
 })

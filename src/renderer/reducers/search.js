@@ -1,13 +1,16 @@
 import { createReducer } from 'utils/redux'
 import { fromJS } from 'immutable'
 import { SEARCH_REQUEST, ON_SEARCH_FOUND } from 'actions/downloads'
-import { SET_SEARCH_QUERY } from 'actions/search'
+import {
+  RESET,
+  SET_SEARCH_QUERY
+} from 'actions/search'
 
 let initialSearchResults = []
 
-if (process.env.NODE_ENV === 'development') {
-  initialSearchResults = require('../fixtures/search-justice-genesis').default
-}
+// if (process.env.NODE_ENV === 'development') {
+//   initialSearchResults = require('../fixtures/search-justice-genesis').default
+// }
 
 const initialState = fromJS({
   searchResults: initialSearchResults,
@@ -15,7 +18,8 @@ const initialState = fromJS({
   isSearching: false,
   error: null,
   searchResultCount: 0,
-  searchResultLastFile: ''
+  searchResultLastFile: '',
+  hasSearched: false
 })
 
 export default createReducer(initialState, {
@@ -26,6 +30,7 @@ export default createReducer(initialState, {
         .set('error', null)
         .set('searchResultCount', 0)
         .set('searchResultLastFile', '')
+        .set('hasSearched', true)
     })
   },
   [SEARCH_REQUEST.SUCCESS]: (state, { payload: searchResults }) => {
@@ -52,5 +57,8 @@ export default createReducer(initialState, {
         .set('searchResultCount', resultCount)
         .set('searchResultLastFile', track.file)
     })
+  },
+  [RESET]: () => {
+    return initialState
   }
 })

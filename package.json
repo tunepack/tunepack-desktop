@@ -1,7 +1,7 @@
 {
   "name": "tunepack-desktop",
   "productName": "Tunepack",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A modern tool for finding and downloading high quality audio files",
   "scripts": {
     "build": "run-p build:main build:renderer",
@@ -93,7 +93,9 @@
   },
   "homepage": "https://github.com/tunepack/tunepack-desktop#readme",
   "dependencies": {
+    "await-timeout": "^0.5.0",
     "canvas-fit": "^1.5.0",
+    "chokidar": "^3.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.4.0",
     "core-js": "^3.1.2",
@@ -179,6 +181,7 @@
     "lint-staged": "^8.1.7",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.6.0",
+    "node-loader": "^0.6.0",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
