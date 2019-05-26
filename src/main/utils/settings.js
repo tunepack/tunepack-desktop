@@ -131,6 +131,10 @@ const getDownloadHistory = () => {
   return settings.get('downloadHistory')
 }
 
+const setDownloadHistory = (downloadHistory) => {
+  return settings.set('downloadHistory', downloadHistory)
+}
+
 const addToDownloadHistory = ({
   track,
   downloadPath,
@@ -173,10 +177,12 @@ const updateDownloadHistoryEntry = (id, updateFields) => {
 }
 
 module.exports = {
+  getDownloadHistory,
   getRendererSettings,
   setRendererSettings,
   getDownloadsDir,
   setDownloadsDir,
+  setDownloadHistory,
   getSoulseekUsername,
   getSoulseekPassword,
   addToDownloadHistory,
