@@ -13,6 +13,8 @@ import {
   DOWNLOAD
 } from 'actions/downloads'
 
+import moment from 'moment'
+
 const initialState = List()
 
 const getInitialStateFromSettings = settings => {
@@ -21,7 +23,12 @@ const getInitialStateFromSettings = settings => {
   const { downloadHistory } = settings
 
   for (const download of downloadHistory) {
-    initialState.push(download.track)
+    const createdAt = moment.utc(download.createdAt).unix()
+
+    initialState.push({
+      createdAt,
+      ...download.track
+    })
   }
 
   return fromJS(initialState)
@@ -32,7 +39,8 @@ export default createReducer(initialState, {
     return getInitialStateFromSettings(settings)
   },
   [DOWNLOAD]: (state, { payload: track }) => {
-    return state.push(track)
+    const createdAt = moment.utc().unix()
+    return state.push(track.set('createdAt', createdAt))
   },
   [ON_UPDATE_SETTINGS]: (state, { payload: settings }) => {
     return getInitialStateFromSettings(settings)

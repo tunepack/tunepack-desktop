@@ -3,7 +3,7 @@ import View from 'components/View/View'
 import Title from 'components/Title/Title'
 import { connect } from 'react-redux'
 import ResultsList from 'components/ResultsList/ResultsList'
-import { getDownloadsList } from 'selectors/downloadsList'
+import { getSortedDownloadsList } from 'selectors/downloadsList'
 
 const DownloadsView = React.memo(({
   items
@@ -30,7 +30,7 @@ const DownloadsView = React.memo(({
 })
 
 const mapStateToProps = state => ({
-  items: getDownloadsList(state)
+  items: getSortedDownloadsList(state)
 })
 
 export default connect(
