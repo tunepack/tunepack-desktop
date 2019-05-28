@@ -11,8 +11,8 @@ const notifications = require('../utils/notifications')
 const fsUtils = require('../utils/fs')
 const debug = require('debug')('tunepack:download')
 
-const PROGRESS_INTERVAL = 150
-const SPEED_INTERVAL = 100
+const PROGRESS_INTERVAL = 250
+const SPEED_INTERVAL = 200
 
 const getErrorMessage = () => {
   return 'Something has gone wrong.'
