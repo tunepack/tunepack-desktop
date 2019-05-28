@@ -1,4 +1,4 @@
-const slsk = require('slsk-client')
+const slsk = require('../slsk')
 const faker = require('faker')
 
 const generateUsername = () => {

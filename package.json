@@ -136,7 +136,6 @@
     "reselect": "^4.0.0",
     "sanitize.css": "^9.0.0",
     "shortid": "^2.2.14",
-    "slsk-client": "github:tunepack/slsk-client",
     "source-map-support": "^0.5.12",
     "streamspeed": "^1.1.1",
     "string-hash": "^1.1.3",
