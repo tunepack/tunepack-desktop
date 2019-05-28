@@ -11,9 +11,11 @@ const getDoesFileExist = async path => {
   }
 }
 
+const copyFile = promisify(fs.copyFile)
 const unlink = promisify(fs.unlink)
 
 module.exports = {
   unlink,
+  copyFile,
   getDoesFileExist
 }

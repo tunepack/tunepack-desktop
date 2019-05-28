@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const _ = require('lodash')
+const tmp = require('tmp')
 
 const { createSendAndWait } = require('../utils/handlers')
 const Channel = require('../constants/Channel')
@@ -18,14 +19,31 @@ const getErrorMessage = () => {
   return 'Something has gone wrong.'
 }
 
+const createTmpFile = () => new Promise((resolve, reject) => {
+  tmp.file((error, path, fd, cleanupCallback) => {
+    if (error) {
+      return reject(error)
+    }
+
+    resolve({
+      path,
+      fd,
+      cleanupCallback
+    })
+  })
+})
+
 const downloadTrack = async ({
   downloadPath,
+  tmpPath,
   track,
   onProgress,
   onSpeed
 }) => {
   return new Promise(async (resolve, reject) => {
-    const writeStream = fs.createWriteStream(downloadPath)
+    const writeStream = fs.createWriteStream(tmpPath)
+
+    debug(`Downloading to: ${tmpPath}`)
 
     const totalSize = track.size
     let uploadedSize = 0
@@ -56,17 +74,26 @@ const downloadTrack = async ({
       writeStream.write(chunk)
     })
 
-    downloadStream.on('error', (error) => {
-      reject(error)
-    })
-
-    downloadStream.on('end', () => {
+    const handleEnd = async () => {
       writeStream.end()
 
+      await fsUtils.copyFile(tmpPath, downloadPath)
+      await fsUtils.unlink(tmpPath)
+
+      debug(`Copied and removed ${tmpPath} to: ${downloadPath}`)
+
       resolve({
+        tmpPath,
         downloadPath
       })
-    })
+    }
+
+    const handleError = (error) => {
+      reject(error)
+    }
+
+    downloadStream.on('error', handleError)
+    downloadStream.on('end', handleEnd)
   })
 }
 
@@ -111,11 +138,17 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       })
     }
 
+    const {
+      path: tmpPath,
+      cleanupCallback
+    } = await createTmpFile()
+
     const downloadPath = await getUniqueDownloadPath(track)
 
     settings.addToDownloadHistory({
       track,
       downloadPath,
+      tmpPath,
       isDownloading: true,
       isDownloaded: false,
       error: ''
@@ -123,10 +156,13 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
 
     await downloadTrack({
       downloadPath,
+      tmpPath,
       track,
       onProgress: handleProgress,
       onSpeed: handleSpeed
     })
+
+    cleanupCallback()
 
     settings.updateDownloadHistoryEntry(track.id, {
       isDownloading: false,

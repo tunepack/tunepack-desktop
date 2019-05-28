@@ -169,6 +169,7 @@ const setDownloadHistory = (downloadHistory) => {
 const addToDownloadHistory = ({
   track,
   downloadPath,
+  tmpPath,
   isDownloading,
   isDownloaded,
   hasError
@@ -183,6 +184,7 @@ const addToDownloadHistory = ({
       createdAt: moment.utc().format(),
       track,
       downloadPath,
+      tmpPath,
       isDownloading,
       isDownloaded,
       hasError
