@@ -14,7 +14,7 @@ const shortid = require('shortid')
 const activeStreams = require('../utils/activeStreams')
 const state = require('../utils/state')
 
-const PROGRESS_INTERVAL = 150
+const PROGRESS_INTERVAL = 300
 
 const getErrorMessage = () => {
   return 'Something has gone wrong.'
