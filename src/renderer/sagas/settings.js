@@ -21,7 +21,9 @@ export function * onInitialize () {
   yield put(actions.initializeRequest.start())
 
   try {
-    const { settings } = yield call(handlers.initialize)
+    const res = yield call(handlers.initialize)
+    const { settings } = res
+
     yield put(showLoading(false))
 
     setUid(settings.uid)
@@ -31,7 +33,11 @@ export function * onInitialize () {
       action: 'Initialize'
     })
 
-    yield put(actions.initializeRequest.success(settings))
+    yield put(actions.initializeRequest.success({
+      settings,
+      hasNewRelease: res?.hasNewRelease,
+      latestReleaseInfo: res?.latestReleaseInfo
+    }))
   } catch (res) {
     yield put(showLoading(false))
     yield put(showError(res.error))

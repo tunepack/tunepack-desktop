@@ -137,6 +137,7 @@
     "request-promise-native": "^1.0.7",
     "reselect": "^4.0.0",
     "sanitize.css": "^9.0.0",
+    "semver": "^6.1.1",
     "shortid": "^2.2.14",
     "source-map-support": "^0.5.12",
     "string-hash": "^1.1.3",

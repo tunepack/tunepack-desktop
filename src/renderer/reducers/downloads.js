@@ -30,7 +30,7 @@ const getInitialStateFromSettings = settings => {
 }
 
 export default createReducer(initialState, {
-  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: settings }) => {
+  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: { settings } }) => {
     return getInitialStateFromSettings(settings)
   },
   [ON_UPDATE_SETTINGS]: (state, { payload: settings }) => {

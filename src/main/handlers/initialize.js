@@ -5,15 +5,11 @@ const settings = require('../utils/settings')
 const Timeout = require('await-timeout')
 const debug = require('debug')('tunepack:initialize')
 const fsUtils = require('../utils/fs')
+const getLatestRelease = require('../utils/getLatestRelease')
+const config = require('../config')
+const semver = require('semver')
 
 const TIMEOUT = 3000
-
-// const getLatestRelease = require('./utils/getLatestRelease')
-// const config = require('./config')
-// const latestReleaseInfo = await getLatestRelease({
-//   owner: config.REPO_OWNER,
-//   repo: config.REPO_NAME
-// })
 
 const getCleanDownloadHistory = async downloadHistory => {
   const cleanDownloadHistory = [
@@ -60,6 +56,33 @@ const getCleanDownloadHistory = async downloadHistory => {
   return cleanDownloadHistory
 }
 
+const checkForUpdates = async () => {
+  try {
+    const latestReleaseInfo = await getLatestRelease({
+      owner: config.REPO_OWNER,
+      repo: config.REPO_NAME
+    })
+
+    const currentVersion = config.APP_VERSION
+    const latestVersion = latestReleaseInfo.name
+
+    const hasNewRelease = semver.gt(latestVersion, currentVersion)
+
+    if (hasNewRelease) {
+      debug(`Found a new release: ${latestVersion}, current release is: ${currentVersion}`)
+    } else {
+      debug(`This is the latest version of ${config.APP_NAME}`)
+    }
+
+    return {
+      latestReleaseInfo,
+      hasNewRelease
+    }
+  } catch (e) {
+    return null
+  }
+}
+
 createSendAndWait(Channel.INITIALIZE, async () => {
   const timer = new Timeout()
 
@@ -68,6 +91,8 @@ createSendAndWait(Channel.INITIALIZE, async () => {
 
   const username = settings.getSoulseekUsername()
   const password = settings.getSoulseekPassword()
+
+  const updateInfo = await checkForUpdates()
 
   try {
     await Promise.race([
@@ -104,6 +129,7 @@ createSendAndWait(Channel.INITIALIZE, async () => {
   const rendererSettings = settings.getRendererSettings()
 
   return {
+    ...updateInfo,
     settings: rendererSettings
   }
 })
