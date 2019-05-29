@@ -35,7 +35,7 @@ const getInitialStateFromSettings = settings => {
 }
 
 export default createReducer(initialState, {
-  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: settings }) => {
+  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: { settings } }) => {
     return getInitialStateFromSettings(settings)
   },
   [DOWNLOAD]: (state, { payload: track }) => {

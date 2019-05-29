@@ -10,8 +10,7 @@ import {
   DOWNLOAD,
   ON_DOWNLOAD_PROGRESS,
   ON_DOWNLOAD_ERROR,
-  ON_DOWNLOAD_COMPLETE,
-  ON_DOWNLOAD_SPEED
+  ON_DOWNLOAD_COMPLETE
 } from 'actions/downloads'
 
 const initialState = Map({
@@ -31,7 +30,7 @@ const getInitialStateFromSettings = settings => {
 }
 
 export default createReducer(initialState, {
-  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: settings }) => {
+  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: { settings } }) => {
     return getInitialStateFromSettings(settings)
   },
   [ON_UPDATE_SETTINGS]: (state, { payload: settings }) => {
@@ -48,19 +47,11 @@ export default createReducer(initialState, {
       downloadPath: null
     }))
   },
-  [ON_DOWNLOAD_PROGRESS]: (state, { payload: { track, progress } }) => {
+  [ON_DOWNLOAD_PROGRESS]: (state, { payload: { track, progress, avgSpeed } }) => {
     return state.withMutations((state) => {
       const currentTrackState = state
         .get(String(track.id))
         .set('progress', progress)
-
-      return state.set(String(track.id), currentTrackState)
-    })
-  },
-  [ON_DOWNLOAD_SPEED]: (state, { payload: { track, avgSpeed } }) => {
-    return state.withMutations((state) => {
-      const currentTrackState = state
-        .get(String(track.id))
         .set('avgSpeed', avgSpeed)
 
       return state.set(String(track.id), currentTrackState)

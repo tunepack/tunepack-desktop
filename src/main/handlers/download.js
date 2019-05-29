@@ -7,13 +7,14 @@ const { createSendAndWait } = require('../utils/handlers')
 const Channel = require('../constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
-const StreamSpeed = require('streamspeed')
 const notifications = require('../utils/notifications')
 const fsUtils = require('../utils/fs')
 const debug = require('debug')('tunepack:download')
+const shortid = require('shortid')
+const activeStreams = require('../utils/activeStreams')
+const state = require('../utils/state')
 
-const PROGRESS_INTERVAL = 250
-const SPEED_INTERVAL = 200
+const PROGRESS_INTERVAL = 300
 
 const getErrorMessage = () => {
   return 'Something has gone wrong.'
@@ -37,8 +38,7 @@ const downloadTrack = async ({
   downloadPath,
   tmpPath,
   track,
-  onProgress,
-  onSpeed
+  onProgress
 }) => {
   return new Promise(async (resolve, reject) => {
     const writeStream = fs.createWriteStream(tmpPath)
@@ -46,41 +46,31 @@ const downloadTrack = async ({
     debug(`Downloading to: ${tmpPath}`)
 
     const totalSize = track.size
+    const streamId = shortid.generate()
+
     let uploadedSize = 0
-
-    const downloadStream = await slsk.downloadStream({
-      file: track
-    })
-
-    const throttledOnSpeed = _.throttle((speed, avgSpeed) => {
-      onSpeed(avgSpeed)
-    }, SPEED_INTERVAL)
-
-    let ss = new StreamSpeed()
-    ss.add(downloadStream)
-    ss.on('speed', (speed, avgSpeed) => {
-      throttledOnSpeed(speed, avgSpeed)
-    })
+    const startTime = Date.now()
 
     const throttledOnProgress = _.throttle(() => {
-      const progress = (uploadedSize / totalSize * 100).toFixed(2)
-      onProgress(progress)
+      const now = Date.now()
+      const progress = Math.round(uploadedSize / totalSize * 100)
+      const avgSpeed = Math.round(uploadedSize / (now - startTime) * 1000)
+
+      onProgress(progress, avgSpeed)
     }, PROGRESS_INTERVAL)
 
-    downloadStream.on('data', (chunk) => {
-      const { length: chunkLength } = chunk
-      uploadedSize += chunkLength
+    const handleChunk = chunk => {
+      uploadedSize += chunk.length
       throttledOnProgress()
-      writeStream.write(chunk)
-    })
+    }
 
     const handleEnd = async () => {
-      writeStream.end()
-
       await fsUtils.copyFile(tmpPath, downloadPath)
       await fsUtils.unlink(tmpPath)
 
       debug(`Copied and removed ${tmpPath} to: ${downloadPath}`)
+
+      delete activeStreams.downloadStreams[streamId]
 
       resolve({
         tmpPath,
@@ -89,11 +79,23 @@ const downloadTrack = async ({
     }
 
     const handleError = (error) => {
+      delete activeStreams.downloadStreams[streamId]
+
       reject(error)
     }
 
-    downloadStream.on('error', handleError)
-    downloadStream.on('end', handleEnd)
+    const downloadStream = await slsk
+      .downloadStream({
+        file: track
+      })
+
+    activeStreams.downloadStreams[streamId] = downloadStream
+
+    downloadStream
+      .on('data', handleChunk)
+      .on('error', handleError)
+      .on('end', handleEnd)
+      .pipe(writeStream)
   })
 }
 
@@ -116,24 +118,16 @@ const getUniqueDownloadPath = async (track) => {
 
 createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   try {
-    const handleProgress = progress => {
-      settings.updateDownloadHistoryEntry(track.id, {
-        progress: String(progress)
-      })
+    const handleProgress = (progress, avgSpeed) => {
+      // This is an important crash fix
+      if (state.isQuitting) {
+        debug(`Ignoring the send of ${Channel.DOWNLOAD_PROGRESS} because the app is quitting`)
+        return
+      }
 
       event.reply(Channel.DOWNLOAD_PROGRESS, {
         track,
-        progress
-      })
-    }
-
-    const handleSpeed = avgSpeed => {
-      settings.updateDownloadHistoryEntry(track.id, {
-        avgSpeed
-      })
-
-      event.reply(Channel.DOWNLOAD_SPEED, {
-        track,
+        progress,
         avgSpeed
       })
     }
@@ -158,8 +152,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       downloadPath,
       tmpPath,
       track,
-      onProgress: handleProgress,
-      onSpeed: handleSpeed
+      onProgress: handleProgress
     })
 
     cleanupCallback()

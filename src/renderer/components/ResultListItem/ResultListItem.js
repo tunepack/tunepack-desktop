@@ -5,6 +5,7 @@ import SearchResultControls from '../ResultListItemControls/ResultListItemContro
 import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 import cx from 'classnames'
+import FileExtensionBadge from './FileExtensionBadge/FileExtensionBadge'
 
 const ResultListItem = React.memo(({
   track,
@@ -14,9 +15,9 @@ const ResultListItem = React.memo(({
   style,
   isDownloadsPage
 }) => {
-  const fileExtension = track.get('fileExtension')
-  const fileExtensionLabel = fileExtension === 'mp3'
-    ? `${fileExtension} - ${track.get('bitrate')}kbps` : fileExtension
+  const handleDownloadClick = () => {
+    onDownloadClick(track)
+  }
 
   return (
     <div
@@ -35,15 +36,10 @@ const ResultListItem = React.memo(({
               {track.get('folderName')}
             </div>
             <div className={styles.metaData}>
-              <Badge className={styles.badgeFileExtension}>
-                <div
-                  className={cx(styles.fileExtension, {
-                    [styles[fileExtension]]: fileExtension
-                  })}
-                >
-                  {fileExtensionLabel}
-                </div>
-              </Badge>
+              <FileExtensionBadge
+                track={track}
+                className={styles.badgeFileExtension}
+              />
               <Badge>
                 {track.get('fileSize')}
               </Badge>
@@ -52,7 +48,7 @@ const ResultListItem = React.memo(({
           <div className={styles.controls}>
             <SearchResultControls
               isDownloadsPage={isDownloadsPage}
-              onDownloadClick={() => { return onDownloadClick(track) }}
+              onDownloadClick={handleDownloadClick}
               download={download}
             />
           </div>

@@ -3,8 +3,10 @@ const { initMainWindow } = require('./utils/mainWindow')
 const { ensureDefaultDownloadsFolder } = require('./utils/downloadsFolder')
 const slsk = require('./utils/slsk')
 const downloadsFolderWatcher = require('./utils/downloadsFolderWatcher')
-// const debug = require('debug')('tunepack:main')
+const debug = require('debug')('tunepack:main')
 const menuUtils = require('./utils/menu')
+const activeStreams = require('./utils/activeStreams')
+const state = require('./utils/state')
 
 const menu = Menu.buildFromTemplate(menuUtils.getMenuTemplate())
 Menu.setApplicationMenu(menu)
@@ -37,17 +39,28 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-app.on('before-quit', e => {
-  if (app.isQuitting) return
+const destroyActiveStreams = (streams) => {
+  for (const [id, s] of Object.entries(streams)) {
+    debug(`Destroying active stream: ${id}`)
+    s.destroy()
+  }
+}
 
-  app.isQuitting = true
+app.on('before-quit', e => {
+  if (state.isQuitting) {
+    return
+  }
+
+  state.isQuitting = true
+
   e.preventDefault()
 
+  destroyActiveStreams(activeStreams.downloadStreams)
   slsk.disconnect()
 
   setTimeout(() => {
     app.quit()
-  }, 500) // quit after 4 secs, at most
+  }, 500)
 })
 
 app.on('ready', async () => {

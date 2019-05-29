@@ -10,15 +10,21 @@ import { RESET_REQUEST } from '../actions/app'
 const initialState = fromJS({
   isInitialized: false,
   isResetting: false,
-  data: {}
+  data: {},
+  hasNewRelease: false,
+  latestReleaseInfo: {}
 })
 
 export default createReducer(initialState, {
-  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload: data }) => {
+  [INITIALIZE_REQUEST.SUCCESS]: (state, { payload }) => {
     return state.withMutations((state) => {
+      const { settings: data } = payload
+
       return state
         .set('isInitialized', true)
         .set('data', fromJS(data))
+        .set('hasNewRelease', payload?.hasNewRelease || null)
+        .set('latestReleaseInfo', fromJS(payload?.latestReleaseInfo || {}))
     })
   },
   [SET_SETTINGS_REQUEST.SUCCESS]: (state, { payload: data }) => {

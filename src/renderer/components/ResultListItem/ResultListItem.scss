@@ -49,20 +49,6 @@ $progress-bar-width: 65px;
   color: darken($color-subtext, 10%);
 }
 
-.fileExtension {
-  &.mp3 {
-    color: $color-blue;
-  }
-
-  &.flac {
-    color: $color-red;
-  }
-
-  &.wav {
-    color: $color-orange;
-  }
-}
-
 .badgeFileExtension {
   margin-right: 5px;
 }
@@ -112,7 +98,7 @@ $progress-bar-width: 65px;
   z-index: 100;
   border-radius: $progress-bar-height;
   background-color: $color-primary;
-  transition: width 100ms ease;
+  transition: width 900ms ease;
   width: 0;
   height: $progress-bar-height;
 }
