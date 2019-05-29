@@ -2,7 +2,7 @@ const APP_NAME = 'Tunepack'
 const HOME_PAGE_URL = 'https://tunepack.io'
 const REPO_OWNER = 'tunepack'
 const REPO_NAME = 'tunepack-desktop'
-const APP_VERSION = '1.0.6'
+const APP_VERSION = '1.0.7'
 
 const stylingVariables = {
   WINDOW_WIDTH: '540px',
