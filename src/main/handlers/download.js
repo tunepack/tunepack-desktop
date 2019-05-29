@@ -11,7 +11,8 @@ const notifications = require('../utils/notifications')
 const fsUtils = require('../utils/fs')
 const debug = require('debug')('tunepack:download')
 const shortid = require('shortid')
-const downloadStreams = require('../utils/downloadStreams')
+const activeStreams = require('../utils/activeStreams')
+const state = require('../utils/state')
 
 const PROGRESS_INTERVAL = 150
 
@@ -47,25 +48,8 @@ const downloadTrack = async ({
     const totalSize = track.size
     const streamId = shortid.generate()
 
-    const downloadStream = await slsk.downloadStream({
-      file: track
-    })
-
-    downloadStreams[streamId] = {
-      downloadStream,
-      writeStream
-    }
-
     let uploadedSize = 0
     const startTime = Date.now()
-
-    const handleChunk = chunk => {
-      uploadedSize += chunk.length
-      throttledOnProgress()
-      writeStream.write(chunk)
-    }
-
-    downloadStream.on('data', handleChunk)
 
     const throttledOnProgress = _.throttle(() => {
       const now = Date.now()
@@ -75,13 +59,18 @@ const downloadTrack = async ({
       onProgress(progress, avgSpeed)
     }, PROGRESS_INTERVAL)
 
-    const handleEnd = async () => {
-      writeStream.end()
+    const handleChunk = chunk => {
+      uploadedSize += chunk.length
+      throttledOnProgress()
+    }
 
+    const handleEnd = async () => {
       await fsUtils.copyFile(tmpPath, downloadPath)
       await fsUtils.unlink(tmpPath)
 
       debug(`Copied and removed ${tmpPath} to: ${downloadPath}`)
+
+      delete activeStreams.downloadStreams[streamId]
 
       resolve({
         tmpPath,
@@ -90,11 +79,23 @@ const downloadTrack = async ({
     }
 
     const handleError = (error) => {
+      delete activeStreams.downloadStreams[streamId]
+
       reject(error)
     }
 
-    downloadStream.on('error', handleError)
-    downloadStream.on('end', handleEnd)
+    const downloadStream = await slsk
+      .downloadStream({
+        file: track
+      })
+
+    activeStreams.downloadStreams[streamId] = downloadStream
+
+    downloadStream
+      .on('data', handleChunk)
+      .on('error', handleError)
+      .on('end', handleEnd)
+      .pipe(writeStream)
   })
 }
 
@@ -118,6 +119,12 @@ const getUniqueDownloadPath = async (track) => {
 createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   try {
     const handleProgress = (progress, avgSpeed) => {
+      // This is an important crash fix
+      if (state.isQuitting) {
+        debug(`Ignoring the send of ${Channel.DOWNLOAD_PROGRESS} because the app is quitting`)
+        return
+      }
+
       event.reply(Channel.DOWNLOAD_PROGRESS, {
         track,
         progress,
