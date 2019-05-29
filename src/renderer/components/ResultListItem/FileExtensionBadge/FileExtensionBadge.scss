@@ -1,0 +1,15 @@
+@import 'base.scss';
+
+.component {
+  &.mp3 {
+    color: $color-blue;
+  }
+
+  &.flac {
+    color: $color-red;
+  }
+
+  &.wav {
+    color: $color-orange;
+  }
+}
