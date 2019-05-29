@@ -58,6 +58,7 @@ module.exports = class DefaultPeer extends Peer {
                   size: file.size,
                   slots: result.slots === 1,
                   bitrate: file.attribs ? file.attribs[0] : undefined,
+                  attributes: file.attribs,
                   speed: result.speed
                 })
               })
