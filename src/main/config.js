@@ -1,5 +1,7 @@
 const APP_NAME = 'Tunepack'
 const HOME_PAGE_URL = 'https://tunepack.io'
+const REPO_OWNER = 'tunepack'
+const REPO_NAME = 'tunepack-desktop'
 const APP_VERSION = '1.0.6'
 
 const stylingVariables = {
@@ -16,5 +18,7 @@ module.exports = {
   stylingVariables,
   APP_NAME,
   APP_VERSION,
-  HOME_PAGE_URL
+  HOME_PAGE_URL,
+  REPO_OWNER,
+  REPO_NAME
 }

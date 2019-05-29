@@ -8,6 +8,13 @@ const fsUtils = require('../utils/fs')
 
 const TIMEOUT = 3000
 
+// const getLatestRelease = require('./utils/getLatestRelease')
+// const config = require('./config')
+// const latestReleaseInfo = await getLatestRelease({
+//   owner: config.REPO_OWNER,
+//   repo: config.REPO_NAME
+// })
+
 const getCleanDownloadHistory = async downloadHistory => {
   const cleanDownloadHistory = [
     ...downloadHistory

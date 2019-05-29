@@ -47,7 +47,7 @@ app.on('before-quit', e => {
 
   setTimeout(() => {
     app.quit()
-  }, 500) // quit after 4 secs, at most
+  }, 500)
 })
 
 app.on('ready', async () => {
