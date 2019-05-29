@@ -1,0 +1,119 @@
+@import 'base.scss';
+
+$arrow-height: 8px;
+$header-bg-color: #f7f7f7;
+$width: 92vw;
+$border-radius: 3px;
+
+.component {
+  position: absolute;
+  top: $header-height - 5px;
+  z-index: 9000000;
+  transform: translateY(-5px) scale(0.95);
+  opacity: 0;
+  transition: transform 220ms, opacity 180ms ease;
+  will-change: transform, opacity;
+  pointer-events: none;
+
+  &.isVisible {
+    pointer-events: all;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.label {
+  margin-top: $arrow-height;
+  background-color: white;
+  border: 1px solid transparentize(black, .8);
+  border-radius: $border-radius;
+  box-shadow: 0 1px 10px 0 transparentize(black, .9);
+}
+
+.arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 50%;
+  margin-left: -$arrow-height;
+  border-left: $arrow-height solid transparent;
+  border-right: $arrow-height solid transparent;
+  border-bottom: $arrow-height solid darken($header-bg-color, 10%);
+}
+
+.header {
+  padding: $side-padding $side-padding * 1.5;
+  margin-bottom: 0;
+  font-size: 1rem;
+  color: inherit;
+  background-color: $header-bg-color;
+  border-bottom: 1px solid $color-border;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.headerTitle {
+  margin-right: 6px;
+}
+
+.headerVersion {
+  color: $color-subtext;
+}
+
+.body {
+  width: $width;
+  padding: $side-padding * 1.5;
+  color: #212529;
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+.bodyHeader {
+  margin-bottom: 1em;
+}
+
+.btnDownload,
+.btnSkip {
+  display: block;
+  width: 100%;
+}
+
+.btnSkip {
+  margin-top: 10px;
+}
+
+.changes {
+}
+
+.changesTitle {
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+
+.changesContent {
+  background-color: darken(white, 1%);
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+  padding: $side-padding;
+  font-size: 12px;
+
+  h1, h2, h3, h4, h5 {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  ul {
+    margin: 8px;
+    padding: 0 0 0 14px;
+  }
+
+  li {
+    margin: 0;
+  }
+}

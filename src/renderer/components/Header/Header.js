@@ -5,10 +5,19 @@ import Icon from 'components/Icon/Icon'
 import Folder from 'icons/Folder.svg'
 import { shell } from 'electron'
 import { connect } from 'react-redux'
-import { getDownloadsDir } from 'selectors/settings'
+
+import {
+  getDownloadsDir,
+  getHasNewRelease,
+  getLatestReleaseInfo
+} from 'selectors/settings'
+
+import Update from './components/Update/Update'
 
 const Header = ({
-  downloadsDir
+  downloadsDir,
+  hasNewRelease,
+  latestReleaseInfo
 }) => {
   const handleDownloadsFolderClick = () => {
     shell.openItem(downloadsDir)
@@ -19,6 +28,10 @@ const Header = ({
       <img
         className={styles.logo}
         src={LogoSmall}
+      />
+      <Update
+        hasNewRelease={hasNewRelease}
+        latestReleaseInfo={latestReleaseInfo}
       />
       <button
         onClick={handleDownloadsFolderClick}
@@ -34,7 +47,9 @@ const Header = ({
 }
 
 const mapStateToProps = state => ({
-  downloadsDir: getDownloadsDir(state)
+  downloadsDir: getDownloadsDir(state),
+  hasNewRelease: getHasNewRelease(state),
+  latestReleaseInfo: getLatestReleaseInfo(state)
 })
 
 const mapActionsToProps = null
