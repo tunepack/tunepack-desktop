@@ -48,7 +48,6 @@ const webpackConfig = {
   target: 'electron-main',
   mode: 'production',
   devtool: 'source-map',
-  context: paths.rootPath,
   output: {
     path: paths.buildPath,
     filename: 'main.js'
@@ -67,6 +66,7 @@ const webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
+      paths.rootPath,
       paths.rendererPath
     ],
     descriptionFiles: [
@@ -75,7 +75,10 @@ const webpackConfig = {
     extensions: [
       '.js',
       '.json'
-    ]
+    ],
+    alias: {
+      shared: paths.sharedPath
+    }
   },
   module: {
     rules

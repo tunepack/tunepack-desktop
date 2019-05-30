@@ -3,6 +3,7 @@ const HOME_PAGE_URL = 'https://tunepack.io'
 const REPO_OWNER = 'tunepack'
 const REPO_NAME = 'tunepack-desktop'
 const APP_VERSION = '1.0.7'
+const GA_TRACKING_ID = process.env.GA_TRACKING_ID
 
 const stylingVariables = {
   WINDOW_WIDTH: '540px',
@@ -20,5 +21,6 @@ module.exports = {
   APP_VERSION,
   HOME_PAGE_URL,
   REPO_OWNER,
-  REPO_NAME
+  REPO_NAME,
+  GA_TRACKING_ID
 }

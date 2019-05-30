@@ -3,7 +3,7 @@ import { withFormik, Form } from 'formik'
 import { Input, Field, FormGroup, Select, Toggle } from 'components/FormFields'
 import Button from 'components/Button/Button'
 
-import * as AudioFileExtensions from 'constants/AudioFileExtension'
+import * as AudioFileExtensions from 'src/shared/constants/AudioFileExtension'
 import * as Yup from 'yup'
 import DownloadLocation from '../DownloadsLocation/DownloadsLocation'
 import Icon from 'components/Icon/Icon'

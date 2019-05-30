@@ -1,7 +1,7 @@
 const path = require('path')
 const { BrowserWindow } = require('electron')
 const windowStateManager = require('electron-window-state')
-const config = require('../../config')
+const config = require('../../shared/config')
 
 let _mainWindow = null
 

@@ -1,4 +1,4 @@
-import * as Channel from 'constants/Channel'
+import * as Channel from 'src/shared/constants/Channel'
 import { ipcRenderer } from 'electron'
 
 export default (args) => {

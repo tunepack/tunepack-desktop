@@ -3,7 +3,7 @@ const slskUtils = require('./slsk')
 const { defaultDownloadsFolder } = require('./downloadsFolder')
 const AudioFileExtension = require('../constants/AudioFileExtension')
 const moment = require('moment-timezone')
-const config = require('../../config')
+const config = require('../../shared/config')
 const debug = require('debug')('tunepack:settings')
 const uuid = require('uuid/v1')
 

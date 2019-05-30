@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import * as Routes from 'constants/Routes'
+import * as Routes from 'src/shared/constants/Routes'
 import styles from './Nav.scss'
 import Icon from 'components/Icon/Icon'
 import IconSearch from 'icons/Search.svg'

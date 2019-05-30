@@ -5,7 +5,7 @@ import {
 } from 'redux'
 import { createHashHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
-import * as Channel from '../constants/Channel'
+import * as Channel from '../../shared/constants/Channel'
 
 import {
   routerMiddleware
