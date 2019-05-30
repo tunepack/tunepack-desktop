@@ -136,6 +136,7 @@
     "redux-saga": "^1.0.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
+    "require-dir": "^1.2.0",
     "reselect": "^4.0.0",
     "sanitize.css": "^9.0.0",
     "semver": "^6.1.1",

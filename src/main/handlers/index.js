@@ -1,7 +1,0 @@
-require('./initialize')
-require('./search')
-require('./download')
-require('./selectDir')
-require('./setSettings')
-require('./reload')
-require('./reset')
