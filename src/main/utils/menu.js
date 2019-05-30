@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../../config')
 
 function getMenuTemplate () {
   const isMac = process.platform === 'darwin'

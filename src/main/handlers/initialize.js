@@ -6,7 +6,7 @@ const Timeout = require('await-timeout')
 const debug = require('debug')('tunepack:initialize')
 const fsUtils = require('../utils/fs')
 const getLatestRelease = require('../utils/getLatestRelease')
-const config = require('../config')
+const config = require('../../config')
 const semver = require('semver')
 
 const TIMEOUT = 3000
