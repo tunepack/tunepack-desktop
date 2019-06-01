@@ -232,13 +232,6 @@ const webpackConfig = {
       paths.rootPath,
       paths.rendererPath
     ],
-    descriptionFiles: [
-      'package.json'
-    ],
-    extensions: [
-      '.js',
-      '.json'
-    ],
     alias: {
       shared: paths.sharedPath
     }

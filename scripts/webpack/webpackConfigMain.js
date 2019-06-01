@@ -5,6 +5,7 @@ const webpack = require('webpack')
 const LodashPlugin = require('lodash-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const nodeExternals = require('webpack-node-externals')
 
 const paths = require('../utils/paths')
 const env = require('../utils/env')
@@ -31,10 +32,10 @@ const plugins = []
 plugins.push(
   new LodashPlugin(),
   new webpack.EnvironmentPlugin({
-    NODE_ENV: 'production',
-    DEBUG_PROD: false,
-    START_MINIMIZED: false,
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID
+    NODE_ENV: env.isDev ? 'development' : 'production',
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+    DEBUG_PROD: process.env.DEBUG_PROD || false,
+    START_MINIMIZED: process.env.START_MINIMIZED || false
   }),
   new BundleAnalyzerPlugin({
     analyzerMode:
@@ -45,9 +46,10 @@ plugins.push(
 )
 
 const webpackConfig = {
+  externals: [nodeExternals()],
+  mode: env.isDev ? 'development' : 'production',
   target: 'electron-main',
-  mode: 'production',
-  devtool: 'source-map',
+  devtool: env.isDev ? 'inline-source-map' : 'source-map',
   output: {
     path: paths.buildPath,
     filename: 'main.js'
@@ -67,14 +69,7 @@ const webpackConfig = {
     modules: [
       'node_modules',
       paths.rootPath,
-      paths.rendererPath
-    ],
-    descriptionFiles: [
-      'package.json'
-    ],
-    extensions: [
-      '.js',
-      '.json'
+      paths.mainPath
     ],
     alias: {
       shared: paths.sharedPath

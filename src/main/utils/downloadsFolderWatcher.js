@@ -1,7 +1,7 @@
 const chokidar = require('chokidar')
 const debug = require('debug')('tunepack:downloadsFolderWatcher')
 const { getDownloadsDir, getDownloadHistory, setDownloadHistory, getRendererSettings } = require('./settings')
-const Channel = require('../constants/Channel')
+const Channel = require('shared/constants/Channel')
 const { getMainWindow } = require('../utils/mainWindow')
 
 const handleFileRemove = path => {

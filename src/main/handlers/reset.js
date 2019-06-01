@@ -1,4 +1,4 @@
-const Channel = require('../constants/Channel')
+const Channel = require('shared/constants/Channel')
 const { createSendAndWait } = require('../utils/handlers')
 const { getMainWindow } = require('../utils/mainWindow')
 const settings = require('../utils/settings')

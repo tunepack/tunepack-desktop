@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router'
-import * as Routes from 'src/shared/constants/Routes'
+import * as Routes from 'constants/Routes'
 import Layout from 'components/Layout/Layout'
 import AnimatedSwitch from 'components/AnimatedSwitch/AnimatedSwitch'
 

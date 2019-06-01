@@ -1,5 +1,5 @@
 const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('../constants/Channel')
+const Channel = require('shared/constants/Channel')
 const slsk = require('../utils/slsk')
 const settings = require('../utils/settings')
 const Timeout = require('await-timeout')

@@ -1,6 +1,6 @@
 const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('../constants/Channel')
-const AudioFileExtension = require('../constants/AudioFileExtension')
+const Channel = require('shared/constants/Channel')
+const AudioFileExtension = require('shared/constants/AudioFileExtension')
 const slsk = require('../utils/slsk')
 const { getTrackId } = require('../utils/tracks')
 const prettyBytes = require('pretty-bytes')

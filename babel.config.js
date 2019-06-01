@@ -1,10 +1,12 @@
 module.exports = api => {
+  const isElectron = process.env.IS_ELECTRON
+
   const development = api.env([
     'development',
     'test'
   ])
 
-  const plugins = [
+  let plugins = [
     '@babel/syntax-dynamic-import',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-class-properties',
@@ -12,19 +14,21 @@ module.exports = api => {
     'lodash'
   ]
 
-  if (development) {
-    plugins.push(
-      require('react-hot-loader/babel')
-    )
-  } else {
-    plugins.push(
-      require('babel-plugin-dev-expression'),
+  if (isElectron) {
+    if (development) {
+      plugins.push(
+        require('react-hot-loader/babel')
+      )
+    } else {
+      plugins.push(
+        require('babel-plugin-dev-expression'),
 
-      // babel-preset-react-optimize
-      require('@babel/plugin-transform-react-constant-elements'),
-      require('@babel/plugin-transform-react-inline-elements'),
-      require('babel-plugin-transform-react-remove-prop-types')
-    )
+        // babel-preset-react-optimize
+        require('@babel/plugin-transform-react-constant-elements'),
+        require('@babel/plugin-transform-react-inline-elements'),
+        require('babel-plugin-transform-react-remove-prop-types')
+      )
+    }
   }
 
   return {

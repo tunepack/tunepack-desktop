@@ -1,4 +1,4 @@
-const { app, Menu } = require('electron')
+import { app, Menu } from 'electron'
 const { initMainWindow } = require('./utils/mainWindow')
 const { ensureDefaultDownloadsFolder } = require('./utils/downloadsFolder')
 const slsk = require('./utils/slsk')

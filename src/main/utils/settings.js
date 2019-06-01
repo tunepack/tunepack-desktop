@@ -1,7 +1,7 @@
 const Store = require('electron-store')
 const slskUtils = require('./slsk')
 const { defaultDownloadsFolder } = require('./downloadsFolder')
-const AudioFileExtension = require('../constants/AudioFileExtension')
+const AudioFileExtension = require('shared/constants/AudioFileExtension')
 const moment = require('moment-timezone')
 const config = require('../../shared/config')
 const debug = require('debug')('tunepack:settings')

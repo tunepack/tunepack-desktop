@@ -10,7 +10,7 @@
     "build:electron": "cross-env NODE_ENV=development electron ./build/main.js",
     "build:preview": "npm run build && npm run build:electron",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts/webpack/webpackConfigRenderer.js",
-    "dev:main": "cross-env NODE_ENV=development electron --require @babel/register ./src/main/index.js",
+    "dev:main": "cross-env NODE_ENV=development IS_ELECTRON=true webpack --config ./scripts/webpack/webpackConfigMain.js && cross-env NODE_ENV=development electron ./build/main.js",
     "package": "npm run build && electron-builder --publish never",
     "package:all": "npm run build && electron-builder build -mwl",
     "package:win": "npm run build && electron-builder build --win --x64",
@@ -136,7 +136,6 @@
     "redux-saga": "^1.0.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
-    "require-dir": "^1.2.0",
     "reselect": "^4.0.0",
     "sanitize.css": "^9.0.0",
     "semver": "^6.1.1",
@@ -162,6 +161,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "chalk": "^2.4.2",
     "cross-env": "^5.2.0",
@@ -205,7 +205,8 @@
     "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.4.1",
+    "webpack-node-externals": "^1.7.2"
   },
   "devEngines": {
     "node": "12.2.0",

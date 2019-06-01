@@ -2,7 +2,6 @@ const path = require('path')
 const { BrowserWindow } = require('electron')
 const windowStateManager = require('electron-window-state')
 const config = require('../../shared/config')
-const requireDir = require('require-dir')
 
 let _mainWindow = null
 
@@ -41,7 +40,7 @@ const initMainWindow = () => {
   _mainWindow.loadURL(url)
 
   // Setup handlers
-  requireDir('../handlers')
+  require('../handlers')
 
   _mainWindow.once('ready-to-show', () => {
     if (!_mainWindow) {
