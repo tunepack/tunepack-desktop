@@ -167,6 +167,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "dotenv": "^8.0.0",
+    "dotenv-webpack": "^1.7.0",
     "electron": "^5.0.2",
     "electron-builder": "^20.41.0",
     "electron-debug": "^3.0.0",
@@ -205,7 +206,7 @@
     "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1",
+    "webpack-dev-server": "^3.5.1",
     "webpack-node-externals": "^1.7.2"
   },
   "devEngines": {

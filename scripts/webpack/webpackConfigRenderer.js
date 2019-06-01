@@ -11,6 +11,7 @@ const { spawn } = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { injectGetFunction } = require('./utils/sassLoader')
+const Dotenv = require('dotenv-webpack')
 
 const paths = require('../utils/paths')
 const env = require('../utils/env')
@@ -156,15 +157,15 @@ let plugins = [
     } : false
   }),
   new LodashPlugin(),
-  new webpack.EnvironmentPlugin({
-    NODE_ENV: env.isDev ? 'development' : 'production',
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID
-  }),
   new SpritePlugin(),
   new BundleAnalyzerPlugin({
     analyzerMode:
       process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
     openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+  }),
+  new Dotenv({
+    safe: true,
+    systemvars: true
   })
 ]
 

@@ -6,6 +6,7 @@ const LodashPlugin = require('lodash-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const nodeExternals = require('webpack-node-externals')
+const Dotenv = require('dotenv-webpack')
 
 const paths = require('../utils/paths')
 const env = require('../utils/env')
@@ -31,18 +32,16 @@ const plugins = []
 
 plugins.push(
   new LodashPlugin(),
-  new webpack.EnvironmentPlugin({
-    NODE_ENV: env.isDev ? 'development' : 'production',
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
-    DEBUG_PROD: process.env.DEBUG_PROD || false,
-    START_MINIMIZED: process.env.START_MINIMIZED || false
-  }),
   new BundleAnalyzerPlugin({
     analyzerMode:
       process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
     openAnalyzer: process.env.OPEN_ANALYZER === 'true'
   }),
-  new webpack.NamedModulesPlugin()
+  new webpack.NamedModulesPlugin(),
+  new Dotenv({
+    safe: true,
+    systemvars: true
+  })
 )
 
 const webpackConfig = {
