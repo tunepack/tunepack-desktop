@@ -1,26 +1,27 @@
-const path = require('path')
-const { BrowserWindow } = require('electron')
-const windowStateManager = require('electron-window-state')
-const config = require('../config')
+import path from 'path'
+import { BrowserWindow } from 'electron'
+import windowStateManager from 'electron-window-state'
+import injectedStylingVars from 'shared/injectedStylingVars'
+import * as config from 'shared/config'
 
 let _mainWindow = null
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const getMainWindow = () => {
+export const getMainWindow = () => {
   return _mainWindow
 }
 
-const initMainWindow = () => {
+export const initMainWindow = () => {
   const mainWindowState = windowStateManager()
 
   _mainWindow = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
-    width: parseInt(config.stylingVariables.WINDOW_WIDTH),
-    height: parseInt(config.stylingVariables.WINDOW_HEIGHT),
+    width: parseInt(injectedStylingVars.WINDOW_WIDTH),
+    height: parseInt(injectedStylingVars.WINDOW_HEIGHT),
     resizable: false,
-    title: 'Tunepack',
+    title: config.APP_NAME,
     maximizable: false,
     titleBarStyle: 'hiddenInset',
     icon: path.resolve(__dirname, '../../../resources/icon.icns'),
@@ -47,7 +48,7 @@ const initMainWindow = () => {
       throw new Error('"mainWindow" is not defined')
     }
 
-    if (process.env.START_MINIMIZED === 'true') {
+    if (config.START_MINIMIZED === 'true') {
       _mainWindow.minimize()
     } else {
       _mainWindow.show()
@@ -58,9 +59,4 @@ const initMainWindow = () => {
   _mainWindow.on('closed', () => {
     _mainWindow = null
   })
-}
-
-module.exports = {
-  getMainWindow,
-  initMainWindow
 }

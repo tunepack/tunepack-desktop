@@ -1,11 +1,6 @@
 /* eslint-disable no-console */
 
-const chalk = require('chalk')
+import chalk from 'chalk'
 
-const info = message => { return console.log(chalk.bgCyan(message)) }
-const error = message => { return console.error(chalk.bgRed(message)) }
-
-module.exports = {
-  info,
-  error
-}
+export const info = message => { return console.log(chalk.bgCyan(message)) }
+export const error = message => { return console.error(chalk.bgRed(message)) }

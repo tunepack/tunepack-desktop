@@ -5,6 +5,8 @@ const webpack = require('webpack')
 const LodashPlugin = require('lodash-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const nodeExternals = require('webpack-node-externals')
+const Dotenv = require('dotenv-webpack')
 
 const paths = require('../utils/paths')
 const env = require('../utils/env')
@@ -13,7 +15,7 @@ const rules = []
 
 // babel
 rules.push({
-  test: /\.js/,
+  test: /\.js$/,
   loader: 'babel-loader',
   exclude: /node_modules/,
   query: {
@@ -21,6 +23,7 @@ rules.push({
   }
 })
 
+// .node
 rules.push({
   test: /\.node$/,
   use: 'node-loader'
@@ -30,25 +33,23 @@ const plugins = []
 
 plugins.push(
   new LodashPlugin(),
-  new webpack.EnvironmentPlugin({
-    NODE_ENV: 'production',
-    DEBUG_PROD: false,
-    START_MINIMIZED: false,
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID
-  }),
   new BundleAnalyzerPlugin({
     analyzerMode:
       process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
     openAnalyzer: process.env.OPEN_ANALYZER === 'true'
   }),
-  new webpack.NamedModulesPlugin()
+  new webpack.NamedModulesPlugin(),
+  new Dotenv({
+    safe: true,
+    systemvars: true
+  })
 )
 
 const webpackConfig = {
+  externals: env.isDev ? [nodeExternals()] : undefined,
+  mode: env.isDev ? 'development' : 'production',
   target: 'electron-main',
-  mode: 'production',
   devtool: 'source-map',
-  context: paths.rootPath,
   output: {
     path: paths.buildPath,
     filename: 'main.js'
@@ -67,14 +68,8 @@ const webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
-      paths.rendererPath
-    ],
-    descriptionFiles: [
-      'package.json'
-    ],
-    extensions: [
-      '.js',
-      '.json'
+      paths.srcPath,
+      paths.mainPath
     ]
   },
   module: {
@@ -88,4 +83,4 @@ const webpackConfig = {
   }
 }
 
-module.exports = webpackConfig
+export default webpackConfig

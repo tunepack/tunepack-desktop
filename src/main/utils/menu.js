@@ -1,10 +1,10 @@
-const config = require('../config')
+import { APP_NAME } from 'shared/config'
 
-function getMenuTemplate () {
+export function getMenuTemplate () {
   const isMac = process.platform === 'darwin'
 
   return isMac ? [{
-    label: config.APP_NAME,
+    label: APP_NAME,
     submenu: [{
       role: 'about'
     }, {
@@ -22,8 +22,4 @@ function getMenuTemplate () {
       { role: 'selectAll' }
     ]
   }] : []
-}
-
-module.exports = {
-  getMenuTemplate
 }

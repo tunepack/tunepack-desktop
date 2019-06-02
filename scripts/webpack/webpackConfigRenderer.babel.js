@@ -1,3 +1,5 @@
+import injectedStylingVars from '../../src/shared/injectedStylingVars'
+
 require('dotenv').config()
 
 const path = require('path')
@@ -11,12 +13,12 @@ const { spawn } = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { injectGetFunction } = require('./utils/sassLoader')
+const Dotenv = require('dotenv-webpack')
 
 const paths = require('../utils/paths')
 const env = require('../utils/env')
 
 const port = process.env.PORT || 1212
-const config = require('../../src/main/config')
 
 const rules = []
 
@@ -28,7 +30,7 @@ const getStyleLoaders = loaders => {
 
 // babel
 rules.push({
-  test: /\.js/,
+  test: /\.js$/,
   loader: 'babel-loader',
   exclude: /node_modules/,
   query: {
@@ -59,7 +61,7 @@ rules.push({
         includePaths: [
           path.resolve(paths.rendererPath, 'styles')
         ],
-        functions: injectGetFunction(config.stylingVariables)
+        functions: injectGetFunction(injectedStylingVars)
       }
     }
   ])
@@ -156,15 +158,15 @@ let plugins = [
     } : false
   }),
   new LodashPlugin(),
-  new webpack.EnvironmentPlugin({
-    NODE_ENV: env.isDev ? 'development' : 'production',
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID
-  }),
   new SpritePlugin(),
   new BundleAnalyzerPlugin({
     analyzerMode:
       process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
     openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+  }),
+  new Dotenv({
+    safe: true,
+    systemvars: true
   })
 ]
 
@@ -205,7 +207,6 @@ const entry = env.isDev ? [
 
 const webpackConfig = {
   mode: env.isDev ? 'development' : 'production',
-  context: paths.rootPath,
   target: 'electron-renderer',
   devtool: env.isDev ? 'inline-source-map' : 'source-map',
   output,
@@ -230,14 +231,8 @@ const webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
+      paths.srcPath,
       paths.rendererPath
-    ],
-    descriptionFiles: [
-      'package.json'
-    ],
-    extensions: [
-      '.js',
-      '.json'
     ]
   },
   entry,

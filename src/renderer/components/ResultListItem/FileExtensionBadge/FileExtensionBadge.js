@@ -2,7 +2,7 @@ import React from 'react'
 import Badge from 'components/Badge/Badge'
 import styles from './FileExtensionBadge.scss'
 import cx from 'classnames'
-import * as AudioFileExtension from 'constants/AudioFileExtension'
+import * as AudioFileExtension from 'shared/constants/AudioFileExtension'
 
 const getFileExtensionLabel = (track) => {
   const fileExtension = track.get('fileExtension')

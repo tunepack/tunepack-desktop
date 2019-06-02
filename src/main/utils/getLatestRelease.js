@@ -1,4 +1,4 @@
-const request = require('request-promise-native')
+import request from 'request-promise-native'
 
 const getLatestRelease = ({
   owner,
@@ -13,4 +13,4 @@ const getLatestRelease = ({
   })
 }
 
-module.exports = getLatestRelease
+export default getLatestRelease

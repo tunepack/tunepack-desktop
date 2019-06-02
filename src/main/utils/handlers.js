@@ -1,6 +1,6 @@
-const { ipcMain } = require('electron')
+import { ipcMain } from 'electron'
 
-const createSendAndWait = (channel, handler) => {
+export const createSendAndWait = (channel, handler) => {
   const receiverChannel = `${channel}:ping`
   const responseChannel = `${channel}:pong`
 
@@ -26,8 +26,4 @@ const createSendAndWait = (channel, handler) => {
   }
 
   ipcMain.on(receiverChannel, handleResponse)
-}
-
-module.exports = {
-  createSendAndWait
 }

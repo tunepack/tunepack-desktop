@@ -1,18 +1,18 @@
-const slsk = require('../slsk')
-const faker = require('faker')
+import faker from 'faker'
+import slsk from '../slsk'
 
-const generateUsername = () => {
+export const generateUsername = () => {
   return faker.fake('{{internet.userName}}')
 }
 
-const generatePassword = () => {
+export const generatePassword = () => {
   return faker.fake('{{internet.password}}')
 }
 
 let _client = null
 let _isConnected = false
 
-const connect = ({
+export const connect = ({
   username: user,
   password: pass,
   timeout
@@ -38,7 +38,7 @@ const connect = ({
   })
 }
 
-const search = ({
+export const search = ({
   query,
   duration,
   onFound
@@ -59,7 +59,7 @@ const search = ({
   })
 }
 
-const download = options => {
+export const download = options => {
   return new Promise((resolve, reject) => {
     _client.download(options, (error, res) => {
       if (error) {
@@ -71,7 +71,7 @@ const download = options => {
   })
 }
 
-const downloadStream = options => {
+export const downloadStream = options => {
   return new Promise((resolve, reject) => {
     _client.downloadStream(options, (error, res) => {
       if (error) {
@@ -83,21 +83,11 @@ const downloadStream = options => {
   })
 }
 
-const disconnect = () => {
+export const disconnect = () => {
   if (!_isConnected) {
     return
   }
 
   slsk.disconnect()
   _isConnected = false
-}
-
-module.exports = {
-  connect,
-  search,
-  download,
-  downloadStream,
-  generateUsername,
-  generatePassword,
-  disconnect
 }

@@ -2,11 +2,6 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
 }
 
-const env = process.env.NODE_ENV
-const isDev = env === 'development'
-const isProd = env === 'production'
-
-module.exports = {
-  isDev,
-  isProd
-}
+export const env = process.env.NODE_ENV
+export const isDev = env === 'development'
+export const isProd = env === 'production'

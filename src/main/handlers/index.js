@@ -1,7 +1,7 @@
-require('./initialize')
-require('./search')
-require('./download')
-require('./selectDir')
-require('./setSettings')
-require('./reload')
-require('./reset')
+import './download'
+import './initialize'
+import './reload'
+import './reset'
+import './search'
+import './selectDir'
+import './setSettings'

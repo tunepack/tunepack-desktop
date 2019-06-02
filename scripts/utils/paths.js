@@ -1,17 +1,9 @@
-const path = require('path')
+import path from 'path'
 
-const rootPath = path.resolve(__dirname, '../../')
-const srcPath = path.resolve(rootPath, 'src')
-const rendererPath = path.resolve(srcPath, 'renderer')
-const mainPath = path.resolve(srcPath, 'main')
-const buildPath = path.resolve(rootPath, 'build')
-const iconsPath = path.resolve(rendererPath, 'icons')
-
-module.exports = {
-  rootPath,
-  srcPath,
-  rendererPath,
-  mainPath,
-  buildPath,
-  iconsPath
-}
+export const rootPath = path.resolve(__dirname, '../../')
+export const srcPath = path.resolve(rootPath, 'src')
+export const rendererPath = path.resolve(srcPath, 'renderer')
+export const mainPath = path.resolve(srcPath, 'main')
+export const sharedPath = path.resolve(srcPath, 'shared')
+export const buildPath = path.resolve(rootPath, 'build')
+export const iconsPath = path.resolve(rendererPath, 'icons')
