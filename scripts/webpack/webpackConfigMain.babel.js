@@ -46,7 +46,7 @@ plugins.push(
 )
 
 const webpackConfig = {
-  externals: [nodeExternals()],
+  externals: env.isDev ? [nodeExternals()] : undefined,
   mode: env.isDev ? 'development' : 'production',
   target: 'electron-main',
   devtool: 'source-map',
