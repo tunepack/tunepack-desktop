@@ -2,7 +2,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const stat = promisify(fs.stat)
 
-const getDoesFileExist = async path => {
+export const getDoesFileExist = async path => {
   try {
     await stat(path)
     return true
@@ -11,11 +11,5 @@ const getDoesFileExist = async path => {
   }
 }
 
-const copyFile = promisify(fs.copyFile)
-const unlink = promisify(fs.unlink)
-
-module.exports = {
-  unlink,
-  copyFile,
-  getDoesFileExist
-}
+export const copyFile = promisify(fs.copyFile)
+export const unlink = promisify(fs.unlink)

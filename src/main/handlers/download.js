@@ -1,18 +1,19 @@
-const path = require('path')
-const fs = require('fs')
-const _ = require('lodash')
-const tmp = require('tmp')
+import path from 'path'
+import fs from 'fs'
+import _ from 'lodash'
+import createDebug from 'debug'
+import shortid from 'shortid'
+import tmp from 'tmp'
 
-const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('shared/constants/Channel')
-const slsk = require('../utils/slsk')
-const settings = require('../utils/settings')
-const notifications = require('../utils/notifications')
-const fsUtils = require('../utils/fs')
-const debug = require('debug')('tunepack:download')
-const shortid = require('shortid')
-const activeStreams = require('../utils/activeStreams')
-const state = require('../utils/state')
+import { createSendAndWait } from '../utils/handlers'
+import * as Channel from 'shared/constants/Channel'
+import * as slsk from '../utils/slsk'
+import * as settings from '../utils/settings'
+import * as notifications from '../utils/notifications'
+import * as fsUtils from '../utils/fs'
+import * as state from '../utils/state'
+
+const debug = createDebug('tunepack:download')
 
 const PROGRESS_INTERVAL = 300
 
@@ -70,7 +71,7 @@ const downloadTrack = async ({
 
       debug(`Copied and removed ${tmpPath} to: ${downloadPath}`)
 
-      delete activeStreams.downloadStreams[streamId]
+      state.removeActiveStream(streamId)
 
       resolve({
         tmpPath,
@@ -79,8 +80,7 @@ const downloadTrack = async ({
     }
 
     const handleError = (error) => {
-      delete activeStreams.downloadStreams[streamId]
-
+      state.removeActiveStream(streamId)
       reject(error)
     }
 
@@ -89,7 +89,7 @@ const downloadTrack = async ({
         file: track
       })
 
-    activeStreams.downloadStreams[streamId] = downloadStream
+    state.addActiveStream(streamId, downloadStream)
 
     downloadStream
       .on('data', handleChunk)
@@ -120,7 +120,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
   try {
     const handleProgress = (progress, avgSpeed) => {
       // This is an important crash fix
-      if (state.isQuitting) {
+      if (state.getState().isQuitting) {
         debug(`Ignoring the send of ${Channel.DOWNLOAD_PROGRESS} because the app is quitting`)
         return
       }

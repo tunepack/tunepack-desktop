@@ -1,3 +1,1 @@
-const searches = {}
-
-module.exports = searches
+export let searches = {}

@@ -1,3 +1,5 @@
+import injectedStylingVars from '../../src/shared/injectedStylingVars'
+
 require('dotenv').config()
 
 const path = require('path')
@@ -17,7 +19,6 @@ const paths = require('../utils/paths')
 const env = require('../utils/env')
 
 const port = process.env.PORT || 1212
-const config = require('../../src/shared/config')
 
 const rules = []
 
@@ -29,7 +30,7 @@ const getStyleLoaders = loaders => {
 
 // babel
 rules.push({
-  test: /\.js/,
+  test: /\.js$/,
   loader: 'babel-loader',
   exclude: /node_modules/,
   query: {
@@ -60,7 +61,7 @@ rules.push({
         includePaths: [
           path.resolve(paths.rendererPath, 'styles')
         ],
-        functions: injectGetFunction(config.stylingVariables)
+        functions: injectGetFunction(injectedStylingVars)
       }
     }
   ])
@@ -230,12 +231,9 @@ const webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
-      paths.rootPath,
+      paths.srcPath,
       paths.rendererPath
-    ],
-    alias: {
-      shared: paths.sharedPath
-    }
+    ]
   },
   entry,
   module: {

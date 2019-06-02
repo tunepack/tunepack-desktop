@@ -1,13 +1,17 @@
-const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('shared/constants/Channel')
-const slsk = require('../utils/slsk')
-const settings = require('../utils/settings')
-const Timeout = require('await-timeout')
-const debug = require('debug')('tunepack:initialize')
-const fsUtils = require('../utils/fs')
-const getLatestRelease = require('../utils/getLatestRelease')
-const config = require('../../shared/config')
-const semver = require('semver')
+import Timeout from 'await-timeout'
+import createDebug from 'debug'
+import semver from 'semver'
+
+import * as Channel from 'shared/constants/Channel'
+import { createSendAndWait } from '../utils/handlers'
+import * as fsUtils from '../utils/fs'
+import * as slsk from '../utils/slsk'
+import * as settings from '../utils/settings'
+
+import getLatestRelease from '../utils/getLatestRelease'
+
+import * as config from 'shared/config'
+const debug = createDebug('tunepack:initialize')
 
 const TIMEOUT = 3000
 

@@ -1,7 +1,9 @@
-const { Notification, shell } = require('electron')
-const debug = require('debug')('tunepack:notifications')
+import { Notification, shell } from 'electron'
+import createDebug from 'debug'
 
-const showDownloadedNotification = ({
+const debug = createDebug('tunepack:notifications')
+
+export const showDownloadedNotification = ({
   track,
   downloadPath
 }) => {
@@ -18,8 +20,4 @@ const showDownloadedNotification = ({
   debug('Showing download complete notification')
 
   notification.show()
-}
-
-module.exports = {
-  showDownloadedNotification
 }

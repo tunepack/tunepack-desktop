@@ -1,8 +1,8 @@
-const Channel = require('shared/constants/Channel')
-const { createSendAndWait } = require('../utils/handlers')
-const { getMainWindow } = require('../utils/mainWindow')
-const settings = require('../utils/settings')
-const slsk = require('../utils/slsk')
+import * as Channel from 'shared/constants/Channel'
+import { createSendAndWait } from '../utils/handlers'
+import { getMainWindow } from '../utils/mainWindow'
+import * as slsk from '../utils/slsk'
+import * as settings from '../utils/settings'
 
 const wait = duration => new Promise((resolve) => {
   setTimeout(resolve, duration)

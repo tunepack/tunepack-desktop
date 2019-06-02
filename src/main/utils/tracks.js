@@ -1,10 +1,6 @@
-const stringHash = require('string-hash')
+import stringHash from 'string-hash'
 
-const getTrackId = (track) => {
+export const getTrackId = (track) => {
   const rawId = `${track.user}___${track.file}`
   return stringHash(rawId)
-}
-
-module.exports = {
-  getTrackId
 }

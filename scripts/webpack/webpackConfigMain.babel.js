@@ -15,7 +15,7 @@ const rules = []
 
 // babel
 rules.push({
-  test: /\.js/,
+  test: /\.js$/,
   loader: 'babel-loader',
   exclude: /node_modules/,
   query: {
@@ -23,6 +23,7 @@ rules.push({
   }
 })
 
+// .node
 rules.push({
   test: /\.node$/,
   use: 'node-loader'
@@ -48,7 +49,7 @@ const webpackConfig = {
   externals: [nodeExternals()],
   mode: env.isDev ? 'development' : 'production',
   target: 'electron-main',
-  devtool: env.isDev ? 'inline-source-map' : 'source-map',
+  devtool: 'source-map',
   output: {
     path: paths.buildPath,
     filename: 'main.js'
@@ -67,12 +68,9 @@ const webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
-      paths.rootPath,
+      paths.srcPath,
       paths.mainPath
-    ],
-    alias: {
-      shared: paths.sharedPath
-    }
+    ]
   },
   module: {
     rules
@@ -85,4 +83,4 @@ const webpackConfig = {
   }
 }
 
-module.exports = webpackConfig
+export default webpackConfig

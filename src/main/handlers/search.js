@@ -1,12 +1,13 @@
-const { createSendAndWait } = require('../utils/handlers')
-const Channel = require('shared/constants/Channel')
-const AudioFileExtension = require('shared/constants/AudioFileExtension')
-const slsk = require('../utils/slsk')
-const { getTrackId } = require('../utils/tracks')
-const prettyBytes = require('pretty-bytes')
-const fileExtension = require('file-extension')
-const _ = require('lodash')
-const searches = require('../utils/searches')
+import _ from 'lodash'
+import prettyBytes from 'pretty-bytes'
+import fileExtension from 'file-extension'
+
+import * as Channel from 'shared/constants/Channel'
+import * as AudioFileExtension from 'shared/constants/AudioFileExtension'
+import { createSendAndWait } from '../utils/handlers'
+import * as slsk from '../utils/slsk'
+import { getTrackId } from '../utils/tracks'
+import { searches } from '../utils/searches'
 
 const FOUND_INTERVAL = 16
 

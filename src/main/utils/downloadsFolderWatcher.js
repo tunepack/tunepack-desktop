@@ -1,29 +1,31 @@
-const chokidar = require('chokidar')
-const debug = require('debug')('tunepack:downloadsFolderWatcher')
-const { getDownloadsDir, getDownloadHistory, setDownloadHistory, getRendererSettings } = require('./settings')
-const Channel = require('shared/constants/Channel')
-const { getMainWindow } = require('../utils/mainWindow')
+import chokidar from 'chokidar'
+import createDebug from 'debug'
+import * as Channel from 'shared/constants/Channel'
+import * as settings from './settings'
+import { getMainWindow } from './mainWindow'
+
+const debug = createDebug('tunepack:downloadsFolderWatcher')
 
 const handleFileRemove = path => {
   debug(`File in downloadsFolder got removed at: ${path}`)
 
-  const downloadHistory = getDownloadHistory()
+  const downloadHistory = settings.getDownloadHistory()
 
   const cleanDownloadHistory = [
     ...downloadHistory
   ]
     .filter(d => d.downloadPath !== path)
 
-  setDownloadHistory(cleanDownloadHistory)
+  settings.setDownloadHistory(cleanDownloadHistory)
 
-  const rendererSettings = getRendererSettings()
+  const rendererSettings = settings.getRendererSettings()
   const mainWindow = getMainWindow()
 
   mainWindow.send(Channel.UPDATE_SETTINGS, rendererSettings)
 }
 
-const start = () => {
-  const downloadsDir = getDownloadsDir()
+export const start = () => {
+  const downloadsDir = settings.getDownloadsDir()
   const glob = `${downloadsDir}/**/*.*`
 
   debug(`Starting to watch downloads folder at: ${glob}`)
@@ -34,8 +36,4 @@ const start = () => {
     .on('unlink', handleFileRemove)
 
   return true
-}
-
-module.exports = {
-  start
 }

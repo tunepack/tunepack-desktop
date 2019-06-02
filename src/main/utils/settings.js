@@ -1,11 +1,13 @@
-const Store = require('electron-store')
-const slskUtils = require('./slsk')
-const { defaultDownloadsFolder } = require('./downloadsFolder')
-const AudioFileExtension = require('shared/constants/AudioFileExtension')
-const moment = require('moment-timezone')
-const config = require('../../shared/config')
-const debug = require('debug')('tunepack:settings')
-const uuid = require('uuid/v1')
+import Store from 'electron-store'
+import moment from 'moment-timezone'
+import createDebug from 'debug'
+import uuid from 'uuid/v1'
+import { defaultDownloadsFolder } from './downloadsFolder'
+import * as AudioFileExtension from 'shared/constants/AudioFileExtension'
+import * as config from 'shared/config'
+import * as slskUtils from './slsk'
+
+const debug = createDebug('tunepack:settings')
 
 moment.tz.setDefault('UTC')
 
@@ -72,7 +74,7 @@ const settings = new Store({
   }
 })
 
-const clear = (initialSettings) => {
+export const clear = (initialSettings) => {
   debug(`Clearing settings`)
   settings.clear()
 
@@ -104,7 +106,7 @@ if (lastVersion === undefined) {
 
 debug(`Settings loaded`, settings.get())
 
-const getRendererSettings = () => {
+export const getRendererSettings = () => {
   const downloadsDir = settings.get('downloadsDir')
   const searchFileExtensions = settings.get('searchFileExtensions')
   const searchHasOnlyHighBitrate = settings.get('searchHasOnlyHighBitrate')
@@ -122,7 +124,7 @@ const getRendererSettings = () => {
   }
 }
 
-const setRendererSettings = ({
+export const setRendererSettings = ({
   downloadsDir,
   searchFileExtensions,
   searchHasOnlyHighBitrate,
@@ -138,35 +140,31 @@ const setRendererSettings = ({
   return getRendererSettings()
 }
 
-const getSearchDuration = () => {
+export const getSearchDuration = () => {
   return settings.get('searchDuration')
 }
 
-const setDownloadsDir = (downloadsDir) => {
-  return settings.set('downloadsDir', downloadsDir)
-}
-
-const getDownloadsDir = () => {
+export const getDownloadsDir = () => {
   return settings.get('downloadsDir')
 }
 
-const getSoulseekUsername = (soulseekUsername) => {
+export const getSoulseekUsername = (soulseekUsername) => {
   return settings.get('soulseekUsername', soulseekUsername)
 }
 
-const getSoulseekPassword = (soulseekPassword) => {
+export const getSoulseekPassword = (soulseekPassword) => {
   return settings.get('soulseekPassword', soulseekPassword)
 }
 
-const getDownloadHistory = () => {
+export const getDownloadHistory = () => {
   return settings.get('downloadHistory')
 }
 
-const setDownloadHistory = (downloadHistory) => {
+export const setDownloadHistory = (downloadHistory) => {
   return settings.set('downloadHistory', downloadHistory)
 }
 
-const addToDownloadHistory = ({
+export const addToDownloadHistory = ({
   track,
   downloadPath,
   tmpPath,
@@ -195,7 +193,7 @@ const addToDownloadHistory = ({
   return newDownloadHistory
 }
 
-const updateDownloadHistoryEntry = (id, updateFields) => {
+export const updateDownloadHistoryEntry = (id, updateFields) => {
   const downloadHistory = getDownloadHistory()
 
   const newDownloadHistory = downloadHistory.map(i => {
@@ -207,19 +205,4 @@ const updateDownloadHistoryEntry = (id, updateFields) => {
 
   settings.set('downloadHistory', newDownloadHistory)
   return newDownloadHistory
-}
-
-module.exports = {
-  getDownloadHistory,
-  getRendererSettings,
-  setRendererSettings,
-  getDownloadsDir,
-  setDownloadsDir,
-  setDownloadHistory,
-  getSoulseekUsername,
-  getSoulseekPassword,
-  addToDownloadHistory,
-  updateDownloadHistoryEntry,
-  clear,
-  getSearchDuration
 }

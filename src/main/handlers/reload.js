@@ -1,6 +1,6 @@
-const Channel = require('shared/constants/Channel')
-const { createSendAndWait } = require('../utils/handlers')
-const { getMainWindow } = require('../utils/mainWindow')
+import * as Channel from 'shared/constants/Channel'
+import { createSendAndWait } from '../utils/handlers'
+import { getMainWindow } from '../utils/mainWindow'
 
 createSendAndWait(Channel.RELOAD, async () => {
   const mainWindow = getMainWindow()

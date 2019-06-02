@@ -1,29 +1,13 @@
-const INITIALIZE = 'initialize'
-const SEARCH = 'search'
-const SEARCH_FOUND = `${SEARCH}:found`
-const SEARCH_STOP = `${SEARCH}:stop`
-const DOWNLOAD = 'download'
-const DOWNLOAD_PROGRESS = `${DOWNLOAD}:progress`
-const DOWNLOAD_ERROR = `${DOWNLOAD}:error`
-const DOWNLOAD_COMPLETE = `${DOWNLOAD}:complete`
-const SELECT_DIR = 'select-dir'
-const SET_SETTINGS = 'set-settings'
-const UPDATE_SETTINGS = 'update-settings'
-const RELOAD = 'reload'
-const RESET = 'reset'
-
-module.exports = {
-  INITIALIZE,
-  SEARCH,
-  SEARCH_FOUND,
-  SEARCH_STOP,
-  DOWNLOAD,
-  DOWNLOAD_PROGRESS,
-  DOWNLOAD_ERROR,
-  DOWNLOAD_COMPLETE,
-  SELECT_DIR,
-  SET_SETTINGS,
-  UPDATE_SETTINGS,
-  RELOAD,
-  RESET
-}
+export const INITIALIZE = 'initialize'
+export const SEARCH = 'search'
+export const SEARCH_FOUND = `${SEARCH}:found`
+export const SEARCH_STOP = `${SEARCH}:stop`
+export const DOWNLOAD = 'download'
+export const DOWNLOAD_PROGRESS = `${DOWNLOAD}:progress`
+export const DOWNLOAD_ERROR = `${DOWNLOAD}:error`
+export const DOWNLOAD_COMPLETE = `${DOWNLOAD}:complete`
+export const SELECT_DIR = 'select-dir'
+export const SET_SETTINGS = 'set-settings'
+export const UPDATE_SETTINGS = 'update-settings'
+export const RELOAD = 'reload'
+export const RESET = 'reset'

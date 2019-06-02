@@ -1,26 +1,11 @@
-const APP_NAME = 'Tunepack'
-const HOME_PAGE_URL = 'https://tunepack.io'
-const REPO_OWNER = 'tunepack'
-const REPO_NAME = 'tunepack-desktop'
-const APP_VERSION = '1.0.7'
-const GA_TRACKING_ID = process.env.GA_TRACKING_ID
+export {
+  productName as APP_NAME,
+  version as APP_VERSION
+} from '../../package.json'
 
-const stylingVariables = {
-  WINDOW_WIDTH: '540px',
-  WINDOW_HEIGHT: '768px',
-  HEADER_HEIGHT: '40px',
-  NAV_HEIGHT: '60px',
-  SIDE_PADDING: '12px',
-  LIST_ITEM_HEIGHT: '100px',
-  VIEW_HEADER_HEIGHT: '80px'
-}
-
-module.exports = {
-  stylingVariables,
-  APP_NAME,
-  APP_VERSION,
-  HOME_PAGE_URL,
-  REPO_OWNER,
-  REPO_NAME,
-  GA_TRACKING_ID
-}
+export const REPO_OWNER = 'tunepack'
+export const REPO_NAME = 'tunepack-desktop'
+export const GA_TRACKING_ID = process.env.GA_TRACKING_ID
+export const DEBUG_PROD = process.env.DEBUG_PROD === 'true' || false
+export const UPGRADE_EXTENSIONS = process.env.UPGRADE_EXTENSIONS === 'true' || false
+export const START_MINIMIZED = process.env.START_MINIMIZED === 'true' || false

@@ -1,5 +1,5 @@
 import Analytics from 'electron-google-analytics'
-import config from 'shared/config'
+import * as config from 'shared/config'
 
 const analytics = new Analytics(config.GA_TRACKING_ID)
 

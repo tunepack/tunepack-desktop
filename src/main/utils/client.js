@@ -1,3 +1,1 @@
-let client = null
-
-module.exports = client
+export let client = null

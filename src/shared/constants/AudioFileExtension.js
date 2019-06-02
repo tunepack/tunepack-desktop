@@ -1,9 +1,3 @@
-const MP3 = 'mp3'
-const WAV = 'wav'
-const FLAC = 'flac'
-
-module.exports = {
-  MP3,
-  WAV,
-  FLAC
-}
+export const MP3 = 'mp3'
+export const WAV = 'wav'
+export const FLAC = 'flac'

@@ -1,14 +1,13 @@
 import { app, Menu } from 'electron'
-const { initMainWindow } = require('./utils/mainWindow')
-const { ensureDefaultDownloadsFolder } = require('./utils/downloadsFolder')
-const slsk = require('./utils/slsk')
-const downloadsFolderWatcher = require('./utils/downloadsFolderWatcher')
-const debug = require('debug')('tunepack:main')
-const menuUtils = require('./utils/menu')
-const activeStreams = require('./utils/activeStreams')
-const state = require('./utils/state')
+import { initMainWindow } from './utils/mainWindow'
+import { ensureDefaultDownloadsFolder } from './utils/downloadsFolder'
+import * as slskUtils from './utils/slsk'
+import { start as startDownloadsFolderWatcher } from './utils/downloadsFolderWatcher'
+import { getMenuTemplate } from './utils/menu'
+import * as state from './utils/state'
+import * as config from 'shared/config'
 
-const menu = Menu.buildFromTemplate(menuUtils.getMenuTemplate())
+const menu = Menu.buildFromTemplate(getMenuTemplate())
 Menu.setApplicationMenu(menu)
 
 if (process.env.NODE_ENV === 'production') {
@@ -16,16 +15,17 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install()
 }
 
-if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+if (process.env.NODE_ENV === 'development' || config.DEBUG_PROD) {
   require('electron-debug')()
 }
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer')
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS
+  const forceDownload = !!config.UPGRADE_EXTENSIONS
   const extensions = [
     'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
+    'REDUX_DEVTOOLS',
+    'REACT_PERF'
   ]
 
   return Promise.all(
@@ -39,24 +39,19 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-const destroyActiveStreams = (streams) => {
-  for (const [id, s] of Object.entries(streams)) {
-    debug(`Destroying active stream: ${id}`)
-    s.destroy()
-  }
-}
-
 app.on('before-quit', e => {
-  if (state.isQuitting) {
+  if (state.getState().isQuitting) {
     return
   }
 
-  state.isQuitting = true
+  state.setState({
+    isQuitting: true
+  })
 
   e.preventDefault()
 
-  destroyActiveStreams(activeStreams.downloadStreams)
-  slsk.disconnect()
+  state.destroyActiveStreams()
+  slskUtils.disconnect()
 
   setTimeout(() => {
     app.quit()
@@ -65,9 +60,9 @@ app.on('before-quit', e => {
 
 app.on('ready', async () => {
   await ensureDefaultDownloadsFolder()
-  downloadsFolderWatcher.start()
+  startDownloadsFolderWatcher()
 
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+  if (process.env.NODE_ENV === 'development' || config.DEBUG_PROD) {
     await installExtensions()
   }
 
