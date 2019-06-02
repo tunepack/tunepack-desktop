@@ -21,7 +21,7 @@ export const initMainWindow = () => {
     width: parseInt(injectedStylingVars.WINDOW_WIDTH),
     height: parseInt(injectedStylingVars.WINDOW_HEIGHT),
     resizable: false,
-    title: 'Tunepack',
+    title: config.APP_NAME,
     maximizable: false,
     titleBarStyle: 'hiddenInset',
     icon: path.resolve(__dirname, '../../../resources/icon.icns'),
