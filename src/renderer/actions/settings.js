@@ -12,6 +12,8 @@ export const SELECT_DOWNLOAD_DIR = '@settings/SELECT_DOWNLOAD_DIR'
 
 export const ON_UPDATE_SETTINGS = '@settings/ON_UPDATE_SETTINGS'
 
+export const SET_IS_BURNING = '@settings/SET_IS_BURNING'
+
 export const constants = {
   INITIALIZE,
   INITIALIZE_REQUEST,
@@ -20,7 +22,8 @@ export const constants = {
   SET_SETTINGS,
   SET_SETTINGS_REQUEST,
   SELECT_DOWNLOAD_DIR,
-  ON_UPDATE_SETTINGS
+  ON_UPDATE_SETTINGS,
+  SET_IS_BURNING
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -36,6 +39,8 @@ export const selectDownloadDir = createAction(SELECT_DOWNLOAD_DIR)
 
 export const onUpdateSettings = createAction(ON_UPDATE_SETTINGS)
 
+export const setIsBurning = createAction(SET_IS_BURNING)
+
 export default {
   initialize,
   initializeRequest,
@@ -44,5 +49,6 @@ export default {
   setSettings,
   setSettingsRequest,
   selectDownloadDir,
-  onUpdateSettings
+  onUpdateSettings,
+  setIsBurning
 }

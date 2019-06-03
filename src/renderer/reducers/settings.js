@@ -3,7 +3,8 @@ import { fromJS } from 'immutable'
 import {
   INITIALIZE_REQUEST,
   ON_UPDATE_SETTINGS,
-  SET_SETTINGS_REQUEST
+  SET_SETTINGS_REQUEST,
+  SET_IS_BURNING
 } from 'actions/settings'
 import { RESET_REQUEST } from '../actions/app'
 
@@ -12,7 +13,8 @@ const initialState = fromJS({
   isResetting: false,
   data: {},
   hasNewRelease: false,
-  latestReleaseInfo: {}
+  latestReleaseInfo: {},
+  isBurning: false
 })
 
 export default createReducer(initialState, {
@@ -37,5 +39,8 @@ export default createReducer(initialState, {
   },
   [RESET_REQUEST.START]: (state) => {
     return state.set('isResetting', true)
+  },
+  [SET_IS_BURNING]: (state, { payload: isBurning }) => {
+    return state.set('isBurning', isBurning)
   }
 })
