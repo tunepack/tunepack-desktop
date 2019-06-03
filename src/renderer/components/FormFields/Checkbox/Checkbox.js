@@ -5,7 +5,7 @@ import cx from 'classnames'
 import Check from 'icons/Check.svg'
 import Icon from 'components/Icon/Icon'
 
-const Checkbox = ({
+const Checkbox = React.memo(({
   field,
   form,
   label,
@@ -53,6 +53,6 @@ const Checkbox = ({
       </label>
     </div>
   )
-}
+})
 
 export default Checkbox

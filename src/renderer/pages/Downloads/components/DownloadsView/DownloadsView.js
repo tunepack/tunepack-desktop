@@ -46,6 +46,7 @@ const DownloadsView = React.memo(({
   }
 
   const hasSelectedOneForBurning = selectedForBurning.count() > 0
+  const hasItems = items.count() > 0
 
   return (
     <View
@@ -88,6 +89,7 @@ const DownloadsView = React.memo(({
               </>
             ) : (
               <Button
+                disabled={!hasItems}
                 onClick={handleBtnBurnClick}
                 iconBefore={(
                   <div className={styles.btnBurnIcon}>

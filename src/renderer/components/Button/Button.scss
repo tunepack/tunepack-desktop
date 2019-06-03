@@ -14,13 +14,17 @@ $btn-focus-ring-width: 3px;
   padding: 0 14px;
   cursor: pointer;
   outline: 0;
-  transition: box-shadow 120ms ease, background-color 180ms ease;
+  transition: box-shadow 120ms ease, background-color 180ms ease, opacity 200ms ease;
   font-size: 14px;
   user-select: none;
   font-family: inherit;
 
   &.isLoading {
     cursor: not-allowed;
+  }
+
+  &:disabled {
+    opacity: .3 !important;
   }
 
   &:focus {

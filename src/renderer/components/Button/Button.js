@@ -4,6 +4,7 @@ import cx from 'classnames'
 import Spinner from 'components/Spinner/Spinner'
 
 const Button = ({
+  isDisabled = false,
   children,
   type,
   variant,
@@ -18,12 +19,14 @@ const Button = ({
   return (
     <button
       type={type}
+      disabled={isDisabled}
       className={cx(styles.component, {
         [styles.hasIconTop]: iconTop,
         [styles[`variant-${variant}`]]: variant,
         [styles[`size-${size}`]]: size,
         [styles.isLoading]: isLoading,
-        [className]: className
+        [className]: className,
+        [styles.isDisabled]: isDisabled
       })}
       {...props}
     >
