@@ -34,7 +34,7 @@ const ResultListItem = React.memo(({
     toggleDownloadSelectBurning(track.get('id'), value)
   }
 
-  const handleInfoPrimaryClick = () => {
+  const handleSelectClick = () => {
     const isDownloaded = download?.get('isDownloaded')
     const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
 
@@ -55,11 +55,14 @@ const ResultListItem = React.memo(({
       })}
     >
       <div
-        onClick={handleInfoPrimaryClick}
+        onClick={handleSelectClick}
         className={styles.content}
       >
         {shouldShowBurnSelect && (
-          <div className={styles.select}>
+          <div
+            onClick={handleSelectClick}
+            className={styles.select}
+          >
             <Checkbox
               form={{
                 setFieldValue: handleSelectForBurningChange
