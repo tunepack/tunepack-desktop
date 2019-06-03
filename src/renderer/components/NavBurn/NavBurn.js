@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux'
 import Icon from 'components/Icon/Icon'
 import Button from 'components/Button/Button'
+import BurnForm from 'components/BurnForm/BurnForm'
 import IconUSB from 'icons/USB.svg'
 import IconChevronUp from 'icons/ChevronUp.svg'
 
@@ -76,9 +77,11 @@ const NavBurn = ({
           )}
         </div>
       </div>
-      <div className={styles.inner}>
-        Work in progress...
-      </div>
+      {isBurningContinued && (
+        <div className={styles.form}>
+          <BurnForm />
+        </div>
+      )}
     </div>
   )
 }
