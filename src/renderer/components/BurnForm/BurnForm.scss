@@ -1,5 +1,44 @@
 @import 'base.scss';
 
 .component {
-  // Empty
+  height: 100%;
+}
+
+.typeSelect {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.btnType {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: .2;
+  outline: 0;
+  transition: opacity 220ms ease;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.btnTypeIcon {
+  color: $color-text;
+  margin-right: 1em;
+
+  svg {
+    $size: 40px;
+    width: $size;
+    height: $size;
+  }
+}
+
+.btnTypeLabel {
+  font-size: 18px;
+  font-weight: 300;
 }

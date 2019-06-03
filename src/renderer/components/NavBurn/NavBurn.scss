@@ -87,6 +87,6 @@ $btn-height: $nav-height;
   position: absolute;
   top: $btn-height;
   right: 0;
-  bottom: 0;
+  bottom: $nav-height + $btn-height;
   left: 0;
 }

@@ -55,7 +55,7 @@ const NavBurn = ({
                 </div>
               )}
             >
-              Return to downloads
+              Return to selection
             </Button>
           ) : (
             <Button
