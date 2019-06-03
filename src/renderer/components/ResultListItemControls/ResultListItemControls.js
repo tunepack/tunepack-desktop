@@ -19,12 +19,14 @@ export default React.memo(({
 
   if (download?.get('isDownloaded')) {
     return (
-      <Button
-        onClick={handleOpenClick}
-        variant='minimal'
-      >
-        Open
-      </Button>
+      <div className={styles.downloadedControls}>
+        <Button
+          onClick={handleOpenClick}
+          variant='minimal'
+        >
+          Open
+        </Button>
+      </div>
     )
   }
 

@@ -22,6 +22,19 @@ $progress-bar-width: 65px;
   }
 }
 
+.downloadedControls {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .info {
   z-index: 2;
   display: flex;
