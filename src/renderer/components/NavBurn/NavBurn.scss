@@ -7,7 +7,7 @@ $btn-height: $nav-height;
   bottom: 0;
   right: 0;
   left: 0;
-  height: unquote("calc(100vh + #{$btn-height})");
+  height: unquote("calc(320px + #{$btn-height})");
   z-index: 200;
   transform: translateY(unquote("calc(100vh)"));
   opacity: 0;
@@ -20,10 +20,11 @@ $btn-height: $nav-height;
   &.isVisible {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(unquote("calc(100vh)"));
+    transform: translateY(unquote("calc(320px)"));
   }
 
   &.isContinued {
+    box-shadow: 0 0 10px 5px transparentize($color-red, .50);
     transform: translateY($header-height + $btn-height);
   }
 }
@@ -58,21 +59,31 @@ $btn-height: $nav-height;
   }
 }
 
+.btnCloseIconBefore {
+  svg {
+    $size: 12px;
+    width: $size;
+    height: $size;
+  }
+}
+
 .btnBurnContent {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.btnBurnIconBefore,
-.btnCloseIconBefore {
-  opacity: .75;
-  transition: opacity 180ms ease;
-
+.btnBurnIconBefore {
   svg {
     width: 16px;
     height: 16px;
   }
+}
+
+.btnBurnIconBefore,
+.btnCloseIconBefore {
+  opacity: .75;
+  transition: opacity 180ms ease;
 }
 
 .btnBurn {

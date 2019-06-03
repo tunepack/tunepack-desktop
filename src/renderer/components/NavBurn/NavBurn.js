@@ -15,7 +15,7 @@ import Icon from 'components/Icon/Icon'
 import Button from 'components/Button/Button'
 import BurnForm from 'components/BurnForm/BurnForm'
 import IconUSB from 'icons/USB.svg'
-import IconChevronUp from 'icons/ChevronUp.svg'
+import IconClose from 'components/IconClose/IconClose'
 
 const NavBurn = ({
   isBurning,
@@ -51,11 +51,11 @@ const NavBurn = ({
               className={styles.btnClose}
               iconBefore={(
                 <div className={styles.btnCloseIconBefore}>
-                  <Icon glyph={IconChevronUp} />
+                  <IconClose />
                 </div>
               )}
             >
-              Return to selection
+              Close
             </Button>
           ) : (
             <Button
