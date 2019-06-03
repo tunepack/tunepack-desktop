@@ -16,6 +16,7 @@ export const TOGGLE_IS_BURNING = '@settings/TOGGLE_IS_BURNING'
 export const TOGGLE_DOWNLOAD_SELECT_ALL = '@settings/TOGGLE_DOWNLOAD_SELECT_ALL'
 export const TOGGLE_DOWNLOAD_SELECT_BURNING = '@settings/TOGGLE_DOWNLOAD_SELECT_BURNING'
 export const SET_SELECTED_FOR_BURNING = '@settings/SET_SELECTED_FOR_BURNING'
+export const BURN_CONTINUE = '@settings/BURN_CONTINUE'
 
 export const constants = {
   INITIALIZE,
@@ -29,7 +30,8 @@ export const constants = {
   TOGGLE_IS_BURNING,
   TOGGLE_DOWNLOAD_SELECT_BURNING,
   TOGGLE_DOWNLOAD_SELECT_ALL,
-  SET_SELECTED_FOR_BURNING
+  SET_SELECTED_FOR_BURNING,
+  BURN_CONTINUE
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -49,6 +51,7 @@ export const toggleIsBurning = createAction(TOGGLE_IS_BURNING)
 export const toggleDownloadSelectBurning = createAction(TOGGLE_DOWNLOAD_SELECT_BURNING)
 export const toggleDownloadSelectAll = createAction(TOGGLE_DOWNLOAD_SELECT_ALL)
 export const setSelectedForBurning = createAction(SET_SELECTED_FOR_BURNING)
+export const setBurnContinue = createAction(BURN_CONTINUE)
 
 export default {
   initialize,
@@ -62,5 +65,6 @@ export default {
   toggleIsBurning,
   toggleDownloadSelectBurning,
   toggleDownloadSelectAll,
-  setSelectedForBurning
+  setSelectedForBurning,
+  setBurnContinue
 }

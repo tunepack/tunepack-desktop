@@ -6,7 +6,8 @@ import {
   SET_SETTINGS_REQUEST,
   TOGGLE_IS_BURNING,
   TOGGLE_DOWNLOAD_SELECT_BURNING,
-  SET_SELECTED_FOR_BURNING
+  SET_SELECTED_FOR_BURNING,
+  BURN_CONTINUE
 } from 'actions/settings'
 import { RESET_REQUEST } from '../actions/app'
 
@@ -17,7 +18,8 @@ const initialState = fromJS({
   hasNewRelease: false,
   latestReleaseInfo: {},
   isBurning: false,
-  selectedForBurning: []
+  selectedForBurning: [],
+  isBurningContinued: false
 })
 
 export default createReducer(initialState, {
@@ -32,6 +34,7 @@ export default createReducer(initialState, {
         .set('latestReleaseInfo', fromJS(payload?.latestReleaseInfo || {}))
         .set('isBurning', false)
         .set('selectedForBurning', List())
+        .set('isBurningContinued', false)
     })
   },
   [SET_SETTINGS_REQUEST.SUCCESS]: (state, { payload: data }) => {
@@ -53,6 +56,7 @@ export default createReducer(initialState, {
         return state
           .set('isBurning', false)
           .set('selectedForBurning', List())
+          .set('isBurningContinued', false)
       }
 
       return state
@@ -70,5 +74,8 @@ export default createReducer(initialState, {
   },
   [SET_SELECTED_FOR_BURNING]: (state, { payload: selectedForBurning }) => {
     return state.set('selectedForBurning', List(selectedForBurning))
+  },
+  [BURN_CONTINUE]: (state, { payload: isBurningContinued }) => {
+    return state.set('isBurningContinued', isBurningContinued)
   }
 })

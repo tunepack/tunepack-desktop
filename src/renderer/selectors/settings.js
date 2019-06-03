@@ -9,6 +9,7 @@ export const getHasNewRelease = state => { return state.settings.get('hasNewRele
 export const getLatestReleaseInfo = state => { return state.settings.get('latestReleaseInfo') }
 export const getIsBurning = state => { return state.settings.get('isBurning') }
 export const getSelectedForBurning = state => { return state.settings.get('selectedForBurning') }
+export const getIsBurningContinued = state => { return state.settings.get('isBurningContinued') }
 
 export const getIsAllSelectedForBurning = createSelector(
   getSelectedForBurning,

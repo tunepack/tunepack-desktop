@@ -3,45 +3,77 @@ import cx from 'classnames'
 import styles from './NavBurn.scss'
 import {
   getIsBurning,
-  getSelectedForBurning
+  getSelectedForBurning,
+  getIsBurningContinued
 } from 'selectors/settings'
-import { toggleIsBurning } from 'actions/settings'
+import {
+  setBurnContinue,
+  toggleIsBurning
+} from 'actions/settings'
 import { connect } from 'react-redux'
 import Icon from 'components/Icon/Icon'
-import USBIcon from 'icons/USB.svg'
+import Button from 'components/Button/Button'
+import IconUSB from 'icons/USB.svg'
+import IconChevronUp from 'icons/ChevronUp.svg'
 
 const NavBurn = ({
   isBurning,
-  selectedForBurning
+  selectedForBurning,
+  isBurningContinued,
+  setBurnContinue
 }) => {
   const selectedForBurningCount = selectedForBurning.count()
   const hasSelectedOneForBurning = selectedForBurningCount > 0
   const isVisible = isBurning && hasSelectedOneForBurning
 
+  const handleContinueClick = () => {
+    setBurnContinue(true)
+  }
+
+  const handleCloseClick = () => {
+    setBurnContinue(false)
+  }
+
   return (
     <div
       className={cx(styles.component, {
-        [styles.isVisible]: isVisible
+        [styles.isVisible]: isVisible,
+        [styles.isContinued]: isBurningContinued
       })}
     >
       <div className={styles.content}>
         <div className={styles.header}>
-          <button
-            className={styles.btnBurn}
-          >
-            <div className={styles.btnBurnContent}>
-              <div className={styles.btnBurnIconBefore}>
-                <Icon glyph={USBIcon} />
-              </div>
-              <div className={styles.btnBurnLabel}>
-                <span>Click here to burn</span>
-                {' '}
-                <strong>{selectedForBurningCount} {selectedForBurningCount === 1 ? 'tune' : 'tunes'}</strong>
-                {' '}
-                <span>to CD or USB</span>
-              </div>
-            </div>
-          </button>
+          {isBurningContinued ? (
+            <Button
+              variant='error'
+              onClick={handleCloseClick}
+              className={styles.btnClose}
+              iconBefore={(
+                <div className={styles.btnCloseIconBefore}>
+                  <Icon glyph={IconChevronUp} />
+                </div>
+              )}
+            >
+              Return to downloads
+            </Button>
+          ) : (
+            <Button
+              className={styles.btnBurn}
+              variant='primary'
+              onClick={handleContinueClick}
+              iconBefore={(
+                <div className={styles.btnBurnIconBefore}>
+                  <Icon glyph={IconUSB} />
+                </div>
+              )}
+            >
+              <span>Click here to burn</span>
+              {' '}
+              <strong>{selectedForBurningCount} {selectedForBurningCount === 1 ? 'tune' : 'tunes'}</strong>
+              {' '}
+              <span>to CD or USB</span>
+            </Button>
+          )}
         </div>
       </div>
     </div>
@@ -51,12 +83,14 @@ const NavBurn = ({
 const mapStateToProps = state => {
   return {
     isBurning: getIsBurning(state),
-    selectedForBurning: getSelectedForBurning(state)
+    selectedForBurning: getSelectedForBurning(state),
+    isBurningContinued: getIsBurningContinued(state)
   }
 }
 
 const mapActionsToProps = {
-  toggleIsBurning
+  toggleIsBurning,
+  setBurnContinue
 }
 
 export default connect(

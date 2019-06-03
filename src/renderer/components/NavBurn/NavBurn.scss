@@ -12,50 +12,46 @@ $height: $nav-height;
   color: white;
   transform: translateY($height * 1.5);
   opacity: 0;
-  transition: opacity 180ms ease, transform 120ms ease;
-  will-change: transform, opacity;
+  transition: opacity 180ms ease, transform 120ms ease, height 300ms ease;
+  will-change: transform, opacity, height;
   box-shadow: 0 0 10px 5px transparentize($color-primary, .50);
+  background-color: white;
 
   &.isVisible {
     opacity: 1;
     transform: none;
+  }
+
+  &.isContinued {
+    height: unquote("calc(100vh - #{$header-height})");
   }
 }
 
 .content {
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .header {
   width: 100%;
-  height: 100%;
 }
 
-.btnBurn {
+.btnBurn,
+.btnClose {
+  height: $nav-height;
   width: 100%;
-  height: 100%;
-  border: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  background-color: $color-primary;
-  transition: background-color 180ms ease;
-  outline: 0;
+  box-shadow: none !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
 
   &:hover {
-    background-color: darken($color-primary, 4%);
-
-    .btnBurnIconBefore {
-      opacity: .9;
+    span {
+      opacity: .95;
     }
 
-    .btnBurnLabel {
-      span {
-        opacity: .9;
-      }
+    .btnBurnIconBefore,
+    .btnCloseIconBefore {
+      opacity: .95;
     }
   }
 }
@@ -66,9 +62,9 @@ $height: $nav-height;
   justify-content: center;
 }
 
-.btnBurnIconBefore {
-  margin-right: .5em;
-  opacity: .65;
+.btnBurnIconBefore,
+.btnCloseIconBefore {
+  opacity: .75;
   transition: opacity 180ms ease;
 
   svg {
@@ -77,9 +73,9 @@ $height: $nav-height;
   }
 }
 
-.btnBurnLabel {
+.btnBurn {
   span {
     transition: opacity 180ms ease;
-    opacity: .65;
+    opacity: .75;
   }
 }
