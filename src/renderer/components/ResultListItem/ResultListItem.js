@@ -32,7 +32,7 @@ const ResultListItem = React.memo(({
     toggleDownloadSelectBurning(track.get('id'), value)
   }
 
-  const isDownloaded = download.get('isDownloaded')
+  const isDownloaded = download?.get('isDownloaded')
   const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
 
   return (
