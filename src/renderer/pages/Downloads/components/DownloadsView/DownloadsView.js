@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import View from 'components/View/View'
 import Title from 'components/Title/Title'
 import { connect } from 'react-redux'
@@ -12,11 +12,27 @@ import CloseIcon from 'icons/Close.svg'
 import { setIsBurning } from 'actions/settings'
 import { getIsBurning } from 'selectors/settings'
 
+const KEY_B = 66
+
 const DownloadsView = React.memo(({
   isBurning,
   setIsBurning,
   items
 }) => {
+  const handleKeyUp = useCallback(event => {
+    if (event.keyCode === KEY_B) {
+      setIsBurning(!isBurning)
+    }
+  }, [isBurning])
+
+  useEffect(() => {
+    window.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [handleKeyUp])
+
   const handleBtnBurnClick = () => {
     setIsBurning(!isBurning)
   }
