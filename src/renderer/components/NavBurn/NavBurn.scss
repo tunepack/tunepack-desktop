@@ -1,0 +1,31 @@
+@import 'base.scss';
+
+$height: $nav-height;
+
+.component {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: $height;
+  background-color: $gray-800;
+  z-index: 200;
+  color: white;
+  transform: translateY($height * 1.5);
+  opacity: 0;
+  transition: opacity 180ms ease, transform 230ms ease;
+  will-change: transform, opacity;
+
+  &.isVisible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.content {
+  padding: $side-padding;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

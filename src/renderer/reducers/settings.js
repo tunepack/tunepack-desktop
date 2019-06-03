@@ -59,11 +59,11 @@ export default createReducer(initialState, {
         .set('isBurning', true)
     })
   },
-  [TOGGLE_IS_BURNING]: (state) => {
+  [TOGGLE_IS_BURNING]: (state, { payload: isBurning }) => {
     return state.withMutations((state) => {
       const currentIsBurning = state.get('isBurning')
 
-      if (currentIsBurning) {
+      if (isBurning === false || currentIsBurning) {
         return state
           .set('isBurning', false)
           .set('selectedForBurning', List())

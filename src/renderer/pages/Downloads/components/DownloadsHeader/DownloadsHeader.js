@@ -6,8 +6,7 @@ import Icon from 'components/Icon/Icon'
 import CloseIcon from 'icons/Close.svg'
 import USBIcon from 'icons/USB.svg'
 import {
-  getIsBurning,
-  getSelectedForBurning
+  getIsBurning
 } from 'selectors/settings'
 import { toggleIsBurning } from 'actions/settings'
 import { connect } from 'react-redux'
@@ -16,7 +15,6 @@ const KEY_B = 66
 
 const DownloadsHeader = ({
   isBurning,
-  selectedForBurning,
   toggleIsBurning
 }) => {
   const handleKeyUp = useCallback(event => {
@@ -33,6 +31,12 @@ const DownloadsHeader = ({
     }
   }, [handleKeyUp])
 
+  useEffect(() => {
+    return () => {
+      toggleIsBurning(false)
+    }
+  }, [])
+
   const handleBtnBurnClick = () => {
     toggleIsBurning()
   }
@@ -40,8 +44,6 @@ const DownloadsHeader = ({
   const handleBtnCancelClick = () => {
     toggleIsBurning(false)
   }
-
-  const hasSelectedOneForBurning = selectedForBurning.count() > 0
 
   return (
     <div className={styles.component}>
@@ -63,20 +65,6 @@ const DownloadsHeader = ({
             >
               Cancel
             </Button>
-            {hasSelectedOneForBurning && (
-              <Button
-                onClick={handleBtnBurnClick}
-                iconBefore={(
-                  <div className={styles.btnBurnIcon}>
-                    <Icon glyph={USBIcon} />
-                  </div>
-                )}
-                variant='primary'
-                size='xsm'
-              >
-                Burn to CD or USB
-              </Button>
-            )}
           </>
         ) : (
           <Button
@@ -98,8 +86,7 @@ const DownloadsHeader = ({
 
 const mapStateToProps = state => {
   return {
-    isBurning: getIsBurning(state),
-    selectedForBurning: getSelectedForBurning(state)
+    isBurning: getIsBurning(state)
   }
 }
 
