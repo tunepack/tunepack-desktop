@@ -48,7 +48,7 @@ module.exports = plop => {
 
       const actions = []
 
-      const rootDir = page ? path.resolve(paths.pagesPath, page) : paths.srcPath
+      const rootDir = page ? path.resolve(paths.pagesPath, page) : paths.rendererPath
       const componentDir = isContainer ? 'containers' : 'components'
       const dir = path.join(rootDir, `/${componentDir}/${name}`)
 
