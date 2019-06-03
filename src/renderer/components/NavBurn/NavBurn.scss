@@ -1,35 +1,37 @@
 @import 'base.scss';
 
-$height: $nav-height;
+$btn-height: $nav-height;
 
 .component {
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
-  height: $height;
+  height: unquote("calc(100vh + #{$btn-height})");
   z-index: 200;
-  color: white;
-  transform: translateY($height * 1.5);
+  transform: translateY(unquote("calc(100vh)"));
   opacity: 0;
-  transition: opacity 180ms ease, transform 120ms ease, height 300ms ease;
-  will-change: transform, opacity, height;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 280ms ease;
+  will-change: transform, opacity;
   box-shadow: 0 0 10px 5px transparentize($color-primary, .50);
   background-color: white;
 
   &.isVisible {
     opacity: 1;
-    transform: none;
+    pointer-events: all;
+    transform: translateY(unquote("calc(100vh)"));
   }
 
   &.isContinued {
-    height: unquote("calc(100vh - #{$header-height})");
+    transform: translateY($header-height + $btn-height);
   }
 }
 
 .content {
   height: 100%;
   display: flex;
+  position: relative;
 }
 
 .header {
@@ -78,4 +80,13 @@ $height: $nav-height;
     transition: opacity 180ms ease;
     opacity: .75;
   }
+}
+
+.inner {
+  padding: $side-padding;
+  position: absolute;
+  top: $btn-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

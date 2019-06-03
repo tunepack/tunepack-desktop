@@ -76,6 +76,9 @@ const NavBurn = ({
           )}
         </div>
       </div>
+      <div className={styles.inner}>
+        Work in progress...
+      </div>
     </div>
   )
 }
