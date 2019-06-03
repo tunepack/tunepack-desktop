@@ -1,17 +1,22 @@
 import React, { useEffect, useRef } from 'react'
 import { Input } from 'components/FormFields'
+import setupNavKeybinds from 'utils/setupNavKeybinds'
+import { withRouter } from 'react-router-dom'
 
 const SearchForm = React.memo(({
   onChange,
   searchQuery,
   isSearching,
   onSubmit,
-  onClearClick
+  onClearClick,
+  history
 }) => {
   const queryInputRef = useRef(null)
 
   useEffect(() => {
     queryInputRef.current.focus()
+
+    setupNavKeybinds(queryInputRef.current, history)
   }, [])
 
   const handleChange = event => {
@@ -41,4 +46,4 @@ const SearchForm = React.memo(({
   )
 })
 
-export default SearchForm
+export default withRouter(SearchForm)
