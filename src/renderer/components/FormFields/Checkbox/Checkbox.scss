@@ -1,0 +1,83 @@
+@import 'base.scss';
+
+$size: 24px;
+
+.component {
+  position: relative;
+  display: flex;
+
+  &.hasError {
+    .checkbox {
+      border-color: $color-red !important;
+    }
+  }
+}
+
+.input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 1em;
+  z-index: 2;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: $size;
+  height: $size;
+
+  &:checked {
+    ~.label {
+      .checkbox {
+        background-color: $color-text;
+        border-color: $color-text;
+      }
+
+      .checkboxCheck {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.label {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: $size;
+  height: $size;
+  border: 1px solid $color-border;
+  background-color: white;
+  flex-shrink: 0;
+  margin-right: 12px;
+  margin-top: 2px;
+  position: relative;
+  border-radius: 2px;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.checkboxCheck {
+  line-height: 1;
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  color: white;
+  transform: scale(0);
+  transition: transform 230ms ease;
+}
+
+.checkboxCheckIcon {
+  width: 14px;
+  height: 12px;
+  color: white;
+}
+
+.labelContent {
+  user-select: none;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 13px;
+}

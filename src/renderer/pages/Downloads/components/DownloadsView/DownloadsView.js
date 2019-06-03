@@ -9,19 +9,19 @@ import Button from 'components/Button/Button'
 import Icon from 'components/Icon/Icon'
 import USBIcon from 'icons/USB.svg'
 import CloseIcon from 'icons/Close.svg'
-import { setIsBurning } from 'actions/settings'
+import { toggleIsBurning } from 'actions/settings'
 import { getIsBurning } from 'selectors/settings'
 
 const KEY_B = 66
 
 const DownloadsView = React.memo(({
   isBurning,
-  setIsBurning,
+  toggleIsBurning,
   items
 }) => {
   const handleKeyUp = useCallback(event => {
     if (event.keyCode === KEY_B) {
-      setIsBurning(!isBurning)
+      toggleIsBurning(!isBurning)
     }
   }, [isBurning])
 
@@ -34,7 +34,7 @@ const DownloadsView = React.memo(({
   }, [handleKeyUp])
 
   const handleBtnBurnClick = () => {
-    setIsBurning(!isBurning)
+    toggleIsBurning(!isBurning)
   }
 
   return (
@@ -97,7 +97,7 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = {
-  setIsBurning
+  toggleIsBurning
 }
 
 export default connect(

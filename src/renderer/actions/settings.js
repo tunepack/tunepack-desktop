@@ -12,7 +12,8 @@ export const SELECT_DOWNLOAD_DIR = '@settings/SELECT_DOWNLOAD_DIR'
 
 export const ON_UPDATE_SETTINGS = '@settings/ON_UPDATE_SETTINGS'
 
-export const SET_IS_BURNING = '@settings/SET_IS_BURNING'
+export const TOGGLE_IS_BURNING = '@settings/TOGGLE_IS_BURNING'
+export const TOGGLE_DOWNLOAD_SELECT_BURNING = '@settings/TOGGLE_DOWNLOAD_SELECT_BURNING'
 
 export const constants = {
   INITIALIZE,
@@ -23,7 +24,8 @@ export const constants = {
   SET_SETTINGS_REQUEST,
   SELECT_DOWNLOAD_DIR,
   ON_UPDATE_SETTINGS,
-  SET_IS_BURNING
+  TOGGLE_IS_BURNING,
+  TOGGLE_DOWNLOAD_SELECT_BURNING
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -39,7 +41,8 @@ export const selectDownloadDir = createAction(SELECT_DOWNLOAD_DIR)
 
 export const onUpdateSettings = createAction(ON_UPDATE_SETTINGS)
 
-export const setIsBurning = createAction(SET_IS_BURNING)
+export const toggleIsBurning = createAction(TOGGLE_IS_BURNING)
+export const toggleDownloadSelectBurning = createAction(TOGGLE_DOWNLOAD_SELECT_BURNING)
 
 export default {
   initialize,
@@ -50,5 +53,6 @@ export default {
   setSettingsRequest,
   selectDownloadDir,
   onUpdateSettings,
-  setIsBurning
+  toggleIsBurning,
+  toggleDownloadSelectBurning
 }

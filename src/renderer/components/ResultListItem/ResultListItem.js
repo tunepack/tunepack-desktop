@@ -6,6 +6,12 @@ import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 import cx from 'classnames'
 import FileExtensionBadge from './FileExtensionBadge/FileExtensionBadge'
+import {
+  getIsBurning,
+  getSelectedForBurning
+} from '../../selectors/settings'
+import { Checkbox } from 'components/FormFields'
+import { toggleDownloadSelectBurning } from 'actions/settings'
 
 const ResultListItem = React.memo(({
   track,
@@ -13,11 +19,21 @@ const ResultListItem = React.memo(({
   download,
   onDownloadClick,
   style,
-  isDownloadsPage
+  isDownloadsPage,
+  isBurning,
+  toggleDownloadSelectBurning,
+  selectedForBurning
 }) => {
   const handleDownloadClick = () => {
     onDownloadClick(track)
   }
+
+  const handleSelectForBurningChange = (value) => {
+    toggleDownloadSelectBurning(track.get('id'), value)
+  }
+
+  const isDownloaded = download.get('isDownloaded')
+  const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
 
   return (
     <div
@@ -27,6 +43,19 @@ const ResultListItem = React.memo(({
       })}
     >
       <div className={styles.content}>
+        {shouldShowBurnSelect && (
+          <div className={styles.select}>
+            <Checkbox
+              form={{
+                setFieldValue: handleSelectForBurningChange
+              }}
+              field={{
+                name: 'isSelected',
+                value: selectedForBurning.includes(track.get('id'))
+              }}
+            />
+          </div>
+        )}
         <div className={styles.info}>
           <div className={styles.infoPrimary}>
             <div className={styles.fileName}>
@@ -62,11 +91,15 @@ const mapStateToProps = (state, ownProps) => {
   const trackId = ownProps.track.get('id')
 
   return {
-    download: getDownloadByTrackId(trackId)(state)
+    isBurning: getIsBurning(state),
+    download: getDownloadByTrackId(trackId)(state),
+    selectedForBurning: getSelectedForBurning(state)
   }
 }
 
-const mapActionsToProps = null
+const mapActionsToProps = {
+  toggleDownloadSelectBurning
+}
 
 export default connect(
   mapStateToProps,
