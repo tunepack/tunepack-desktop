@@ -4,6 +4,10 @@ import Title from 'components/Title/Title'
 import { connect } from 'react-redux'
 import ResultsList from 'components/ResultsList/ResultsList'
 import { getSortedDownloadsList } from 'selectors/downloadsList'
+import styles from './DownloadsView.scss'
+import Button from 'components/Button/Button'
+import Icon from 'components/Icon/Icon'
+import USBIcon from 'icons/USB.svg'
 
 const DownloadsView = React.memo(({
   items
@@ -11,9 +15,26 @@ const DownloadsView = React.memo(({
   return (
     <View
       header={(
-        <Title>
-          Downloads
-        </Title>
+        <div className={styles.header}>
+          <div className={styles.headerTitle}>
+            <Title>
+              Downloads
+            </Title>
+          </div>
+          <div className={styles.headerControls}>
+            <Button
+              iconBefore={(
+                <div className={styles.btnBurnIcon}>
+                  <Icon glyph={USBIcon} />
+                </div>
+              )}
+              variant='primary'
+              size='sm'
+            >
+              Burn to CD or USB
+            </Button>
+          </div>
+        </div>
       )}
     >
       <ResultsList

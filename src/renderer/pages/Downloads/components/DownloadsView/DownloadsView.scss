@@ -3,3 +3,19 @@
 .component {
 
 }
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.headerControls {
+  margin-left: auto;
+}
+
+.btnBurnIcon {
+  svg {
+    width: 11px;
+    height: 16px;
+  }
+}
