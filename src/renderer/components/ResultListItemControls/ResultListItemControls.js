@@ -10,12 +10,17 @@ export default React.memo(({
   onDownloadClick,
   download
 }) => {
+  const handleOpenClick = event => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    shell.openItem(download.get('downloadPath'))
+  }
+
   if (download?.get('isDownloaded')) {
     return (
       <Button
-        onClick={() => {
-          shell.openItem(download.get('downloadPath'))
-        }}
+        onClick={handleOpenClick}
         variant='minimal'
       >
         Open

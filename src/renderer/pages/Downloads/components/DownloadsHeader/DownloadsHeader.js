@@ -8,14 +8,15 @@ import USBIcon from 'icons/USB.svg'
 import {
   getIsBurning
 } from 'selectors/settings'
-import { toggleIsBurning } from 'actions/settings'
+import { toggleIsBurning, toggleDownloadSelectAll } from 'actions/settings'
 import { connect } from 'react-redux'
 
 const KEY_B = 66
 
 const DownloadsHeader = ({
   isBurning,
-  toggleIsBurning
+  toggleIsBurning,
+  toggleDownloadSelectAll
 }) => {
   const handleKeyUp = useCallback(event => {
     if (event.keyCode === KEY_B) {
@@ -45,6 +46,10 @@ const DownloadsHeader = ({
     toggleIsBurning(false)
   }
 
+  const handleSelectAllClick = () => {
+    toggleDownloadSelectAll()
+  }
+
   return (
     <div className={styles.component}>
       <Title>
@@ -53,6 +58,13 @@ const DownloadsHeader = ({
       <div className={styles.controls}>
         {isBurning ? (
           <>
+            <Button
+              onClick={handleSelectAllClick}
+              variant='minimal'
+              size='xsm'
+            >
+              Select all
+            </Button>
             <Button
               onClick={handleBtnCancelClick}
               iconBefore={(
@@ -91,7 +103,8 @@ const mapStateToProps = state => {
 }
 
 const mapActionsToProps = {
-  toggleIsBurning
+  toggleIsBurning,
+  toggleDownloadSelectAll
 }
 
 export default connect(

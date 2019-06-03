@@ -10,12 +10,18 @@ import handlers from 'handlers'
 import {
   getData as getSettings,
   getDownloadsDir
+  ,
+  getSelectedForBurning
 } from 'selectors/settings'
 
 import {
   setUid,
   sendEvent
 } from 'utils/analytics'
+
+import {
+  getDownloadsList
+} from 'selectors/downloadsList'
 
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
@@ -88,10 +94,22 @@ export function * onSelectDownloadsDir () {
   }))
 }
 
+export function * onToggleSelectAll () {
+  const downloadsList = yield select(getDownloadsList)
+  const currentSelectedForBurning = yield select(getSelectedForBurning)
+
+  const selectedForBurning = (downloadsList.count() === currentSelectedForBurning.count())
+    ? []
+    : downloadsList.map(d => d.get('id')).toArray()
+
+  yield put(actions.setSelectedForBurning(selectedForBurning))
+}
+
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.INITIALIZE, onInitialize),
     takeLatest(constants.SET_SETTINGS, onSetSettings),
-    takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir)
+    takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir),
+    takeLatest(constants.TOGGLE_DOWNLOAD_SELECT_ALL, onToggleSelectAll)
   ])
 }

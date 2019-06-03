@@ -6,7 +6,7 @@ import {
   SET_SETTINGS_REQUEST,
   TOGGLE_IS_BURNING,
   TOGGLE_DOWNLOAD_SELECT_BURNING,
-  TOGGLE_DOWNLOAD_SELECT_ALL
+  SET_SELECTED_FOR_BURNING
 } from 'actions/settings'
 import { RESET_REQUEST } from '../actions/app'
 
@@ -45,20 +45,6 @@ export default createReducer(initialState, {
   [RESET_REQUEST.START]: (state) => {
     return state.set('isResetting', true)
   },
-  [TOGGLE_DOWNLOAD_SELECT_ALL]: (state) => {
-    return state.withMutations((state) => {
-      const currentIsBurning = state.get('isBurning')
-
-      if (currentIsBurning) {
-        return state
-          .set('isBurning', false)
-          .set('selectedForBurning', List())
-      }
-
-      return state
-        .set('isBurning', true)
-    })
-  },
   [TOGGLE_IS_BURNING]: (state, { payload: isBurning }) => {
     return state.withMutations((state) => {
       const currentIsBurning = state.get('isBurning')
@@ -81,5 +67,8 @@ export default createReducer(initialState, {
     }
 
     return state.set('selectedForBurning', selectedForBurning.push(trackId))
+  },
+  [SET_SELECTED_FOR_BURNING]: (state, { payload: selectedForBurning }) => {
+    return state.set('selectedForBurning', List(selectedForBurning))
   }
 })

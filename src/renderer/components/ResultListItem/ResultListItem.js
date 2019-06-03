@@ -24,12 +24,23 @@ const ResultListItem = React.memo(({
   toggleDownloadSelectBurning,
   selectedForBurning
 }) => {
+  const isSelectedForBurning = selectedForBurning.includes(track.get('id'))
+
   const handleDownloadClick = () => {
     onDownloadClick(track)
   }
 
   const handleSelectForBurningChange = (value) => {
     toggleDownloadSelectBurning(track.get('id'), value)
+  }
+
+  const handleInfoPrimaryClick = () => {
+    const isDownloaded = download?.get('isDownloaded')
+    const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
+
+    if (shouldShowBurnSelect) {
+      toggleDownloadSelectBurning(track.get('id'), !isSelectedForBurning)
+    }
   }
 
   const isDownloaded = download?.get('isDownloaded')
@@ -39,10 +50,14 @@ const ResultListItem = React.memo(({
     <div
       style={style}
       className={cx(styles.component, {
-        [styles.isOdd]: index % 2
+        [styles.isOdd]: index % 2,
+        [styles.isSelectable]: shouldShowBurnSelect
       })}
     >
-      <div className={styles.content}>
+      <div
+        onClick={handleInfoPrimaryClick}
+        className={styles.content}
+      >
         {shouldShowBurnSelect && (
           <div className={styles.select}>
             <Checkbox
@@ -51,7 +66,7 @@ const ResultListItem = React.memo(({
               }}
               field={{
                 name: 'isSelected',
-                value: selectedForBurning.includes(track.get('id'))
+                value: isSelectedForBurning
               }}
             />
           </div>

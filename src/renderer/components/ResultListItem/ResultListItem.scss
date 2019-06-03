@@ -9,9 +9,16 @@ $progress-bar-width: 65px;
   position: relative;
   height: 100px;
   display: flex;
+  user-select: none;
 
   &.isOdd {
     background-color: darken(white, 1.5%);
+  }
+
+  &.isSelectable {
+    .content {
+      cursor: pointer;
+    }
   }
 }
 
