@@ -7,12 +7,15 @@ import {
 } from 'selectors/settings'
 import { toggleIsBurning } from 'actions/settings'
 import { connect } from 'react-redux'
+import Icon from 'components/Icon/Icon'
+import USBIcon from 'icons/USB.svg'
 
 const NavBurn = ({
   isBurning,
   selectedForBurning
 }) => {
-  const hasSelectedOneForBurning = selectedForBurning.count() > 0
+  const selectedForBurningCount = selectedForBurning.count()
+  const hasSelectedOneForBurning = selectedForBurningCount > 0
   const isVisible = isBurning && hasSelectedOneForBurning
 
   return (
@@ -22,7 +25,24 @@ const NavBurn = ({
       })}
     >
       <div className={styles.content}>
-        Test
+        <div className={styles.header}>
+          <button
+            className={styles.btnBurn}
+          >
+            <div className={styles.btnBurnContent}>
+              <div className={styles.btnBurnIconBefore}>
+                <Icon glyph={USBIcon} />
+              </div>
+              <div className={styles.btnBurnLabel}>
+                <span>Click here to burn</span>
+                {' '}
+                <strong>{selectedForBurningCount} {selectedForBurningCount === 1 ? 'tune' : 'tunes'}</strong>
+                {' '}
+                <span>to CD or USB</span>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   )
