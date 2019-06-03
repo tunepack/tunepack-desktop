@@ -10,14 +10,18 @@ import Icon from 'components/Icon/Icon'
 import USBIcon from 'icons/USB.svg'
 import CloseIcon from 'icons/Close.svg'
 import { toggleIsBurning } from 'actions/settings'
-import { getIsBurning } from 'selectors/settings'
+import {
+  getIsBurning,
+  getSelectedForBurning
+} from 'selectors/settings'
 
 const KEY_B = 66
 
 const DownloadsView = React.memo(({
   isBurning,
   toggleIsBurning,
-  items
+  items,
+  selectedForBurning
 }) => {
   const handleKeyUp = useCallback(event => {
     if (event.keyCode === KEY_B) {
@@ -34,8 +38,14 @@ const DownloadsView = React.memo(({
   }, [handleKeyUp])
 
   const handleBtnBurnClick = () => {
-    toggleIsBurning(!isBurning)
+    toggleIsBurning()
   }
+
+  const handleBtnCancelClick = () => {
+    toggleIsBurning(false)
+  }
+
+  const hasSelectedOneForBurning = selectedForBurning.count() > 0
 
   return (
     <View
@@ -48,18 +58,34 @@ const DownloadsView = React.memo(({
           </div>
           <div className={styles.headerControls}>
             {isBurning ? (
-              <Button
-                onClick={handleBtnBurnClick}
-                iconBefore={(
-                  <div className={styles.btnBurnIcon}>
-                    <Icon glyph={CloseIcon} />
-                  </div>
+              <>
+                <Button
+                  onClick={handleBtnCancelClick}
+                  iconBefore={(
+                    <div className={styles.btnBurnIcon}>
+                      <Icon glyph={CloseIcon} />
+                    </div>
+                  )}
+                  variant='error'
+                  size='xsm'
+                >
+                  Cancel
+                </Button>
+                {hasSelectedOneForBurning && (
+                  <Button
+                    onClick={handleBtnBurnClick}
+                    iconBefore={(
+                      <div className={styles.btnBurnIcon}>
+                        <Icon glyph={USBIcon} />
+                      </div>
+                    )}
+                    variant='primary'
+                    size='xsm'
+                  >
+                    Burn to CD or USB
+                  </Button>
                 )}
-                variant='error'
-                size='sm'
-              >
-                Cancel
-              </Button>
+              </>
             ) : (
               <Button
                 onClick={handleBtnBurnClick}
@@ -68,8 +94,7 @@ const DownloadsView = React.memo(({
                     <Icon glyph={USBIcon} />
                   </div>
                 )}
-                variant='primary'
-                size='sm'
+                size='xsm'
               >
                 Burn to CD or USB
               </Button>
@@ -93,7 +118,8 @@ const DownloadsView = React.memo(({
 
 const mapStateToProps = state => ({
   items: getSortedDownloadsList(state),
-  isBurning: getIsBurning(state)
+  isBurning: getIsBurning(state),
+  selectedForBurning: getSelectedForBurning(state)
 })
 
 const mapActionsToProps = {

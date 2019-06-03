@@ -88,6 +88,16 @@ $btn-focus-ring-width: 3px;
     font-size: 12px;
     padding: 0 12px;
   }
+
+  &.size-xsm {
+    $scale-diff: .7;
+    $height: $btn-height * $scale-diff;
+    height: $height;
+    line-height: $height;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
 }
 
 .content {
