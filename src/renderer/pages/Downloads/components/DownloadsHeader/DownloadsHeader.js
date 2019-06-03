@@ -6,7 +6,8 @@ import Icon from 'components/Icon/Icon'
 import CloseIcon from 'icons/Close.svg'
 import USBIcon from 'icons/USB.svg'
 import {
-  getIsBurning
+  getIsBurning,
+  getIsAllSelectedForBurning
 } from 'selectors/settings'
 import { toggleIsBurning, toggleDownloadSelectAll } from 'actions/settings'
 import { connect } from 'react-redux'
@@ -16,7 +17,8 @@ const KEY_B = 66
 const DownloadsHeader = ({
   isBurning,
   toggleIsBurning,
-  toggleDownloadSelectAll
+  toggleDownloadSelectAll,
+  isAllSelectedForBurning
 }) => {
   const handleKeyUp = useCallback(event => {
     if (event.keyCode === KEY_B) {
@@ -63,7 +65,7 @@ const DownloadsHeader = ({
               variant='minimal'
               size='xsm'
             >
-              Select all
+              {isAllSelectedForBurning ? 'Deselect all' : 'Select all'}
             </Button>
             <Button
               onClick={handleBtnCancelClick}
@@ -98,7 +100,8 @@ const DownloadsHeader = ({
 
 const mapStateToProps = state => {
   return {
-    isBurning: getIsBurning(state)
+    isBurning: getIsBurning(state),
+    isAllSelectedForBurning: getIsAllSelectedForBurning(state)
   }
 }
 

@@ -9,9 +9,8 @@ import { showLoading, showError } from 'actions/app'
 import handlers from 'handlers'
 import {
   getData as getSettings,
-  getDownloadsDir
-  ,
-  getSelectedForBurning
+  getDownloadsDir,
+  getIsAllSelectedForBurning
 } from 'selectors/settings'
 
 import {
@@ -96,9 +95,9 @@ export function * onSelectDownloadsDir () {
 
 export function * onToggleSelectAll () {
   const downloadsList = yield select(getDownloadsList)
-  const currentSelectedForBurning = yield select(getSelectedForBurning)
+  const isAllSelectedForBurning = yield select(getIsAllSelectedForBurning)
 
-  const selectedForBurning = (downloadsList.count() === currentSelectedForBurning.count())
+  const selectedForBurning = isAllSelectedForBurning
     ? []
     : downloadsList.map(d => d.get('id')).toArray()
 
