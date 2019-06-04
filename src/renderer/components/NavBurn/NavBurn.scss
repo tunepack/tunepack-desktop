@@ -1,15 +1,16 @@
 @import 'base.scss';
 
 $btn-height: $nav-height;
+$height-open: 250px;
 
 .component {
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
-  height: unquote("calc(320px + #{$btn-height})");
+  height: $height-open + $btn-height;
   z-index: 200;
-  transform: translateY(unquote("calc(100vh)"));
+  transform: translateY($height-open + $btn-height);
   opacity: 0;
   pointer-events: none;
   transition: opacity 180ms ease, transform 280ms ease;
@@ -20,7 +21,7 @@ $btn-height: $nav-height;
   &.isVisible {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(unquote("calc(320px)"));
+    transform: translateY($height-open);
   }
 
   &.isContinued {

@@ -9,7 +9,7 @@ const getErrorMessage = message => {
   if (message === 'timeout') {
     return 'Connecting to servers took too long'
   } else if (message === 'no-connection') {
-    return 'No connection, please check your internet connection'
+    return 'No internet connection'
   }
 
   return 'Something has gone wrong'
