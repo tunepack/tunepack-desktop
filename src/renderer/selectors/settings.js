@@ -18,3 +18,7 @@ export const getIsAllSelectedForBurning = createSelector(
     return selectedForBurning.count() === downloadsList.count()
   }
 )
+
+export const getDrives = state => { return state.settings.get('drives') }
+export const getIsExecutingGetDrives = state => { return state.settings.get('isExecutingGetDrives') }
+export const getIsExecutingBurning = state => { return state.settings.get('isExecutingBurning') }

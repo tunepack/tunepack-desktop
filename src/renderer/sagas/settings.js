@@ -1,17 +1,26 @@
-import { all, takeLatest, put, call, select } from 'redux-saga/effects'
+import {
+  all,
+  takeLatest,
+  put,
+  call,
+  select
+} from 'redux-saga/effects'
 import actions, {
   constants,
   setSettings
 } from 'actions/settings'
 
-import { showLoading, showError } from 'actions/app'
+import {
+  showLoading,
+  showError
+} from 'actions/app'
 
 import handlers from 'handlers'
 import {
   getData as getSettings,
   getDownloadsDir,
   getIsAllSelectedForBurning
-} from 'selectors/settings'
+  , getSelectedForBurning } from 'selectors/settings'
 
 import {
   setUid,
@@ -21,6 +30,10 @@ import {
 import {
   getDownloadsList
 } from 'selectors/downloadsList'
+
+import {
+  getDownloads
+} from 'selectors/downloads'
 
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
@@ -104,11 +117,53 @@ export function * onToggleSelectAll () {
   yield put(actions.setSelectedForBurning(selectedForBurning))
 }
 
+export function * onGetDrives () {
+  yield put(actions.getDrivesRequest.start())
+
+  try {
+    const { drives } = yield call(handlers.getDrives)
+
+    yield put(actions.getDrivesRequest.success(drives))
+  } catch (error) {
+    yield put(actions.getDrivesRequest.error(error))
+  }
+}
+
+export function * onBurn ({ payload: { type, drive } }) {
+  yield put(actions.burnRequest.start())
+
+  const selectedForBurning = yield select(getSelectedForBurning)
+  const downloads = yield select(getDownloads)
+
+  const burnDownloads = []
+
+  selectedForBurning.forEach(r => {
+    burnDownloads.push(
+      downloads
+        .get(String(r))
+        .toJS()
+    )
+  })
+
+  try {
+    yield call(handlers.burn, {
+      downloads: burnDownloads,
+      type,
+      drive
+    })
+    yield put(actions.burnRequest.success())
+  } catch (error) {
+    yield put(actions.burnRequest.error(error))
+  }
+}
+
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.INITIALIZE, onInitialize),
     takeLatest(constants.SET_SETTINGS, onSetSettings),
     takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir),
-    takeLatest(constants.TOGGLE_DOWNLOAD_SELECT_ALL, onToggleSelectAll)
+    takeLatest(constants.TOGGLE_DOWNLOAD_SELECT_ALL, onToggleSelectAll),
+    takeLatest(constants.GET_DRIVES, onGetDrives),
+    takeLatest(constants.BURN, onBurn)
   ])
 }

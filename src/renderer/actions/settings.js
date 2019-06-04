@@ -18,6 +18,12 @@ export const TOGGLE_DOWNLOAD_SELECT_BURNING = '@settings/TOGGLE_DOWNLOAD_SELECT_
 export const SET_SELECTED_FOR_BURNING = '@settings/SET_SELECTED_FOR_BURNING'
 export const BURN_CONTINUE = '@settings/BURN_CONTINUE'
 
+export const BURN = '@settings/BURN'
+export const BURN_REQUEST = createRequestTypes('@settings/BURN_REQUEST')
+
+export const GET_DRIVES = '@settings/GET_DRIVES'
+export const GET_DRIVES_REQUEST = createRequestTypes('@settings/GET_DRIVES_REQUEST')
+
 export const constants = {
   INITIALIZE,
   INITIALIZE_REQUEST,
@@ -31,7 +37,11 @@ export const constants = {
   TOGGLE_DOWNLOAD_SELECT_BURNING,
   TOGGLE_DOWNLOAD_SELECT_ALL,
   SET_SELECTED_FOR_BURNING,
-  BURN_CONTINUE
+  BURN_CONTINUE,
+  BURN,
+  BURN_REQUEST,
+  GET_DRIVES,
+  GET_DRIVES_REQUEST
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -53,6 +63,12 @@ export const toggleDownloadSelectAll = createAction(TOGGLE_DOWNLOAD_SELECT_ALL)
 export const setSelectedForBurning = createAction(SET_SELECTED_FOR_BURNING)
 export const setBurnContinue = createAction(BURN_CONTINUE)
 
+export const burn = createAction(BURN)
+export const burnRequest = createRequestAction(BURN_REQUEST)
+
+export const getDrives = createAction(GET_DRIVES)
+export const getDrivesRequest = createRequestAction(GET_DRIVES_REQUEST)
+
 export default {
   initialize,
   initializeRequest,
@@ -66,5 +82,9 @@ export default {
   toggleDownloadSelectBurning,
   toggleDownloadSelectAll,
   setSelectedForBurning,
-  setBurnContinue
+  setBurnContinue,
+  burn,
+  burnRequest,
+  getDrives,
+  getDrivesRequest
 }

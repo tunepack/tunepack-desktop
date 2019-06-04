@@ -1,17 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './BurnForm.scss'
 import ButtonHugeIcon from 'components/ButtonHugeIcon/ButtonHugeIcon'
 import Icon from 'components/Icon/Icon'
+import Spinner from 'components/Spinner/Spinner'
 import IconCD from 'icons/CD.svg'
 import IconUSB from 'icons/USB.svg'
 import * as BurnType from 'shared/constants/BurnType'
+import { connect } from 'react-redux'
+import { getDrives, burn } from 'actions/settings'
+import {
+  getIsExecutingBurning,
+  getIsExecutingGetDrives,
+  getDrives as getDrivesSelector
+} from '../../selectors/settings'
 
-const BurnForm = () => {
+const BurnForm = ({
+  drives,
+  isExecutingGetDrives,
+  isExecutingBurning,
+  getDrives,
+  burn
+}) => {
   const [burnType, setBurnType] = useState(null)
+
+  useEffect(() => {
+    getDrives()
+  }, [])
 
   const handleSelectBurnType = bt => () => {
     setBurnType(bt)
+
+    burn({
+      type: bt
+    })
   }
+
+  if (isExecutingGetDrives) {
+    return (
+      <div className={styles.loader}>
+        <Spinner primary />
+      </div>
+    )
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(drives)
 
   return (
     <div className={styles.component}>
@@ -34,12 +67,36 @@ const BurnForm = () => {
         />
       </div>
       {burnType && (
-        <div className={styles.next}>
-          This is the inner content
-        </div>
+        <>
+          {burnType === BurnType.DISK ? (
+            <div>
+              {isExecutingBurning ? 'Is burning...' : 'All done.'}
+            </div>
+          ) : (
+            <div>
+              {JSON.stringify(drives.toJS())}
+            </div>
+          )}
+        </>
       )}
     </div>
   )
 }
 
-export default BurnForm
+const mapStateToProps = (state) => {
+  return {
+    drives: getDrivesSelector(state),
+    isExecutingGetDrives: getIsExecutingGetDrives(state),
+    isExecutingBurning: getIsExecutingBurning(state)
+  }
+}
+
+const mapActionsToProps = {
+  getDrives,
+  burn
+}
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(BurnForm)
