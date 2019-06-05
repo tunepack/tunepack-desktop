@@ -3,6 +3,7 @@ import Button from 'components/Button/Button'
 import { shell } from 'electron'
 import styles from '../ResultListItem/ResultListItem.scss'
 import Icon from 'components/Icon/Icon'
+import ProgressBar from 'components/ProgressBar/ProgressBar'
 import DownloadCloud from 'icons/DownloadCloudAlt.svg'
 import prettyBytes from 'pretty-bytes/index'
 
@@ -35,14 +36,9 @@ export default React.memo(({
 
     return (
       <div className={styles.downloading}>
-        <div className={styles.progress}>
-          <div
-            style={{
-              width: `${download.get('progress')}%`
-            }}
-            className={styles.progressIndicator}
-          />
-        </div>
+        <ProgressBar
+          progress={download.get('progress')}
+        />
         {avgSpeed ? (
           <div className={styles.speed}>
             {prettyBytes(avgSpeed)}/s

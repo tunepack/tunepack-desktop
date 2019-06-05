@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from './BurnFormContent.scss'
 import * as BurnType from 'shared/constants/BurnType'
 import Button from 'components/Button/Button'
+import ProgressBar from 'components/ProgressBar/ProgressBar'
 import {
   Select
 } from 'components/FormFields'
@@ -41,26 +42,51 @@ const BurnFormContent = ({
   burningError,
   burn,
   isBurned,
-  burnReset
-  /* TODO: burnProgress */
+  burnReset,
+  burnProgress
 }) => {
   const driveOptions = getDriveOptions(drives)
   const [selectedDriveOption, setSelectedDriveOption] = useState(driveOptions[0])
 
-  useEffect(() => {
-    if (isBurned) {
-      setTimeout(() => {
-        burnReset()
-      }, 1200)
-    }
-  }, [
-    isBurned
-  ])
+  const handleRemoveDownloadsClick = () => {
+    burnReset()
+  }
+
+  const handleKeepDownloadsClick = () => {
+    burnReset()
+  }
+
+  if (isExecutingBurning) {
+    const progress = Math.round(Number(burnProgress))
+
+    return (
+      <div className={styles.progress}>
+        <ProgressBar progress={progress} />
+      </div>
+    )
+  }
 
   if (isBurned) {
     return (
       <div className={styles.finished}>
-        All finished.
+        <div className={styles.finishedLabel}>
+          All finished. Do you want to keep the original downloads?
+        </div>
+        <div className={styles.finishedCleanup}>
+          <Button
+            onClick={handleRemoveDownloadsClick}
+            variant='error'
+            size='sm'
+          >
+            No, remove the downloads
+          </Button>
+          <Button
+            onClick={handleKeepDownloadsClick}
+            size='sm'
+          >
+            Yes, keep the downloads
+          </Button>
+        </div>
       </div>
     )
   }
@@ -81,12 +107,6 @@ const BurnFormContent = ({
         </div>
       )
     }
-
-    return (
-      <div className={styles.status}>
-        {isExecutingBurning ? 'Is burning...' : 'All done.'}
-      </div>
-    )
   } else if (burnType === BurnType.USB) {
     if (driveOptions.length === 0) {
       return (

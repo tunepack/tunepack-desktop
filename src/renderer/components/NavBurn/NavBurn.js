@@ -46,7 +46,6 @@ const NavBurn = ({
         <div className={styles.header}>
           {isBurningContinued ? (
             <Button
-              variant='error'
               onClick={handleCloseClick}
               className={styles.btnClose}
               iconBefore={(

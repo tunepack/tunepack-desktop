@@ -9,7 +9,24 @@
 }
 
 .finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.finishedLabel {
   color: $color-green;
+  margin-bottom: 8px;
+}
+
+.finishedCleanup {
+  button {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .makeSelection,
@@ -17,6 +34,10 @@
 .status,
 .finished {
   line-height: 49px;
+}
+
+.status {
+  color: $color-primary;
 }
 
 .usb {

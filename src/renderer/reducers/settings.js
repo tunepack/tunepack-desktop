@@ -90,6 +90,13 @@ export default createReducer(initialState, {
           .set('isBurning', false)
           .set('selectedForBurning', List())
           .set('isBurningContinued', false)
+          .set('isExecutingBurning', false)
+          .set('burningError', null)
+          .set('burnProgress', null)
+          .set('isBurned', false)
+          .set('drives', List())
+          .set('isExecutingGetDrives', false)
+          .set('getDrivesError', null)
       }
 
       return state
@@ -141,7 +148,7 @@ export default createReducer(initialState, {
       .set('isExecutingGetDrives', false)
       .set('getDrivesError', error)
   },
-  [ON_BURN_PROGRESS]: (state, { payload: progress }) => {
+  [ON_BURN_PROGRESS]: (state, { payload: { progress } }) => {
     return state
       .set('burnProgress', progress)
   }

@@ -25,7 +25,7 @@ $height-open: 240px;
   }
 
   &.isContinued {
-    box-shadow: 0 0 10px 5px transparentize($color-red, .50);
+    box-shadow: 0 0 10px 5px transparentize($gray-800, .50);
     transform: none;
   }
 }
