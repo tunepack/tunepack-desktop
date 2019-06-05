@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './BurnForm.scss'
 import ButtonHugeIcon from 'components/ButtonHugeIcon/ButtonHugeIcon'
+import BurnFormContent from 'components/BurnFormContent/BurnFormContent'
 import Icon from 'components/Icon/Icon'
 import Spinner from 'components/Spinner/Spinner'
 import IconCD from 'icons/CD.svg'
@@ -8,18 +9,21 @@ import IconUSB from 'icons/USB.svg'
 import * as BurnType from 'shared/constants/BurnType'
 import { connect } from 'react-redux'
 import { getDrives, burn } from 'actions/settings'
+import { Collapse } from 'react-collapse'
 import {
   getIsExecutingBurning,
   getIsExecutingGetDrives,
-  getDrives as getDrivesSelector
-} from '../../selectors/settings'
+  getDrives as getDrivesSelector,
+  getBurningError
+} from 'selectors/settings'
 
 const BurnForm = ({
   drives,
   isExecutingGetDrives,
   isExecutingBurning,
   getDrives,
-  burn
+  burn,
+  burningError
 }) => {
   const [burnType, setBurnType] = useState(null)
 
@@ -43,9 +47,6 @@ const BurnForm = ({
     )
   }
 
-  // eslint-disable-next-line no-console
-  console.log(drives)
-
   return (
     <div className={styles.component}>
       <div className={styles.typeSelect}>
@@ -66,19 +67,16 @@ const BurnForm = ({
           )}
         />
       </div>
-      {burnType && (
-        <>
-          {burnType === BurnType.DISK ? (
-            <div>
-              {isExecutingBurning ? 'Is burning...' : 'All done.'}
-            </div>
-          ) : (
-            <div>
-              {JSON.stringify(drives.toJS())}
-            </div>
-          )}
-        </>
-      )}
+      <Collapse isOpened={burnType !== null}>
+        <div className={styles.content}>
+          <BurnFormContent
+            burnType={burnType}
+            isExecutingBurning={isExecutingBurning}
+            drives={drives}
+            burningError={burningError}
+          />
+        </div>
+      </Collapse>
     </div>
   )
 }
@@ -87,7 +85,8 @@ const mapStateToProps = (state) => {
   return {
     drives: getDrivesSelector(state),
     isExecutingGetDrives: getIsExecutingGetDrives(state),
-    isExecutingBurning: getIsExecutingBurning(state)
+    isExecutingBurning: getIsExecutingBurning(state),
+    burningError: getBurningError(state)
   }
 }
 

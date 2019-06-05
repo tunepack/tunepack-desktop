@@ -1,0 +1,32 @@
+@import 'base.scss';
+
+.component {
+  // Empty
+}
+
+.error {
+  color: $color-red;
+}
+
+.makeSelection,
+.error,
+.status {
+  line-height: 49px;
+}
+
+.usb {
+  display: flex;
+  align-items: center;
+}
+
+.selectDrive {
+  margin-right: 1em;
+
+  :global {
+    .react-select {
+      &__control {
+        min-width: 200px !important;
+      }
+    }
+  }
+}

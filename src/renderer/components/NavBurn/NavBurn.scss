@@ -1,7 +1,7 @@
 @import 'base.scss';
 
 $btn-height: $nav-height;
-$height-open: 250px;
+$height-open: 240px;
 
 .component {
   position: fixed;
@@ -26,7 +26,7 @@ $height-open: 250px;
 
   &.isContinued {
     box-shadow: 0 0 10px 5px transparentize($color-red, .50);
-    transform: translateY($header-height + $btn-height);
+    transform: none;
   }
 }
 
@@ -95,10 +95,9 @@ $height-open: 250px;
 }
 
 .form {
-  padding: $side-padding;
   position: absolute;
   top: $btn-height;
   right: 0;
-  bottom: $nav-height + $btn-height;
+  bottom: 0;
   left: 0;
 }

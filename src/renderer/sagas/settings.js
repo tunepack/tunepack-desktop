@@ -35,6 +35,10 @@ import {
   getDownloads
 } from 'selectors/downloads'
 
+import {
+  fromJS
+} from 'immutable'
+
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
 
@@ -123,7 +127,7 @@ export function * onGetDrives () {
   try {
     const { drives } = yield call(handlers.getDrives)
 
-    yield put(actions.getDrivesRequest.success(drives))
+    yield put(actions.getDrivesRequest.success(fromJS(drives)))
   } catch (error) {
     yield put(actions.getDrivesRequest.error(error))
   }
@@ -153,7 +157,7 @@ export function * onBurn ({ payload: { type, drive } }) {
     })
     yield put(actions.burnRequest.success())
   } catch (error) {
-    yield put(actions.burnRequest.error(error))
+    yield put(actions.burnRequest.error(error?.error))
   }
 }
 

@@ -50,6 +50,12 @@ const Select = ({
   const hasTouched = !!form.touched[field.name]
   const hasError = !!form.errors[field.name]
 
+  const value = getValue({
+    options: props.options,
+    isMulti: props.isMulti,
+    value: field.value
+  })
+
   return (
     <div
       className={cx(styles.component, {
@@ -59,11 +65,7 @@ const Select = ({
       <ReactSelect
         classNamePrefix='react-select'
         name={name}
-        value={getValue({
-          options: props.options,
-          isMulti: props.isMulti,
-          value: field.value
-        })}
+        value={value}
         onChange={onChange({
           isMulti: props.isMulti,
           form,
