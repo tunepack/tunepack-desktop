@@ -8,9 +8,14 @@
   color: $color-red;
 }
 
+.finished {
+  color: $color-green;
+}
+
 .makeSelection,
 .error,
-.status {
+.status,
+.finished {
   line-height: 49px;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './BurnFormContent.scss'
 import * as BurnType from 'shared/constants/BurnType'
 import Button from 'components/Button/Button'
@@ -38,14 +38,40 @@ const BurnFormContent = ({
   burnType,
   isExecutingBurning,
   drives,
-  burningError
+  burningError,
+  burn,
+  isBurned,
+  burnReset
+  /* TODO: burnProgress */
 }) => {
-  const handleCopyClick = () => {
-    // TODO: should copy.
-  }
-
   const driveOptions = getDriveOptions(drives)
   const [selectedDriveOption, setSelectedDriveOption] = useState(driveOptions[0])
+
+  useEffect(() => {
+    if (isBurned) {
+      setTimeout(() => {
+        burnReset()
+      }, 1200)
+    }
+  }, [
+    isBurned
+  ])
+
+  if (isBurned) {
+    return (
+      <div className={styles.finished}>
+        All finished.
+      </div>
+    )
+  }
+
+  const handleCopyClick = () => {
+    burn({
+      type: BurnType.USB,
+      drive: selectedDriveOption.value,
+      driveName: selectedDriveOption.label
+    })
+  }
 
   if (burnType === BurnType.DISK) {
     if (burningError) {
@@ -93,6 +119,7 @@ const BurnFormContent = ({
           />
         </div>
         <Button
+          isLoading={isExecutingBurning}
           onClick={handleCopyClick}
           variant='primary'
         >

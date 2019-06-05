@@ -9,7 +9,9 @@ import {
   SET_SELECTED_FOR_BURNING,
   BURN_CONTINUE,
   BURN_REQUEST,
-  GET_DRIVES_REQUEST
+  GET_DRIVES_REQUEST,
+  ON_BURN_PROGRESS,
+  BURN_RESET
 } from 'actions/settings'
 import { RESET_REQUEST } from '../actions/app'
 
@@ -24,12 +26,29 @@ const initialState = fromJS({
   isBurningContinued: false,
   isExecutingBurning: false,
   burningError: null,
+  burnProgress: null,
+  isBurned: false,
   drives: [],
   isExecutingGetDrives: false,
   getDrivesError: null
 })
 
 export default createReducer(initialState, {
+  [BURN_RESET]: (state) => {
+    return state.withMutations((state) => {
+      return state
+        .set('isBurning', false)
+        .set('selectedForBurning', List())
+        .set('isBurningContinued', false)
+        .set('isExecutingBurning', false)
+        .set('burningError', null)
+        .set('burnProgress', null)
+        .set('isBurned', false)
+        .set('drives', List())
+        .set('isExecutingGetDrives', false)
+        .set('getDrivesError', null)
+    })
+  },
   [INITIALIZE_REQUEST.SUCCESS]: (state, { payload }) => {
     return state.withMutations((state) => {
       const { settings: data } = payload
@@ -42,6 +61,13 @@ export default createReducer(initialState, {
         .set('isBurning', false)
         .set('selectedForBurning', List())
         .set('isBurningContinued', false)
+        .set('isExecutingBurning', false)
+        .set('burningError', null)
+        .set('burnProgress', null)
+        .set('isBurned', false)
+        .set('drives', List())
+        .set('isExecutingGetDrives', false)
+        .set('getDrivesError', null)
     })
   },
   [SET_SETTINGS_REQUEST.SUCCESS]: (state, { payload: data }) => {
@@ -93,6 +119,7 @@ export default createReducer(initialState, {
   [BURN_REQUEST.SUCCESS]: (state) => {
     return state
       .set('isExecutingBurning', false)
+      .set('isBurned', true)
   },
   [BURN_REQUEST.ERROR]: (state, { payload: error }) => {
     return state
@@ -113,5 +140,9 @@ export default createReducer(initialState, {
     return state
       .set('isExecutingGetDrives', false)
       .set('getDrivesError', error)
+  },
+  [ON_BURN_PROGRESS]: (state, { payload: progress }) => {
+    return state
+      .set('burnProgress', progress)
   }
 })

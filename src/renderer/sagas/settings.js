@@ -133,7 +133,7 @@ export function * onGetDrives () {
   }
 }
 
-export function * onBurn ({ payload: { type, drive } }) {
+export function * onBurn ({ payload: { type, drive, driveName } }) {
   yield put(actions.burnRequest.start())
 
   const selectedForBurning = yield select(getSelectedForBurning)
@@ -153,7 +153,8 @@ export function * onBurn ({ payload: { type, drive } }) {
     yield call(handlers.burn, {
       downloads: burnDownloads,
       type,
-      drive
+      drive,
+      driveName
     })
     yield put(actions.burnRequest.success())
   } catch (error) {

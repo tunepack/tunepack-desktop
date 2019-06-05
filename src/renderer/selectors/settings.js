@@ -23,3 +23,5 @@ export const getDrives = state => { return state.settings.get('drives') }
 export const getIsExecutingGetDrives = state => { return state.settings.get('isExecutingGetDrives') }
 export const getIsExecutingBurning = state => { return state.settings.get('isExecutingBurning') }
 export const getBurningError = state => { return state.settings.get('burningError') }
+export const getBurnProgress = state => { return state.settings.get('burnProgress') }
+export const getIsBurned = state => { return state.settings.get('isBurned') }

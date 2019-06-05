@@ -45,6 +45,9 @@ export const configureStore = (initialState = {}) => {
     },
     [Channel.UPDATE_SETTINGS]: (event, args) => {
       return settingsActions.onUpdateSettings(args)
+    },
+    [Channel.BURN_PROGRESS]: (event, args) => {
+      return settingsActions.onBurnProgress(args)
     }
   })
 

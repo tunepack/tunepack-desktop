@@ -8,13 +8,15 @@ import IconCD from 'icons/CD.svg'
 import IconUSB from 'icons/USB.svg'
 import * as BurnType from 'shared/constants/BurnType'
 import { connect } from 'react-redux'
-import { getDrives, burn } from 'actions/settings'
+import { getDrives, burn, burnReset } from 'actions/settings'
 import { Collapse } from 'react-collapse'
 import {
   getIsExecutingBurning,
   getIsExecutingGetDrives,
   getDrives as getDrivesSelector,
-  getBurningError
+  getBurningError,
+  getIsBurned,
+  getBurnProgress
 } from 'selectors/settings'
 
 const BurnForm = ({
@@ -23,7 +25,10 @@ const BurnForm = ({
   isExecutingBurning,
   getDrives,
   burn,
-  burningError
+  burningError,
+  isBurned,
+  burnProgress,
+  burnReset
 }) => {
   const [burnType, setBurnType] = useState(null)
 
@@ -34,9 +39,11 @@ const BurnForm = ({
   const handleSelectBurnType = bt => () => {
     setBurnType(bt)
 
-    burn({
-      type: bt
-    })
+    if (bt === BurnType.DISK) {
+      burn({
+        type: bt
+      })
+    }
   }
 
   if (isExecutingGetDrives) {
@@ -70,10 +77,14 @@ const BurnForm = ({
       <Collapse isOpened={burnType !== null}>
         <div className={styles.content}>
           <BurnFormContent
+            burnReset={burnReset}
+            isBurned={isBurned}
+            burnProgress={burnProgress}
             burnType={burnType}
             isExecutingBurning={isExecutingBurning}
             drives={drives}
             burningError={burningError}
+            burn={burn}
           />
         </div>
       </Collapse>
@@ -86,13 +97,16 @@ const mapStateToProps = (state) => {
     drives: getDrivesSelector(state),
     isExecutingGetDrives: getIsExecutingGetDrives(state),
     isExecutingBurning: getIsExecutingBurning(state),
-    burningError: getBurningError(state)
+    burningError: getBurningError(state),
+    isBurned: getIsBurned(state),
+    burnProgress: getBurnProgress(state)
   }
 }
 
 const mapActionsToProps = {
   getDrives,
-  burn
+  burn,
+  burnReset
 }
 
 export default connect(
