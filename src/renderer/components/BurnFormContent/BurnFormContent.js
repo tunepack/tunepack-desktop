@@ -30,6 +30,8 @@ const getDriveOptions = drives => {
 const getBurningErrorLabel = burningError => {
   if (burningError === 'no-device') {
     return 'No disk burning device found.'
+  } else if (burningError === 'not-mac') {
+    return 'Sorry, burning to disk is only for Mac, we are working on it.'
   }
 
   return 'Something has gone wrong....'

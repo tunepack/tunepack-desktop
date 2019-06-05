@@ -1,7 +1,13 @@
 const { spawn } = require('child_process')
 
+const isMac = process.platform === 'darwin'
+
 // TODO: onProgress
 const burnFolder = ({ folderName }) => new Promise((resolve, reject) => {
+  if (!isMac) {
+    return reject(new Error('not-mac'))
+  }
+
   const spawnedBurn = spawn('drutil', [
     'burn',
     '-noverify',
