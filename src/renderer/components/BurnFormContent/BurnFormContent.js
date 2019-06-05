@@ -64,9 +64,15 @@ const BurnFormContent = ({
         <div className={styles.progressBar}>
           <ProgressBar progress={progress} />
         </div>
-        <div className={styles.progressLabel}>
-          Copying to {selectedDriveOption.label}...
-        </div>
+        {burnType === BurnType.USB ? (
+          <div className={styles.progressLabel}>
+            Copying to {selectedDriveOption.label}...
+          </div>
+        ) : (
+          <div className={styles.progressLabel}>
+            Burning to disk
+          </div>
+        )}
       </div>
     )
   }
