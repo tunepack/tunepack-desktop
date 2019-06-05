@@ -8,6 +8,7 @@ import fs from 'fs-extra'
 import { copyFilesToDrive } from '../utils/drive'
 import _ from 'lodash'
 import * as notifications from '../utils/notifications'
+import * as fsUtils from '../utils/fs'
 
 const PROGRESS_INTERVAL = 300
 
@@ -48,7 +49,18 @@ const burnToDrive = async (event, args) => {
     driveName
   } = args
 
-  const throttledOnProgress = _.throttle(progress => {
+  const files = []
+  let totalFileSize = 0
+
+  for (const { downloadPath } of downloads) {
+    files.push(downloadPath)
+    const { size } = await fsUtils.stat(downloadPath)
+    totalFileSize += size
+  }
+
+  const throttledOnProgress = _.throttle(({ completedSize }) => {
+    const progress = (completedSize * 100) / totalFileSize
+
     event.reply(Channel.BURN_PROGRESS, {
       progress
     })
@@ -56,12 +68,6 @@ const burnToDrive = async (event, args) => {
 
   const handleProgress = progress => {
     throttledOnProgress(progress)
-  }
-
-  const files = []
-
-  for (const download of downloads) {
-    files.push(download.downloadPath)
   }
 
   await copyFilesToDrive({
