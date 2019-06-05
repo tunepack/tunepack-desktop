@@ -4,7 +4,8 @@ import styles from './NavBurn.scss'
 import {
   getIsBurning,
   getSelectedForBurning,
-  getIsBurningContinued
+  getIsBurningContinued,
+  getIsExecutingBurning
 } from 'selectors/settings'
 import {
   setBurnContinue,
@@ -21,7 +22,8 @@ const NavBurn = ({
   isBurning,
   selectedForBurning,
   isBurningContinued,
-  setBurnContinue
+  setBurnContinue,
+  isExecutingBurning
 }) => {
   const selectedForBurningCount = selectedForBurning.count()
   const hasSelectedOneForBurning = selectedForBurningCount > 0
@@ -46,6 +48,7 @@ const NavBurn = ({
         <div className={styles.header}>
           {isBurningContinued ? (
             <Button
+              isDisabled={isExecutingBurning}
               onClick={handleCloseClick}
               className={styles.btnClose}
               iconBefore={(
@@ -89,7 +92,8 @@ const mapStateToProps = state => {
   return {
     isBurning: getIsBurning(state),
     selectedForBurning: getSelectedForBurning(state),
-    isBurningContinued: getIsBurningContinued(state)
+    isBurningContinued: getIsBurningContinued(state),
+    isExecutingBurning: getIsExecutingBurning(state)
   }
 }
 

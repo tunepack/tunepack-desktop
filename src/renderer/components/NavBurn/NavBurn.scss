@@ -38,6 +38,13 @@ $height-open: 140px;
 
 .header {
   width: 100%;
+
+  button {
+    &:disabled {
+      cursor: not-allowed !important;
+      opacity: .95 !important;
+    }
+  }
 }
 
 .btnBurn,

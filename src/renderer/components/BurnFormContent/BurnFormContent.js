@@ -79,17 +79,17 @@ const BurnFormContent = ({
         </div>
         <div className={styles.finishedCleanup}>
           <Button
+            onClick={handleKeepDownloadsClick}
+            size='sm'
+          >
+            Yes, keep them
+          </Button>
+          <Button
             onClick={handleRemoveDownloadsClick}
             variant='error'
             size='sm'
           >
-            No, remove the downloads
-          </Button>
-          <Button
-            onClick={handleKeepDownloadsClick}
-            size='sm'
-          >
-            Yes, keep the downloads
+            No, remove them
           </Button>
         </div>
       </div>
