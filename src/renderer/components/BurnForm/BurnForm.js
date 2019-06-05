@@ -56,24 +56,31 @@ const BurnForm = ({
 
   return (
     <div className={styles.component}>
-      <div className={styles.typeSelect}>
-        <ButtonHugeIcon
-          onClick={handleSelectBurnType(BurnType.DISK)}
-          isActive={burnType === BurnType.DISK}
-          label='Burn to disk'
-          icon={(
-            <Icon glyph={IconCD} />
-          )}
-        />
-        <ButtonHugeIcon
-          onClick={handleSelectBurnType(BurnType.USB)}
-          isActive={burnType === BurnType.USB}
-          label='Copy to USB'
-          icon={(
-            <Icon glyph={IconUSB} />
-          )}
-        />
-      </div>
+      <Collapse
+        style={{
+          width: '100%'
+        }}
+        isOpened={burnType === null}
+      >
+        <div className={styles.typeSelect}>
+          <ButtonHugeIcon
+            onClick={handleSelectBurnType(BurnType.DISK)}
+            isActive={burnType === BurnType.DISK}
+            label='Burn to disk'
+            icon={(
+              <Icon glyph={IconCD} />
+            )}
+          />
+          <ButtonHugeIcon
+            onClick={handleSelectBurnType(BurnType.USB)}
+            isActive={burnType === BurnType.USB}
+            label='Copy to USB'
+            icon={(
+              <Icon glyph={IconUSB} />
+            )}
+          />
+        </div>
+      </Collapse>
       <Collapse isOpened={burnType !== null}>
         <div className={styles.content}>
           <BurnFormContent

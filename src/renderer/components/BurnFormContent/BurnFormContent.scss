@@ -15,13 +15,12 @@
 }
 
 .finishedLabel {
-  color: $color-green;
-  margin-bottom: 8px;
+  margin-bottom: 1em;
 }
 
 .finishedCleanup {
   button {
-    margin-right: 10px;
+    margin-right: 1em;
 
     &:last-child {
       margin-right: 0;
@@ -29,11 +28,18 @@
   }
 }
 
-.makeSelection,
-.error,
-.status,
-.finished {
-  line-height: 49px;
+.progress {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.progressBar {
+  margin-bottom: 12px;
+}
+
+.progressLabel {
+  font-size: 12px;
 }
 
 .status {

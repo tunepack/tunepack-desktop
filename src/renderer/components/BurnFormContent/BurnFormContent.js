@@ -61,7 +61,12 @@ const BurnFormContent = ({
 
     return (
       <div className={styles.progress}>
-        <ProgressBar progress={progress} />
+        <div className={styles.progressBar}>
+          <ProgressBar progress={progress} />
+        </div>
+        <div className={styles.progressLabel}>
+          Copying to {selectedDriveOption.label}...
+        </div>
       </div>
     )
   }

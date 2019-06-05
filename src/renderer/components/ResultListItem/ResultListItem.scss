@@ -84,6 +84,10 @@ $progress-bar-width: 65px;
   justify-content: center;
 }
 
+.progressBar {
+  margin-bottom: 5px;
+}
+
 .speed {
   font-size: 10px;
   color: darken($color-subtext, 10%);

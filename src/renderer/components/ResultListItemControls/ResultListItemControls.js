@@ -36,9 +36,11 @@ export default React.memo(({
 
     return (
       <div className={styles.downloading}>
-        <ProgressBar
-          progress={download.get('progress')}
-        />
+        <div className={styles.progressBar}>
+          <ProgressBar
+            progress={download.get('progress')}
+          />
+        </div>
         {avgSpeed ? (
           <div className={styles.speed}>
             {prettyBytes(avgSpeed)}/s

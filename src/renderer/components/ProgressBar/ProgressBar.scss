@@ -8,7 +8,6 @@ $progress-bar-width: 65px;
   border-radius: $progress-bar-height;
   width: $progress-bar-width;
   position: relative;
-  margin-bottom: 5px;
   background-color: lighten($color-border, 2%);
   overflow: hidden;
   box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.1);
