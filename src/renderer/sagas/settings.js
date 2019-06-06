@@ -162,6 +162,33 @@ export function * onBurn ({ payload: { type, drive, driveName } }) {
   }
 }
 
+export function * onDownloadsRemove () {
+  yield put(actions.downloadsRemoveRequest.start())
+
+  const selectedForBurning = yield select(getSelectedForBurning)
+  const downloads = yield select(getDownloads)
+
+  const burnDownloads = []
+
+  selectedForBurning.forEach(r => {
+    burnDownloads.push(
+      downloads
+        .get(String(r))
+        .toJS()
+    )
+  })
+
+  try {
+    yield call(handlers.downloadsRemove, {
+      downloads: burnDownloads
+    })
+
+    yield put(actions.downloadsRemoveRequest.success())
+  } catch (error) {
+    yield put(actions.downloadsRemoveRequest.error(error))
+  }
+}
+
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.INITIALIZE, onInitialize),
@@ -169,6 +196,7 @@ export default function * watchSettings () {
     takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir),
     takeLatest(constants.TOGGLE_DOWNLOAD_SELECT_ALL, onToggleSelectAll),
     takeLatest(constants.GET_DRIVES, onGetDrives),
-    takeLatest(constants.BURN, onBurn)
+    takeLatest(constants.BURN, onBurn),
+    takeLatest(constants.DOWNLOADS_REMOVE, onDownloadsRemove)
   ])
 }

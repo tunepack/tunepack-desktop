@@ -28,6 +28,9 @@ export const BURN_RESET = '@settings/BURN_RESET'
 export const GET_DRIVES = '@settings/GET_DRIVES'
 export const GET_DRIVES_REQUEST = createRequestTypes('@settings/GET_DRIVES_REQUEST')
 
+export const DOWNLOADS_REMOVE = '@settings/DOWNLOADS_REMOVE'
+export const DOWNLOADS_REMOVE_REQUEST = createRequestTypes('@settings/DOWNLOADS_REMOVE_REQUEST')
+
 export const constants = {
   INITIALIZE,
   INITIALIZE_REQUEST,
@@ -47,7 +50,9 @@ export const constants = {
   ON_BURN_PROGRESS,
   BURN_RESET,
   GET_DRIVES,
-  GET_DRIVES_REQUEST
+  GET_DRIVES_REQUEST,
+  DOWNLOADS_REMOVE,
+  DOWNLOADS_REMOVE_REQUEST
 }
 
 export const initialize = createAction(INITIALIZE)
@@ -77,6 +82,9 @@ export const burnReset = createAction(BURN_RESET)
 export const getDrives = createAction(GET_DRIVES)
 export const getDrivesRequest = createRequestAction(GET_DRIVES_REQUEST)
 
+export const downloadsRemove = createAction(DOWNLOADS_REMOVE)
+export const downloadsRemoveRequest = createRequestAction(DOWNLOADS_REMOVE_REQUEST)
+
 export default {
   initialize,
   initializeRequest,
@@ -96,5 +104,7 @@ export default {
   burnReset,
   onBurnProgress,
   getDrives,
-  getDrivesRequest
+  getDrivesRequest,
+  downloadsRemove,
+  downloadsRemoveRequest
 }

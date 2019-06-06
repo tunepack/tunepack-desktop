@@ -11,7 +11,8 @@ import {
   BURN_REQUEST,
   GET_DRIVES_REQUEST,
   ON_BURN_PROGRESS,
-  BURN_RESET
+  BURN_RESET,
+  DOWNLOADS_REMOVE_REQUEST
 } from 'actions/settings'
 import { RESET_REQUEST } from '../actions/app'
 
@@ -30,7 +31,8 @@ const initialState = fromJS({
   isBurned: false,
   drives: [],
   isExecutingGetDrives: false,
-  getDrivesError: null
+  getDrivesError: null,
+  isRemovingDownloads: false
 })
 
 export default createReducer(initialState, {
@@ -116,7 +118,23 @@ export default createReducer(initialState, {
     return state.set('selectedForBurning', List(selectedForBurning))
   },
   [BURN_CONTINUE]: (state, { payload: isBurningContinued }) => {
-    return state.set('isBurningContinued', isBurningContinued)
+    return state.withMutations((state) => {
+      if (isBurningContinued === false) {
+        return state
+          .set('selectedForBurning', List())
+          .set('isBurningContinued', false)
+          .set('isExecutingBurning', false)
+          .set('burningError', null)
+          .set('burnProgress', null)
+          .set('isBurned', false)
+          .set('drives', List())
+          .set('isExecutingGetDrives', false)
+          .set('getDrivesError', null)
+      }
+
+      return state
+        .set('isBurningContinued', true)
+    })
   },
   [BURN_REQUEST.START]: (state) => {
     return state
@@ -151,5 +169,18 @@ export default createReducer(initialState, {
   [ON_BURN_PROGRESS]: (state, { payload: { progress } }) => {
     return state
       .set('burnProgress', progress)
+  },
+  [DOWNLOADS_REMOVE_REQUEST.START]: (state) => {
+    return state
+      .set('isRemovingDownloads', true)
+      .set('isBurned', false)
+  },
+  [DOWNLOADS_REMOVE_REQUEST.SUCCESS]: (state) => {
+    return state
+      .set('isRemovingDownloads', false)
+  },
+  [DOWNLOADS_REMOVE_REQUEST.ERROR]: (state) => {
+    return state
+      .set('isRemovingDownloads', false)
   }
 })

@@ -14,3 +14,4 @@ export const RESET = 'RESET'
 export const BURN = 'BURN'
 export const BURN_PROGRESS = `BURN_PROGRESS`
 export const GET_DRIVES = 'GET_DRIVES'
+export const DOWNLOADS_REMOVE = 'DOWNLOADS_REMOVE'

@@ -18,7 +18,8 @@ const DownloadsHeader = ({
   isBurning,
   toggleIsBurning,
   toggleDownloadSelectAll,
-  isAllSelectedForBurning
+  isAllSelectedForBurning,
+  hasItems
 }) => {
   const handleKeyUp = useCallback(event => {
     if (event.keyCode === KEY_B) {
@@ -80,7 +81,7 @@ const DownloadsHeader = ({
               Cancel
             </Button>
           </>
-        ) : (
+        ) : hasItems && (
           <Button
             onClick={handleBtnBurnClick}
             iconBefore={(

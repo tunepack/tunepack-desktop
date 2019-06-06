@@ -8,7 +8,7 @@ import IconCD from 'icons/CD.svg'
 import IconUSB from 'icons/USB.svg'
 import * as BurnType from 'shared/constants/BurnType'
 import { connect } from 'react-redux'
-import { getDrives, burn, burnReset } from 'actions/settings'
+import { getDrives, burn, burnReset, downloadsRemove } from 'actions/settings'
 import { Collapse } from 'react-collapse'
 import {
   getIsExecutingBurning,
@@ -28,7 +28,8 @@ const BurnForm = ({
   burningError,
   isBurned,
   burnProgress,
-  burnReset
+  burnReset,
+  downloadsRemove
 }) => {
   const [burnType, setBurnType] = useState(null)
 
@@ -84,6 +85,7 @@ const BurnForm = ({
       <Collapse isOpened={burnType !== null}>
         <div className={styles.content}>
           <BurnFormContent
+            downloadsRemove={downloadsRemove}
             burnReset={burnReset}
             isBurned={isBurned}
             burnProgress={burnProgress}
@@ -113,7 +115,8 @@ const mapStateToProps = (state) => {
 const mapActionsToProps = {
   getDrives,
   burn,
-  burnReset
+  burnReset,
+  downloadsRemove
 }
 
 export default connect(

@@ -25,3 +25,4 @@ export const getIsExecutingBurning = state => { return state.settings.get('isExe
 export const getBurningError = state => { return state.settings.get('burningError') }
 export const getBurnProgress = state => { return state.settings.get('burnProgress') }
 export const getIsBurned = state => { return state.settings.get('isBurned') }
+export const getIsRemovingDownloads = state => { return state.settings.get('isRemovingDownloads') }

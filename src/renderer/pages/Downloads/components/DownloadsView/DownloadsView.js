@@ -10,7 +10,7 @@ const DownloadsView = React.memo(({
 }) => {
   return (
     <View
-      header={<DownloadsHeader />}
+      header={<DownloadsHeader hasItems={items.count() > 0} />}
     >
       <ResultsList
         isDownloadsPage

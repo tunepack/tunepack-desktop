@@ -8,6 +8,7 @@ import reload from './reload'
 import reset from './reset'
 import burn from './burn'
 import getDrives from './getDrives'
+import downloadsRemove from './downloadsRemove'
 
 export default {
   initialize,
@@ -19,5 +20,6 @@ export default {
   reload,
   reset,
   burn,
-  getDrives
+  getDrives,
+  downloadsRemove
 }

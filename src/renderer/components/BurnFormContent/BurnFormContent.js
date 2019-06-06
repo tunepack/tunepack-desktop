@@ -45,12 +45,14 @@ const BurnFormContent = ({
   burn,
   isBurned,
   burnReset,
-  burnProgress
+  burnProgress,
+  downloadsRemove
 }) => {
   const driveOptions = getDriveOptions(drives)
   const [selectedDriveOption, setSelectedDriveOption] = useState(driveOptions[0])
 
   const handleRemoveDownloadsClick = () => {
+    downloadsRemove()
     burnReset()
   }
 

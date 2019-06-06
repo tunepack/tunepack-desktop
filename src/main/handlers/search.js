@@ -8,6 +8,7 @@ import { createSendAndWait } from '../utils/handlers'
 import * as slsk from '../utils/slsk'
 import { getTrackId } from '../utils/tracks'
 import { searches } from '../utils/searches'
+import { ipcMain } from 'electron'
 
 const FOUND_INTERVAL = 16
 
@@ -74,47 +75,13 @@ const getUniqueArray = (array, key) => {
     .filter(e => { return array[e] }).map(e => { return array[e] })
 }
 
-createSendAndWait(Channel.SEARCH, async (event, args) => {
-  const { query } = args
-
+const getFilteredResults = results => {
   const {
     searchFileExtensions,
     searchHasOnlyHighBitrate
   } = settings.getRendererSettings()
 
-  const searchDuration = settings.getSearchDuration()
-
-  searches[query] = {
-    startedOn: ~new Date(),
-    resultCount: 0,
-    isDone: false,
-    results: []
-  }
-
-  const throttledFound = _.throttle(track => {
-    const searchCache = searches[query]
-
-    event.reply(Channel.SEARCH_FOUND, {
-      track,
-      resultCount: searchCache.resultCount
-    })
-  }, FOUND_INTERVAL)
-
-  const handleFound = (track) => {
-    searches[query].resultCount++
-    searches[query].results.push(track)
-    throttledFound(track)
-  }
-
-  const searchRes = await slsk.search({
-    query,
-    duration: searchDuration,
-    onFound: handleFound
-  })
-
-  searches[query].isDone = true
-
-  let results = searchRes
+  results = results
     .sort((a, b) => {
       return (a.size / a.speed) - (b.size / b.speed)
     })
@@ -138,7 +105,68 @@ createSendAndWait(Channel.SEARCH, async (event, args) => {
     })
   }
 
-  results = getUniqueArray(results, 'id')
+  return getUniqueArray(results, 'id')
+}
+
+const search = (event, args) => new Promise(async (resolve) => {
+  let isResolved = false
+
+  const { query } = args
+  const searchDuration = settings.getSearchDuration()
+
+  searches[query] = {
+    startedOn: ~new Date(),
+    resultCount: 0,
+    isDone: false,
+    results: []
+  }
+
+  const handleOnStop = (event, queryKey) => {
+    searches[queryKey].isDone = true
+    const results = getFilteredResults(searches[queryKey].results)
+    isResolved = true
+    resolve(results)
+  }
+
+  ipcMain.once(Channel.SEARCH_STOP, handleOnStop)
+
+  const throttledFound = _.throttle(track => {
+    const searchCache = searches[query]
+
+    event.reply(Channel.SEARCH_FOUND, {
+      track,
+      resultCount: searchCache.resultCount
+    })
+  }, FOUND_INTERVAL)
+
+  const handleFound = (track) => {
+    if (isResolved) {
+      return
+    }
+
+    searches[query].resultCount++
+    searches[query].results.push(track)
+    throttledFound(track)
+  }
+
+  const searchRes = await slsk.search({
+    query,
+    duration: searchDuration,
+    onFound: handleFound
+  })
+
+  if (isResolved) {
+    return
+  }
+
+  searches[query].isDone = true
+
+  const results = getFilteredResults(searchRes)
+  resolve(results)
+})
+
+createSendAndWait(Channel.SEARCH, async (event, args) => {
+  const results = await search(event, args)
 
   return {
     results
