@@ -6,6 +6,12 @@ import { connect } from 'react-redux'
 import { getDownloadByTrackId } from 'selectors/downloads'
 import cx from 'classnames'
 import FileExtensionBadge from './FileExtensionBadge/FileExtensionBadge'
+import {
+  getIsBurning,
+  getSelectedForBurning
+} from '../../selectors/settings'
+import { Checkbox } from 'components/FormFields'
+import { toggleDownloadSelectBurning } from 'actions/settings'
 
 const ResultListItem = React.memo(({
   track,
@@ -13,20 +19,61 @@ const ResultListItem = React.memo(({
   download,
   onDownloadClick,
   style,
-  isDownloadsPage
+  isDownloadsPage,
+  isBurning,
+  toggleDownloadSelectBurning,
+  selectedForBurning
 }) => {
+  const isSelectedForBurning = selectedForBurning.includes(track.get('id'))
+
   const handleDownloadClick = () => {
     onDownloadClick(track)
   }
+
+  const handleSelectForBurningChange = (value) => {
+    toggleDownloadSelectBurning(track.get('id'), value)
+  }
+
+  const handleSelectClick = () => {
+    const isDownloaded = download?.get('isDownloaded')
+    const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
+
+    if (shouldShowBurnSelect) {
+      toggleDownloadSelectBurning(track.get('id'), !isSelectedForBurning)
+    }
+  }
+
+  const isDownloaded = download?.get('isDownloaded')
+  const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
 
   return (
     <div
       style={style}
       className={cx(styles.component, {
-        [styles.isOdd]: index % 2
+        [styles.isOdd]: index % 2,
+        [styles.isSelectable]: shouldShowBurnSelect
       })}
     >
-      <div className={styles.content}>
+      <div
+        onClick={handleSelectClick}
+        className={styles.content}
+      >
+        {shouldShowBurnSelect && (
+          <div
+            onClick={handleSelectClick}
+            className={styles.select}
+          >
+            <Checkbox
+              form={{
+                setFieldValue: handleSelectForBurningChange
+              }}
+              field={{
+                name: 'isSelected',
+                value: isSelectedForBurning
+              }}
+            />
+          </div>
+        )}
         <div className={styles.info}>
           <div className={styles.infoPrimary}>
             <div className={styles.fileName}>
@@ -62,11 +109,15 @@ const mapStateToProps = (state, ownProps) => {
   const trackId = ownProps.track.get('id')
 
   return {
-    download: getDownloadByTrackId(trackId)(state)
+    isBurning: getIsBurning(state),
+    download: getDownloadByTrackId(trackId)(state),
+    selectedForBurning: getSelectedForBurning(state)
   }
 }
 
-const mapActionsToProps = null
+const mapActionsToProps = {
+  toggleDownloadSelectBurning
+}
 
 export default connect(
   mapStateToProps,

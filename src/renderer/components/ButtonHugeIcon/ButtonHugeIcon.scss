@@ -1,0 +1,37 @@
+@import 'base.scss';
+
+.component {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: .2;
+  outline: 0;
+  transition: opacity 220ms ease;
+  user-select: none;
+
+  &:hover{
+    opacity: .75;
+  }
+
+  &.isActive {
+    opacity: 1 !important;
+  }
+}
+
+.icon {
+  color: $color-text;
+  margin-right: 1em;
+
+  svg {
+    $size: 40px;
+    width: $size;
+    height: $size;
+  }
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 300;
+}

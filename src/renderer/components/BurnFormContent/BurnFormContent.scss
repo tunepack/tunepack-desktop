@@ -1,0 +1,64 @@
+@import 'base.scss';
+
+.component {
+  // Empty
+}
+
+.error {
+  color: $color-red;
+}
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.finishedLabel {
+  margin-bottom: 1em;
+}
+
+.finishedCleanup {
+  button {
+    margin-right: 1em;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.progressBar {
+  margin-bottom: 12px;
+}
+
+.progressLabel {
+  font-size: 12px;
+}
+
+.status {
+  color: $color-primary;
+}
+
+.usb {
+  display: flex;
+  align-items: center;
+}
+
+.selectDrive {
+  margin-right: 1em;
+
+  :global {
+    .react-select {
+      &__control {
+        min-width: 200px !important;
+      }
+    }
+  }
+}

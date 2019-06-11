@@ -1,21 +1,43 @@
-import { all, takeLatest, put, call, select } from 'redux-saga/effects'
+import {
+  all,
+  takeLatest,
+  put,
+  call,
+  select
+} from 'redux-saga/effects'
 import actions, {
   constants,
   setSettings
 } from 'actions/settings'
 
-import { showLoading, showError } from 'actions/app'
+import {
+  showLoading,
+  showError
+} from 'actions/app'
 
 import handlers from 'handlers'
 import {
   getData as getSettings,
-  getDownloadsDir
-} from 'selectors/settings'
+  getDownloadsDir,
+  getIsAllSelectedForBurning
+  , getSelectedForBurning } from 'selectors/settings'
 
 import {
   setUid,
   sendEvent
 } from 'utils/analytics'
+
+import {
+  getDownloadsList
+} from 'selectors/downloadsList'
+
+import {
+  getDownloads
+} from 'selectors/downloads'
+
+import {
+  fromJS
+} from 'immutable'
 
 export function * onInitialize () {
   yield put(actions.initializeRequest.start())
@@ -88,10 +110,93 @@ export function * onSelectDownloadsDir () {
   }))
 }
 
+export function * onToggleSelectAll () {
+  const downloadsList = yield select(getDownloadsList)
+  const isAllSelectedForBurning = yield select(getIsAllSelectedForBurning)
+
+  const selectedForBurning = isAllSelectedForBurning
+    ? []
+    : downloadsList.map(d => d.get('id')).toArray()
+
+  yield put(actions.setSelectedForBurning(selectedForBurning))
+}
+
+export function * onGetDrives () {
+  yield put(actions.getDrivesRequest.start())
+
+  try {
+    const { drives } = yield call(handlers.getDrives)
+
+    yield put(actions.getDrivesRequest.success(fromJS(drives)))
+  } catch (error) {
+    yield put(actions.getDrivesRequest.error(error))
+  }
+}
+
+export function * onBurn ({ payload: { type, drive, driveName } }) {
+  yield put(actions.burnRequest.start())
+
+  const selectedForBurning = yield select(getSelectedForBurning)
+  const downloads = yield select(getDownloads)
+
+  const burnDownloads = []
+
+  selectedForBurning.forEach(r => {
+    burnDownloads.push(
+      downloads
+        .get(String(r))
+        .toJS()
+    )
+  })
+
+  try {
+    yield call(handlers.burn, {
+      downloads: burnDownloads,
+      type,
+      drive,
+      driveName
+    })
+    yield put(actions.burnRequest.success())
+  } catch (error) {
+    yield put(actions.burnRequest.error(error?.error))
+  }
+}
+
+export function * onDownloadsRemove () {
+  yield put(actions.downloadsRemoveRequest.start())
+
+  const selectedForBurning = yield select(getSelectedForBurning)
+  const downloads = yield select(getDownloads)
+
+  const burnDownloads = []
+
+  selectedForBurning.forEach(r => {
+    burnDownloads.push(
+      downloads
+        .get(String(r))
+        .toJS()
+    )
+  })
+
+  try {
+    yield call(handlers.downloadsRemove, {
+      downloads: burnDownloads
+    })
+
+    yield put(actions.downloadsRemoveRequest.success())
+  } catch (error) {
+    yield put(actions.downloadsRemoveRequest.error(error))
+  }
+}
+
 export default function * watchSettings () {
   yield all([
     takeLatest(constants.INITIALIZE, onInitialize),
     takeLatest(constants.SET_SETTINGS, onSetSettings),
-    takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir)
+    takeLatest(constants.SELECT_DOWNLOAD_DIR, onSelectDownloadsDir),
+    takeLatest(constants.TOGGLE_DOWNLOAD_SELECT_ALL, onToggleSelectAll),
+    takeLatest(constants.GET_DRIVES, onGetDrives),
+    takeLatest(constants.BURN, onBurn),
+    takeLatest(constants.DOWNLOADS_REMOVE, onDownloadsRemove)
   ])
 }

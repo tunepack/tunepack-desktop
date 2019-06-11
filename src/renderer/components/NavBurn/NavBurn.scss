@@ -1,0 +1,110 @@
+@import 'base.scss';
+
+$btn-height: $nav-height;
+$height-open: 140px;
+
+.component {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: $height-open + $btn-height;
+  z-index: 200;
+  transform: translateY($height-open + $btn-height);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 280ms ease;
+  will-change: transform, opacity;
+  box-shadow: 0 0 10px 5px transparentize($color-primary, .50);
+  background-color: white;
+
+  &.isVisible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY($height-open);
+  }
+
+  &.isContinued {
+    box-shadow: 0 0 10px 5px transparentize($gray-800, .50);
+    transform: none;
+  }
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.header {
+  width: 100%;
+
+  button {
+    &:disabled {
+      cursor: not-allowed !important;
+      opacity: .95 !important;
+    }
+  }
+}
+
+.btnBurn,
+.btnClose {
+  height: $nav-height;
+  width: 100%;
+  box-shadow: none !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+
+  &:hover {
+    span {
+      opacity: .95;
+    }
+
+    .btnBurnIconBefore,
+    .btnCloseIconBefore {
+      opacity: .95;
+    }
+  }
+}
+
+.btnCloseIconBefore {
+  svg {
+    $size: 12px;
+    width: $size;
+    height: $size;
+  }
+}
+
+.btnBurnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnBurnIconBefore {
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.btnBurnIconBefore,
+.btnCloseIconBefore {
+  opacity: .75;
+  transition: opacity 180ms ease;
+}
+
+.btnBurn {
+  span {
+    transition: opacity 180ms ease;
+    opacity: .75;
+  }
+}
+
+.form {
+  position: absolute;
+  top: $btn-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

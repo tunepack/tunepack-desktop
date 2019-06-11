@@ -13,6 +13,16 @@ cp .env.example .env
 npm run dev
 ```
 
+## Creating a component
+
+To easily create a scaffolds of components etc. we use Plop.
+
+Please make sure you install Plop first: `npm install plop --g`
+
+```shell
+plop component
+```
+
 ## Packaging
 
 To package the app for the local platform:

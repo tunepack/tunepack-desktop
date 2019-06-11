@@ -1,0 +1,26 @@
+@import 'base.scss';
+
+.loader {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.component {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.typeSelect {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.content {
+}

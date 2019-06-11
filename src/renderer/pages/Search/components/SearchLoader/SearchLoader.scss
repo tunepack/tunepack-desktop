@@ -9,14 +9,16 @@
 }
 
 .spinner {
-  font-size: 24px;
-  margin-bottom: 8px;
+  font-size: 20px;
+  margin-bottom: 14px;
 }
 
 .content {
   max-width: 300px;
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .resultCount {
@@ -27,12 +29,14 @@
   color: $color-subtext;
   font-size: 10px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 30px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   max-width: 300px;
+  text-align: center;
+  height: 30px;
 }
 
 .btnStop {

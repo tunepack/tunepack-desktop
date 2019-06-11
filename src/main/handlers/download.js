@@ -3,7 +3,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import createDebug from 'debug'
 import shortid from 'shortid'
-import tmp from 'tmp'
+import { file as createTmpFile } from 'tmp-promise'
 
 import { createSendAndWait } from '../utils/handlers'
 import * as Channel from 'shared/constants/Channel'
@@ -20,20 +20,6 @@ const PROGRESS_INTERVAL = 300
 const getErrorMessage = () => {
   return 'Something has gone wrong.'
 }
-
-const createTmpFile = () => new Promise((resolve, reject) => {
-  tmp.file((error, path, fd, cleanupCallback) => {
-    if (error) {
-      return reject(error)
-    }
-
-    resolve({
-      path,
-      fd,
-      cleanupCallback
-    })
-  })
-})
 
 const downloadTrack = async ({
   downloadPath,
@@ -134,7 +120,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
 
     const {
       path: tmpPath,
-      cleanupCallback
+      cleanup: tmpCleanup
     } = await createTmpFile()
 
     const downloadPath = await getUniqueDownloadPath(track)
@@ -155,7 +141,7 @@ createSendAndWait(Channel.DOWNLOAD, async (event, track) => {
       onProgress: handleProgress
     })
 
-    cleanupCallback()
+    await tmpCleanup()
 
     settings.updateDownloadHistoryEntry(track.id, {
       isDownloading: false,

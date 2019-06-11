@@ -3,6 +3,7 @@ import Button from 'components/Button/Button'
 import { shell } from 'electron'
 import styles from '../ResultListItem/ResultListItem.scss'
 import Icon from 'components/Icon/Icon'
+import ProgressBar from 'components/ProgressBar/ProgressBar'
 import DownloadCloud from 'icons/DownloadCloudAlt.svg'
 import prettyBytes from 'pretty-bytes/index'
 
@@ -10,16 +11,23 @@ export default React.memo(({
   onDownloadClick,
   download
 }) => {
+  const handleOpenClick = event => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    shell.openItem(download.get('downloadPath'))
+  }
+
   if (download?.get('isDownloaded')) {
     return (
-      <Button
-        onClick={() => {
-          shell.openItem(download.get('downloadPath'))
-        }}
-        variant='minimal'
-      >
-        Open
-      </Button>
+      <div className={styles.downloadedControls}>
+        <Button
+          onClick={handleOpenClick}
+          variant='minimal'
+        >
+          Open
+        </Button>
+      </div>
     )
   }
 
@@ -28,12 +36,9 @@ export default React.memo(({
 
     return (
       <div className={styles.downloading}>
-        <div className={styles.progress}>
-          <div
-            style={{
-              width: `${download.get('progress')}%`
-            }}
-            className={styles.progressIndicator}
+        <div className={styles.progressBar}>
+          <ProgressBar
+            progress={download.get('progress')}
           />
         </div>
         {avgSpeed ? (

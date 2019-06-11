@@ -6,6 +6,7 @@ import Root from 'components/Root/Root'
 import { configureStore, history } from 'utils/configureStore'
 import { initialize } from 'actions/settings'
 import { initialize as initializeAnalytics } from 'utils/analytics'
+import setupNavKeybinds from 'utils/setupNavKeybinds'
 
 initializeAnalytics()
 
@@ -13,6 +14,8 @@ const store = configureStore()
 store.dispatch(initialize())
 
 const rootElement = document.getElementById('root')
+
+setupNavKeybinds(window, history)
 
 function renderApp (RootComponent) {
   render(

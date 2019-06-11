@@ -1,0 +1,21 @@
+import React from 'react'
+import IconBase from 'components/IconBase/IconBase'
+
+const IconClose = () => {
+  return (
+    <IconBase>
+      <svg
+        width='12'
+        height='12'
+        viewBox='0 0 12 12'
+      >
+        <path
+          fill='currentColor'
+          d='M 1.58946e-07 10.9583L 1.04167 12L 6 7.04167L 10.9583 12L 12 10.9583L 7.04167 6L 12 1.04167L 10.9583 1.58946e-07L 6 4.95833L 1.04167 1.58946e-07L 1.58946e-07 1.04167L 4.95833 6L 1.58946e-07 10.9583Z'
+        />
+      </svg>
+    </IconBase>
+  )
+}
+
+export default IconClose

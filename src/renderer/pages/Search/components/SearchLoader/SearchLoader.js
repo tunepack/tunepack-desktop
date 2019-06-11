@@ -10,8 +10,6 @@ import styles from './SearchLoader.scss'
 import { searchStop } from 'actions/downloads'
 import Button from 'components/Button/Button'
 
-const ENABLE_STOP = false
-
 const SearchLoader = ({
   searchResultCount,
   searchResultLastFile,
@@ -34,16 +32,14 @@ const SearchLoader = ({
         <div className={styles.latestTrackFile}>
           {searchResultLastFile}
         </div>
-        {ENABLE_STOP && (
-          <div className={styles.btnStop}>
-            <Button
-              onClick={handleShowResultsClick}
-              size='sm'
-            >
-              Show results
-            </Button>
-          </div>
-        )}
+        <div className={styles.btnStop}>
+          <Button
+            onClick={handleShowResultsClick}
+            size='sm'
+          >
+            Show results
+          </Button>
+        </div>
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import Header from 'components/Header/Header'
 import Nav from 'components/Nav/Nav'
 import { connect } from 'react-redux'
 import LoadingScreen from 'components/LoadingScreen/LoadingScreen'
+import NavBurn from 'components/NavBurn/NavBurn'
 import ErrorScreen from 'components/ErrorScreen/ErrorScreen'
 import {
   getIsInitialized
@@ -40,6 +41,7 @@ class Layout extends React.PureComponent {
         />
         <ErrorScreen />
         <Header />
+        <NavBurn />
         <Nav />
         <div className={styles.content}>
           {this.content}

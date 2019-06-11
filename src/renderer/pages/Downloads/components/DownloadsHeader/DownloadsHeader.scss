@@ -1,0 +1,26 @@
+@import 'base.scss';
+
+.component {
+  display: flex;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  margin-left: auto;
+
+  button {
+    margin-right: .5em;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.btnBurnIcon {
+  svg {
+    width: 11px;
+    height: 16px;
+  }
+}

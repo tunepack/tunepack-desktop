@@ -4,7 +4,7 @@ $btn-height: 48px;
 $btn-focus-ring-width: 3px;
 
 .component {
-  background-color: $color-text;
+  background-color: $gray-800;
   border-radius: 2px;
   height: $btn-height;
   line-height: $btn-height;
@@ -14,13 +14,21 @@ $btn-focus-ring-width: 3px;
   padding: 0 14px;
   cursor: pointer;
   outline: 0;
-  transition: box-shadow 120ms ease, background-color 180ms ease;
+  transition: box-shadow 120ms ease, background-color 180ms ease, opacity 200ms ease;
   font-size: 14px;
   user-select: none;
   font-family: inherit;
 
+  &:hover {
+    background-color: darken($gray-800, 10%);
+  }
+
   &.isLoading {
     cursor: not-allowed;
+  }
+
+  &:disabled {
+    opacity: .3 !important;
   }
 
   &:focus {
@@ -88,6 +96,20 @@ $btn-focus-ring-width: 3px;
     font-size: 12px;
     padding: 0 12px;
   }
+
+  &.size-xsm {
+    $scale-diff: .7;
+    $height: $btn-height * $scale-diff;
+    height: $height;
+    line-height: $height;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+.children {
+  line-height: 1;
 }
 
 .content {
@@ -101,11 +123,11 @@ $btn-focus-ring-width: 3px;
 }
 
 .iconBefore {
-  margin-right: 1rem;
+  margin-right: 10px;
 }
 
 .iconAfter {
-  margin-left: 1rem;
+  margin-left: 10px;
 }
 
 .loaderWrap {
