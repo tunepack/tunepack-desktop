@@ -48,10 +48,11 @@ rules.push({
       options: {
         importLoaders: 1,
         sourceMap: env.isDev,
-        modules: true,
-        localIdentName: env.isDev
-          ? '[name]-[local]-[hash:base64:5]'
-          : '[hash:base64:5]'
+        modules: {
+          localIdentName: env.isDev
+            ? '[name]-[local]-[hash:base64:5]'
+            : '[hash:base64:5]'
+        }
       }
     },
     {

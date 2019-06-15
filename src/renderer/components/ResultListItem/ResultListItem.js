@@ -12,6 +12,8 @@ import {
 } from '../../selectors/settings'
 import { Checkbox } from 'components/FormFields'
 import { toggleDownloadSelectBurning } from 'actions/settings'
+import IconSlow from 'icons/Slow.svg'
+import Icon from 'components/Icon/Icon'
 
 const ResultListItem = React.memo(({
   track,
@@ -45,6 +47,8 @@ const ResultListItem = React.memo(({
 
   const isDownloaded = download?.get('isDownloaded')
   const shouldShowBurnSelect = isDownloadsPage && isDownloaded && isBurning
+  const hasSlots = track?.get('slots')
+  const isSlowDownload = !hasSlots
 
   return (
     <div
@@ -83,6 +87,17 @@ const ResultListItem = React.memo(({
               {track.get('folderName')}
             </div>
             <div className={styles.metaData}>
+              {isSlowDownload && (
+                <Badge
+                  className={styles.badgeSlow}
+                  iconBefore={(
+                    <Icon glyph={IconSlow} />
+                  )}
+                  variant='danger'
+                >
+                  Slow download
+                </Badge>
+              )}
               <FileExtensionBadge
                 track={track}
                 className={styles.badgeFileExtension}
