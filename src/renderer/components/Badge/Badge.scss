@@ -1,7 +1,7 @@
 @import 'base.scss';
 
 .component {
-  display: inline-block;
+  display: flex;
   transition: background-color 120ms ease;
   padding: 2px 4px;
   border-radius: 2px;
@@ -11,6 +11,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: .3px;
+  align-items: center;
 
   &.primary {
     background-color: $color-primary;
@@ -22,5 +23,20 @@
 
   &.success {
     background-color: #778ca3;
+  }
+
+  &.danger {
+    color: lighten($color-red, 8);
+  }
+}
+
+.iconBefore {
+  margin-right: 5px;
+
+  svg {
+    $size: 10px;
+    width: $size;
+    height: $size;
+    color: inherit;
   }
 }

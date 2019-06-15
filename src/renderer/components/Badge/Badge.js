@@ -5,6 +5,7 @@ import cx from 'classnames'
 const Badge = ({
   children,
   variant,
+  iconBefore,
   className
 }) => {
   return (
@@ -14,6 +15,11 @@ const Badge = ({
         [className]: className
       })}
     >
+      {iconBefore && (
+        <div className={styles.iconBefore}>
+          {iconBefore}
+        </div>
+      )}
       {children}
     </div>
   )
