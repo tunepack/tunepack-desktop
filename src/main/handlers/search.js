@@ -86,12 +86,15 @@ const getFilteredResults = results => {
       return (a.size / a.speed) - (b.size / b.speed)
     })
     .filter(r => {
-      return r.slots
-    })
-    .filter(r => {
       return searchFileExtensions.includes(getTrackFileExtension(r))
     })
     .map((r) => { return formatTrack(r) })
+
+  if (results.length > 5) {
+    results = results.filter(r => {
+      return r.slots
+    })
+  }
 
   if (searchHasOnlyHighBitrate) {
     results = results.filter(r => {
